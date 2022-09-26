@@ -41,6 +41,12 @@ public class Game {
         return CheckHorizontal(player) | CheckVertical(player) | CheckDiagonal(player);
     }
 
+    private boolean CheckDraw(int player) {
+	    // how to check for a draw?
+	    
+        return false;
+    }
+
     public void Update(UserEvent U) {
         if (Players == 2 && U.PlayerIdx == CurrentTurn && (CurrentTurn == 0 || CurrentTurn == 1)) {
             if (Button[U.Button] == 0) {
@@ -58,7 +64,12 @@ public class Game {
             } else {
                 Msg[U.PlayerIdx] = "Not a legal move.";
             }
-            if (CheckBoard(1)) {
+	    if (CheckDraw(U.PlayerIdx)) {
+                Msg[0] = "Draw";
+                Msg[1] = "Draw";
+                CurrentTurn = 99;
+	    }
+	    if (CheckBoard(1)) {
                 Msg[0] = "You Win!";
                 Msg[1] = "You Lose!";
                 CurrentTurn = 99;

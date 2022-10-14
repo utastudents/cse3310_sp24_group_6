@@ -1,5 +1,7 @@
 
 // This is example code provided to CSE3310 Fall 2022
+// You are free to use as is, or changed, any of the code provided
+
 // Please comply with the licensing requirements for the
 // open source packages being used.
 
@@ -57,7 +59,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class App extends WebSocketServer {
-
+  // All games currently underway on this server are stored in
+  // the vector ActiveGames
   Vector<Game> ActiveGames = new Vector<Game>();
 
   int GameId = 1;
@@ -84,7 +87,7 @@ public class App extends WebSocketServer {
     // search for a game needing a player
     Game G = null;
     for (Game i : ActiveGames) {
-      if (i.Players == 1) {
+      if (i.Players == uta.cse3310.PlayerType.XPLAYER) {
         G = i;
         System.out.println("found a match");
       }
@@ -94,28 +97,30 @@ public class App extends WebSocketServer {
     if (G == null) {
       G = new Game();
       G.GameId = GameId;
-      // global gameid
       GameId++;
-      G.Players = 1;
+      // Add the first player
+      G.Players = uta.cse3310.PlayerType.XPLAYER;
       ActiveGames.add(G);
-      System.out.println(" creating an object");
+      System.out.println(" creating a new Game");
     } else {
       // join an existing game
       System.out.println(" not a new game");
-      G.Players = 2;
+      G.Players = uta.cse3310.PlayerType.OPLAYER;
       G.StartGame();
     }
     System.out.println("G.players is " + G.Players);
-    E.YouAre = G.Players - 1;
+    // create an event to go to only the new player
+    E.YouAre = G.Players;
     E.GameId = G.GameId;
+    // allows the websocket to give us the Game when a message arrives
     conn.setAttachment(G);
 
     Gson gson = new Gson();
     // Note only send to the single connection
     conn.send(gson.toJson(E));
-
     System.out.println(gson.toJson(E));
-    // Send to everyone
+
+    // The state of the game has changed, so lets send it to everyone
     String jsonString;
     jsonString = gson.toJson(G);
 
@@ -127,9 +132,9 @@ public class App extends WebSocketServer {
   @Override
   public void onClose(WebSocket conn, int code, String reason, boolean remote) {
     System.out.println(conn + " has closed");
-     
-     Game G = conn.getAttachment();
-     G = null;
+    // Retrieve the game tied to the websocket connection
+    Game G = conn.getAttachment();
+    G = null;
   }
 
   @Override
@@ -143,10 +148,12 @@ public class App extends WebSocketServer {
     UserEvent U = gson.fromJson(message, UserEvent.class);
     System.out.println(U.Button);
 
+    // Get our Game Object
     Game G = conn.getAttachment();
     G.Update(U);
 
     // send out the game state every time
+    // to everyone
     String jsonString;
     jsonString = gson.toJson(G);
 

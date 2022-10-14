@@ -1,7 +1,7 @@
 package uta.cse3310;
 
 public class ServerEvent {
-    int YouAre; // tells the client which index to use
+    PlayerType YouAre; // Either an XPLAYER or a YPLAYER
     int GameId;
     
 }

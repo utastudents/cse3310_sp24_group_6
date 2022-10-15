@@ -13,16 +13,14 @@ echo "finished java compile"
 # kill the running service
 echo systemctl --user stop  ${1}.service
 systemctl --user stop  ${1}.service
-systemctl --user disable  ${1}.service
 # replace the systemd file
 echo "replace the service file"
 mkdir --parents $HOME/.config/systemd/user
-ls scripts/${1}.service
 cp -f scripts/${1}.service $HOME/.config/systemd/user/${1}.service
 systemctl --user daemon-reload
 # restart the running service
 systemctl --user start  ${1}.service
-systemctl --user enable  ${1}.service
+#systemctl --user enable  ${1}.service
 systemctl --user status ${1}.service
 echo "done"
 

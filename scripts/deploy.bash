@@ -12,5 +12,7 @@ targetdir="fa2022/$1"
 if [[ $group =~ group? ]]; then
    echo "Copying into ${targetdir} on webpoker.info"
    scp -r */ * fa2022_$group@webpoker.info:.
-   ssh fa2022_$group@webpoker.info bash scripts/restart.bash
+   echo "Copy complete."
+   echo "Enter the password for $group on webpoker.info to install"
+   ssh fa2022_$group@webpoker.info bash scripts/restart.bash fa2022_$group
 fi

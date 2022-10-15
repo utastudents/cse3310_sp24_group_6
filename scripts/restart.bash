@@ -9,18 +9,21 @@ rm -rf $HOME/.m2
 mvn clean
 mvn compile
 mvn package
-echo "finished java compile"
+echo "------ Java Compile Complete"
+
 # kill the running service
-echo systemctl --user stop  ${1}.service
 systemctl --user stop  ${1}.service
+echo "------ Service Stopped"
+
 # replace the systemd file
-echo "replace the service file"
 mkdir --parents $HOME/.config/systemd/user
 cp -f scripts/${1}.service $HOME/.config/systemd/user/${1}.service
 systemctl --user daemon-reload
+echo "------ systemd unit file replaced"
+
 # restart the running service
 systemctl --user start  ${1}.service
-#systemctl --user enable  ${1}.service
+echo "------ service restarted"
 systemctl --user status ${1}.service
-echo "done"
+echo "------ Done"
 

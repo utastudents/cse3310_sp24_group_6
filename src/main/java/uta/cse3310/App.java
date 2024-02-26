@@ -147,6 +147,7 @@ public class App extends WebSocketServer {
     Gson gson = builder.create();
     UserEvent U = gson.fromJson(message, UserEvent.class);
     System.out.println(U.Button);
+    System.out.println("in on message");
 
     // Get our Game Object
     Game G = conn.getAttachment();

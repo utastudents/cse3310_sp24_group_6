@@ -48,7 +48,7 @@ public class Game {
         return CheckHorizontal(player) | CheckVertical(player) | CheckDiagonal(player);
     }
 
-    private boolean CheckDraw(PlayerType player) {
+    public boolean CheckDraw(PlayerType player) {
         // how to check for a draw?
         // Are all buttons are taken ?
         int count = 0;

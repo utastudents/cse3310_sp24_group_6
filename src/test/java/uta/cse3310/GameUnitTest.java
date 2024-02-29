@@ -27,8 +27,7 @@ public class GameUnitTest
         return new TestSuite(GameUnitTest.class);
     }
 
-    public void testApp() {
-        // first create a game object
+    public void testApp() { // first create a game object
         Game G = new Game();
 
         // set it up for a draw game
@@ -59,7 +58,7 @@ public class GameUnitTest
         // XOX
         // OOX
         // OXX
-
+        G.ResetBoard();
         G.Button[0] = uta.cse3310.PlayerType.XPLAYER;
         G.Button[2] = uta.cse3310.PlayerType.XPLAYER;
         G.Button[5] = uta.cse3310.PlayerType.XPLAYER;
@@ -71,8 +70,10 @@ public class GameUnitTest
         G.Button[4] = uta.cse3310.PlayerType.OPLAYER;
         G.Button[6] = uta.cse3310.PlayerType.OPLAYER;
 
+        G.printGame();
         // then CheckDraw()
         assertFalse(G.CheckDraw(p));
-
     }
+
 }
+// mvn -Dtest=WholeGameTest test

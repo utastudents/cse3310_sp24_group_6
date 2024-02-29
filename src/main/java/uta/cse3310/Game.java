@@ -10,15 +10,27 @@ public class Game {
     Game() {
         Button = new PlayerType[9];
         // initialize it
-        for (int i = 0; i < Button.length; i++) {
-            Button[i] = PlayerType.NOPLAYER;
-        }
+        ResetBoard();
 
         Msg = new String[2];
         Players = PlayerType.XPLAYER;
         CurrentTurn = PlayerType.NOPLAYER;
         Msg[0] = "Waiting for other player to join";
         Msg[1] = "";
+    }
+
+    public void ResetBoard() {
+        for (int i = 0; i < Button.length; i++) {
+            Button[i] = PlayerType.NOPLAYER;
+        }
+    }
+
+    public void printGame() {
+        // this method is used for debugging only
+        //
+        System.out.println(Button[0].toString() + " " + Button[1].toString() + " " + Button[2].toString());
+        System.out.println(Button[3].toString() + " " + Button[4].toString() + " " + Button[5].toString());
+        System.out.println(Button[6].toString() + " " + Button[7].toString() + " " + Button[8].toString());
     }
 
     public void StartGame() {
@@ -33,32 +45,28 @@ public class Game {
     }
 
     private boolean CheckHorizontal(PlayerType player) {
-        return CheckLine(0, 1, 2, player) | CheckLine(3, 4, 5, player) | CheckLine(6, 7, 8, player);
+        return CheckLine(0, 1, 2, player) || CheckLine(3, 4, 5, player) || CheckLine(6, 7, 8, player);
     }
 
     private boolean CheckVertical(PlayerType player) {
-        return CheckLine(0, 3, 6, player) | CheckLine(1, 4, 7, player) | CheckLine(2, 5, 8, player);
+        return CheckLine(0, 3, 6, player) || CheckLine(1, 4, 7, player) || CheckLine(2, 5, 8, player);
     }
 
     private boolean CheckDiagonal(PlayerType player) {
-        return CheckLine(0, 4, 8, player) | CheckLine(2, 4, 6, player);
+        return CheckLine(0, 4, 8, player) || CheckLine(2, 4, 6, player);
     }
 
     private boolean CheckBoard(PlayerType player) {
-        return CheckHorizontal(player) | CheckVertical(player) | CheckDiagonal(player);
+        return CheckHorizontal(player) || CheckVertical(player) || CheckDiagonal(player);
     }
 
     public boolean CheckDraw(PlayerType player) {
-        // how to check for a draw?
-        // Are all buttons are taken ?
-        int count = 0;
-        for (int i = 0; i < Button.length; i++) {
-            if (Button[i] == PlayerType.NOPLAYER) {
-                count = count + 1;
-            }
+        // It is a draw if neither player has won.
+        boolean retval = true;
+        if (CheckBoard(uta.cse3310.PlayerType.OPLAYER) || CheckBoard(uta.cse3310.PlayerType.XPLAYER)) {
+            retval = false;
         }
-
-        return count == 0;
+        return retval;
     }
 
     // This function returns an index for each player

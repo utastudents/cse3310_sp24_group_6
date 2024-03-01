@@ -9,10 +9,7 @@ public class Game {
     // 0 1 2
     // 3 4 5
     // 6 7 8
-    // on the html page they are 1 to 9
-    // 1 2 3
-    // 4 5 6
-    // 7 8 9
+    
     public String[] Msg;
     public int GameId;
 
@@ -37,12 +34,22 @@ public class Game {
         }
     }
 
-    public void printGame() {
+    public void PrintGame() {
         // this method is used for debugging only
         //
         System.out.println(Button[0].toString() + " " + Button[1].toString() + " " + Button[2].toString());
         System.out.println(Button[3].toString() + " " + Button[4].toString() + " " + Button[5].toString());
         System.out.println(Button[6].toString() + " " + Button[7].toString() + " " + Button[8].toString());
+    }
+
+    public void SetBoard(PlayerType p, int[] b) {
+        // this method is only used for testing purposes
+        // p is the player to give the square to, and b
+        // is an array of button numbers
+        for (int i : b) {
+            Button[i] = p;
+        }
+
     }
 
     public void StartGame() {
@@ -69,7 +76,7 @@ public class Game {
         return CheckLine(0, 4, 8, player) || CheckLine(2, 4, 6, player);
     }
 
-    private boolean CheckBoard(PlayerType player) {
+    public boolean CheckBoard(PlayerType player) {
         return CheckHorizontal(player) || CheckVertical(player) || CheckDiagonal(player);
     }
 
@@ -99,6 +106,8 @@ public class Game {
 
         if ((CurrentTurn == U.PlayerIdx) && (CurrentTurn == PlayerType.OPLAYER || CurrentTurn == PlayerType.XPLAYER)) {
             // Move is legitimate, lets do what was requested
+
+            // Note that a button is going to be set for every UserEvent !
 
             // Is the button not taken by X or O?
             if (Button[U.Button] == PlayerType.NOPLAYER) {

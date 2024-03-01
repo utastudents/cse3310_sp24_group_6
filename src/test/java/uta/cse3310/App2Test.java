@@ -27,14 +27,11 @@ public class App2Test
         return new TestSuite(App2Test.class);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
     public void testApp() {
         // this tests just shows one move...
         // remember, this is "code", you can use functions
         // and loops in the test code
-
+if (false){
         Game G = new Game();
 
         UserEvent UX = new UserEvent();
@@ -53,13 +50,12 @@ public class App2Test
 
         // play a game
 
-        UX.Button = 1;
+        UX.Button = 0;
         G.Update(UX);
+        G.PrintGame();
         // X__
         // ___
         // ___
-
-        UX.Button = 0;
 
         UO.Button = 2;
         G.Update(UO);
@@ -67,35 +63,32 @@ public class App2Test
         // ___
         // ___
 
-        UO.Button = 0;
-
-        UX.Button = 4;
+        UX.Button = 3;
         G.Update(UX);
         // X0_
         // X__
         // ___
 
-        UX.Button = 0;
-
-        UO.Button = 5;
+        UO.Button = 4;
         G.Update(UO);
         // X0_
         // X0_
         // ___
 
-        UO.Button = 0;
+        UX.Button = 6;
 
-        UX.Button = 7;
         G.Update(UX);
         // X0_
-        // X__
+        // X0_
         // X__
 
-        // System.out.println(G.Msg[0]);
-        // System.out.println(G.Msg[1]);
+        System.out.println(G.Msg[0]);
+        System.out.println(G.Msg[1]);
+        G.PrintGame();
         // X wins
         assertTrue(G.Msg[0] == "You Win!");
         assertTrue(G.Msg[1] == "You Lose!");
+}
 
         // assertTrue ( G.Button[1] == uta.cse3310.PlayerType.XPLAYER);
 

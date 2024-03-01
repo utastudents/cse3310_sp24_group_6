@@ -1,7 +1,5 @@
 package uta.cse3310;
 
-import javax.xml.crypto.dsig.XMLSignContext;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -35,44 +33,67 @@ public class GameUnitTest
         // XOX
         // OOX
         // XXO
-
-        G.Button[0] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[2] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[5] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[6] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[7] = uta.cse3310.PlayerType.XPLAYER;
-
-        G.Button[1] = uta.cse3310.PlayerType.OPLAYER;
-        G.Button[3] = uta.cse3310.PlayerType.OPLAYER;
-        G.Button[4] = uta.cse3310.PlayerType.OPLAYER;
-        G.Button[8] = uta.cse3310.PlayerType.OPLAYER;
+        G.SetBoard(uta.cse3310.PlayerType.XPLAYER, new int[] { 0, 1, 5, 6, 7 });
+        G.SetBoard(uta.cse3310.PlayerType.OPLAYER, new int[] { 1, 3, 4, 6 });
 
         // then CheckDraw()
 
         PlayerType p = uta.cse3310.PlayerType.OPLAYER;
 
         assertTrue(G.CheckDraw(p));
+        assertFalse(G.CheckBoard(uta.cse3310.PlayerType.XPLAYER));
+        assertFalse(G.CheckBoard(uta.cse3310.PlayerType.OPLAYER));
 
         // This is not a draw game.
+        // X Wins
 
         // XOX
         // OOX
         // OXX
         G.ResetBoard();
-        G.Button[0] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[2] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[5] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[7] = uta.cse3310.PlayerType.XPLAYER;
-        G.Button[8] = uta.cse3310.PlayerType.XPLAYER;
 
-        G.Button[1] = uta.cse3310.PlayerType.OPLAYER;
-        G.Button[3] = uta.cse3310.PlayerType.OPLAYER;
-        G.Button[4] = uta.cse3310.PlayerType.OPLAYER;
-        G.Button[6] = uta.cse3310.PlayerType.OPLAYER;
+        G.SetBoard(uta.cse3310.PlayerType.XPLAYER, new int[] { 0, 2, 5, 7, 8 });
+        G.SetBoard(uta.cse3310.PlayerType.OPLAYER, new int[] { 1, 3, 4, 6 });
 
-        G.printGame();
+        // G.PrintGame();
         // then CheckDraw()
         assertFalse(G.CheckDraw(p));
+        assertTrue(G.CheckBoard(uta.cse3310.PlayerType.XPLAYER));
+        assertFalse(G.CheckBoard(uta.cse3310.PlayerType.OPLAYER));
+
+        // This is not a draw game.
+        // O Wins
+
+        // XOX
+        // XOX
+        // _O_
+        G.ResetBoard();
+
+        G.SetBoard(uta.cse3310.PlayerType.XPLAYER, new int[] { 0, 2, 3, 5 });
+        G.SetBoard(uta.cse3310.PlayerType.OPLAYER, new int[] { 1, 4, 7 });
+
+        // G.PrintGame();
+        // then CheckDraw()
+        assertFalse(G.CheckDraw(p));
+        assertTrue(G.CheckBoard(uta.cse3310.PlayerType.OPLAYER));
+        assertFalse(G.CheckBoard(uta.cse3310.PlayerType.XPLAYER));
+
+        // This is not a draw game.
+        // O Wins
+
+        // OXX
+        // XOX
+        // __O
+        G.ResetBoard();
+
+        G.SetBoard(uta.cse3310.PlayerType.XPLAYER, new int[] { 1, 2, 3, 5 });
+        G.SetBoard(uta.cse3310.PlayerType.OPLAYER, new int[] { 0, 4, 8 });
+
+        // G.PrintGame();
+        // then CheckDraw()
+        assertFalse(G.CheckDraw(p));
+        assertTrue(G.CheckBoard(uta.cse3310.PlayerType.OPLAYER));
+        assertFalse(G.CheckBoard(uta.cse3310.PlayerType.XPLAYER));
     }
 
 }

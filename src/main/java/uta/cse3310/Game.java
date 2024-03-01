@@ -1,9 +1,18 @@
 package uta.cse3310;
 
 public class Game {
-    public PlayerType Players;
+
+    PlayerType Players;
     public PlayerType CurrentTurn;
     public PlayerType[] Button;
+    // Buttons are indexed 0 to 8 in the code
+    // 0 1 2
+    // 3 4 5
+    // 6 7 8
+    // on the html page they are 1 to 9
+    // 1 2 3
+    // 4 5 6
+    // 7 8 9
     public String[] Msg;
     public int GameId;
 
@@ -15,11 +24,14 @@ public class Game {
         Msg = new String[2];
         Players = PlayerType.XPLAYER;
         CurrentTurn = PlayerType.NOPLAYER;
+        // Shown to the user, 0 is XPLAYER
+        // 1 is YPLAYER
         Msg[0] = "Waiting for other player to join";
         Msg[1] = "";
     }
 
     public void ResetBoard() {
+        // initializes the board to NOPLAYER in all spots
         for (int i = 0; i < Button.length; i++) {
             Button[i] = PlayerType.NOPLAYER;
         }
@@ -41,6 +53,7 @@ public class Game {
     }
 
     private boolean CheckLine(int i, int j, int k, PlayerType player) {
+        // Checks to see if 3 squares are the same player
         return player == Button[i] && player == Button[j] && player == Button[k];
     }
 
@@ -82,14 +95,14 @@ public class Game {
     }
 
     public void Update(UserEvent U) {
-        System.out.println("The user event is " + U.PlayerIdx + "  " + U.Button);
+        // System.out.println("The user event is " + U.PlayerIdx + " " + U.Button);
 
         if ((CurrentTurn == U.PlayerIdx) && (CurrentTurn == PlayerType.OPLAYER || CurrentTurn == PlayerType.XPLAYER)) {
             // Move is legitimate, lets do what was requested
 
             // Is the button not taken by X or O?
             if (Button[U.Button] == PlayerType.NOPLAYER) {
-                System.out.println("the button was 0, setting it to" + U.PlayerIdx);
+                // System.out.println("the button was 0, setting it to" + U.PlayerIdx);
                 Button[U.Button] = U.PlayerIdx;
                 if (U.PlayerIdx == PlayerType.OPLAYER) {
                     CurrentTurn = PlayerType.XPLAYER;

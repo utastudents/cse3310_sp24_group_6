@@ -24,8 +24,14 @@ public class GameUnitTest
     public static Test suite() {
         return new TestSuite(GameUnitTest.class);
     }
+    
+    //////////////////////////////////////////////////////////////////////////
+    // These are unit tests, to check methods in the Game class.
+    //////////////////////////////////////////////////////////////////////////
 
-    public void testApp() { // first create a game object
+    public void testDrawOrWinner() { // first create a game object
+        // This method tests the ability to find a winner or
+        // a draw game.
         Game G = new Game();
 
         // set it up for a draw game
@@ -39,7 +45,7 @@ public class GameUnitTest
         // then CheckDraw()
 
         PlayerType p = uta.cse3310.PlayerType.OPLAYER;
- 
+
         assertTrue(G.CheckDraw(p));
         assertFalse(G.CheckBoard(uta.cse3310.PlayerType.XPLAYER));
         assertFalse(G.CheckBoard(uta.cse3310.PlayerType.OPLAYER));

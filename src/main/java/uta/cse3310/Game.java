@@ -94,6 +94,8 @@ public class Game {
         // It is a draw if neither player has won.
         boolean retval = false;
 
+        // More specifically, it is a draw if no-one has one, and there
+        // are not spots that have not been taken.
         if (OpenSpots() == 0 && !(CheckBoard(uta.cse3310.PlayerType.OPLAYER)
                 || CheckBoard(uta.cse3310.PlayerType.XPLAYER))) {
             retval = true;

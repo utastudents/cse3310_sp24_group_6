@@ -9,7 +9,7 @@ public class Game {
     // 0 1 2
     // 3 4 5
     // 6 7 8
-    
+
     public String[] Msg;
     public int GameId;
 
@@ -32,6 +32,16 @@ public class Game {
         for (int i = 0; i < Button.length; i++) {
             Button[i] = PlayerType.NOPLAYER;
         }
+    }
+
+    public int OpenSpots() {
+        int count = 0;
+        for (PlayerType i : Button) {
+            if (i == uta.cse3310.PlayerType.NOPLAYER) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void PrintGame() {
@@ -82,10 +92,13 @@ public class Game {
 
     public boolean CheckDraw(PlayerType player) {
         // It is a draw if neither player has won.
-        boolean retval = true;
-        if (CheckBoard(uta.cse3310.PlayerType.OPLAYER) || CheckBoard(uta.cse3310.PlayerType.XPLAYER)) {
-            retval = false;
+        boolean retval = false;
+
+        if (OpenSpots() == 0 && !(CheckBoard(uta.cse3310.PlayerType.OPLAYER)
+                || CheckBoard(uta.cse3310.PlayerType.XPLAYER))) {
+            retval = true;
         }
+
         return retval;
     }
 

@@ -33,13 +33,13 @@ public class GameUnitTest
         // XOX
         // OOX
         // XXO
-        G.SetBoard(uta.cse3310.PlayerType.XPLAYER, new int[] { 0, 1, 5, 6, 7 });
-        G.SetBoard(uta.cse3310.PlayerType.OPLAYER, new int[] { 1, 3, 4, 6 });
+        G.SetBoard(uta.cse3310.PlayerType.XPLAYER, new int[] { 0, 2, 5, 6, 7 });
+        G.SetBoard(uta.cse3310.PlayerType.OPLAYER, new int[] { 1, 3, 4, 8 });
 
         // then CheckDraw()
 
         PlayerType p = uta.cse3310.PlayerType.OPLAYER;
-
+ 
         assertTrue(G.CheckDraw(p));
         assertFalse(G.CheckBoard(uta.cse3310.PlayerType.XPLAYER));
         assertFalse(G.CheckBoard(uta.cse3310.PlayerType.OPLAYER));

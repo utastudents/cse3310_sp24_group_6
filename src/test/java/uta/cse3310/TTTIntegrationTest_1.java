@@ -9,14 +9,14 @@ import com.google.gson.GsonBuilder;
 /**
  * Unit test for simple App.
  */
-public class App2Test
+public class TTTIntegrationTest_1
         extends TestCase {
     /**
      * Create the test case
      *
      * @param testName name of the test case
      */
-    public App2Test(String testName) {
+    public TTTIntegrationTest_1(String testName) {
         super(testName);
     }
 
@@ -24,7 +24,7 @@ public class App2Test
      * @return the suite of tests being tested
      */
     public static Test suite() {
-        return new TestSuite(App2Test.class);
+        return new TestSuite(TTTIntegrationTest_1.class);
     }
 
     public void testApp() {

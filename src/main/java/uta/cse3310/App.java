@@ -54,18 +54,23 @@ import org.java_websocket.server.WebSocketServer;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.time.Instant;
+import java.time.Duration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class App extends WebSocketServer {
+
   // All games currently underway on this server are stored in
   // the vector ActiveGames
-  Vector<Game> ActiveGames = new Vector<Game>();
+  private Vector<Game> ActiveGames = new Vector<Game>();
 
+  private int GameId = 1;
 
-  
-  int GameId = 1;
+  private int connectionId = 0;
+
+  private Instant startTime;
 
   public App(int port) {
     super(new InetSocketAddress(port));
@@ -81,6 +86,8 @@ public class App extends WebSocketServer {
 
   @Override
   public void onOpen(WebSocket conn, ClientHandshake handshake) {
+
+    connectionId++;
 
     System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
 
@@ -110,23 +117,27 @@ public class App extends WebSocketServer {
       G.Players = uta.cse3310.PlayerType.OPLAYER;
       G.StartGame();
     }
-    System.out.println("G.players is " + G.Players);
+
     // create an event to go to only the new player
     E.YouAre = G.Players;
     E.GameId = G.GameId;
-    // allows the websocket to give us the Game when a message arrives
+
+    // allows the websocket to give us the Game when a message arrives..
+    // it stores a pointer to G, and will give that pointer back to us
+    // when we ask for it
     conn.setAttachment(G);
 
     Gson gson = new Gson();
+
     // Note only send to the single connection
-    conn.send(gson.toJson(E));
-    System.out.println(gson.toJson(E));
+    String jsonString = gson.toJson(E);
+    conn.send(jsonString);
+    System.out
+        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + jsonString);
 
     // The state of the game has changed, so lets send it to everyone
-    String jsonString;
     jsonString = gson.toJson(G);
-
-    System.out.println(jsonString);
+    System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + jsonString);
     broadcast(jsonString);
 
   }
@@ -141,15 +152,14 @@ public class App extends WebSocketServer {
 
   @Override
   public void onMessage(WebSocket conn, String message) {
-    System.out.println(conn + ": " + message);
+    System.out
+        .println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + message);
 
     // Bring in the data from the webpage
     // A UserEvent is all that is allowed at this point
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
     UserEvent U = gson.fromJson(message, UserEvent.class);
-    System.out.println(U.Button);
-    System.out.println("in on message");
 
     // Get our Game Object
     Game G = conn.getAttachment();
@@ -160,7 +170,8 @@ public class App extends WebSocketServer {
     String jsonString;
     jsonString = gson.toJson(G);
 
-    System.out.println(jsonString);
+    System.out
+        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + jsonString);
     broadcast(jsonString);
   }
 
@@ -182,6 +193,7 @@ public class App extends WebSocketServer {
   public void onStart() {
     System.out.println("Server started!");
     setConnectionLostTimeout(0);
+    startTime = Instant.now();
   }
 
   public static void main(String[] args) {
@@ -198,6 +210,6 @@ public class App extends WebSocketServer {
     App A = new App(port);
     A.start();
     System.out.println("websocket Server started on port: " + port);
-// This is the line that has been changed
+
   }
 }

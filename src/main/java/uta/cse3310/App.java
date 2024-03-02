@@ -191,7 +191,6 @@ public class App extends WebSocketServer {
 
   @Override
   public void onStart() {
-    System.out.println("Server started!");
     setConnectionLostTimeout(0);
     startTime = Instant.now();
   }
@@ -202,7 +201,7 @@ public class App extends WebSocketServer {
     int port = 9080;
     HttpServer H = new HttpServer(port, "./html");
     H.start();
-    System.out.println("http Server started on port:" + port);
+    System.out.println("http Server started on port: " + port);
 
     // create and start the websocket server
 

@@ -1,3 +1,4 @@
+name: Deploy to remote server
 on:
   push:
   branches:
@@ -5,9 +6,9 @@ on:
  
 jobs:
   deploy:
-  runs-on: ubuntu-latest 
-    steps:
-      - name: Configure SSH
+  runs-on: ubuntu-latest
+  steps:
+       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/staging.key

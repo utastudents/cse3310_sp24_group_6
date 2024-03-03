@@ -4,7 +4,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.lang.annotation.Native;
+//import java.lang.annotation.Native;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +50,8 @@ public class WholeGameTest
         Gson gson = builder.create();
         UserEvent U = gson.fromJson(msg, UserEvent.class);
         G.Update(U);
-        return "";
+        String jsonString = gson.toJson(G);
+        return jsonString;
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -89,7 +90,9 @@ public class WholeGameTest
         // {\"Players\":\"OPLAYER\",\"CurrentTurn\":\"XPLAYER\",\"Button\":[\"XPLAYER\",\"OPLAYER\",\"OPLAYER\",\"NOPLAYER\",\"XPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\"],\"Msg\":[\"Your
         // Move.\",\"Other Players Move.\"],\"GameId\":1}
         result = update(game,"{\"Button\":8,\"PlayerIdx\":\"XPLAYER\",\"GameId\":1}");
-        System.out.println(result);
+        
+        assertTrue(result.indexOf("[\"You Win!\",\"You Lose!\"]")>-1);
+       
         // > 27683 *
         // {\"Players\":\"OPLAYER\",\"CurrentTurn\":\"NOPLAYER\",\"Button\":[\"XPLAYER\",\"OPLAYER\",\"OPLAYER\",\"NOPLAYER\",\"XPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"NOPLAYER\",\"XPLAYER\"],\"Msg\":[\"You
         // Win!\",\"You Lose!\"],\"GameId\":1}

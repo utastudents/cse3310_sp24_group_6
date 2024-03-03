@@ -38,32 +38,32 @@ public class IntegrationTest
         Game G = new Game();
  
         G.GameId = 1;
-        G.Players = uta.cse3310.PlayerType.OPLAYER;
+        G.Players = PlayerType.OPLAYER;
         G.StartGame();
 
         // play a game
 
-        G.Update(new UserEvent(GameID, uta.cse3310.PlayerType.XPLAYER, 0));
+        G.Update(new UserEvent(GameID, PlayerType.XPLAYER, 0));
         // X__
         // ___
         // ___
 
-        G.Update(new UserEvent(GameID, uta.cse3310.PlayerType.OPLAYER, 2));
+        G.Update(new UserEvent(GameID, PlayerType.OPLAYER, 2));
         // X0_
         // ___
         // ___
 
-        G.Update(new UserEvent(GameID, uta.cse3310.PlayerType.XPLAYER, 3));
+        G.Update(new UserEvent(GameID, PlayerType.XPLAYER, 3));
         // X0_
         // X__
         // ___
 
-        G.Update(new UserEvent(GameID, uta.cse3310.PlayerType.OPLAYER, 4));
+        G.Update(new UserEvent(GameID, PlayerType.OPLAYER, 4));
         // X0_
         // X0_
         // ___
 
-        G.Update(new UserEvent(GameID, uta.cse3310.PlayerType.XPLAYER, 6));
+        G.Update(new UserEvent(GameID, PlayerType.XPLAYER, 6));
         // X0_
         // X0_
         // X__

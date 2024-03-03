@@ -18,11 +18,11 @@ public class Game {
         // initialize it
         ResetBoard();
 
-        Msg = new String[2];
         Players = PlayerType.XPLAYER;
         CurrentTurn = PlayerType.NOPLAYER;
         // Shown to the user, 0 is XPLAYER
-        // 1 is YPLAYER
+        // 1 is OPLAYER
+        Msg = new String[2];
         Msg[0] = "Waiting for other player to join";
         Msg[1] = "";
     }
@@ -35,9 +35,11 @@ public class Game {
     }
 
     public int OpenSpots() {
+        // counts the number of spots that neither
+        // O or X has taken.
         int count = 0;
         for (PlayerType i : Button) {
-            if (i == uta.cse3310.PlayerType.NOPLAYER) {
+            if (i == PlayerType.NOPLAYER) {
                 count++;
             }
         }
@@ -46,7 +48,7 @@ public class Game {
 
     public void PrintGame() {
         // this method is used for debugging only
-        //
+        // sometimes you want to see a picture of what is going on
         System.out.println(Button[0].toString() + " " + Button[1].toString() + " " + Button[2].toString());
         System.out.println(Button[3].toString() + " " + Button[4].toString() + " " + Button[5].toString());
         System.out.println(Button[6].toString() + " " + Button[7].toString() + " " + Button[8].toString());
@@ -94,7 +96,7 @@ public class Game {
         // It is a draw if neither player has won.
         boolean retval = false;
 
-        // More specifically, it is a draw if no-one has one, and there
+        // More specifically, it is a draw if no-one has won, and there
         // are not spots that have not been taken.
         if (OpenSpots() == 0 && !(CheckBoard(uta.cse3310.PlayerType.OPLAYER)
                 || CheckBoard(uta.cse3310.PlayerType.XPLAYER))) {

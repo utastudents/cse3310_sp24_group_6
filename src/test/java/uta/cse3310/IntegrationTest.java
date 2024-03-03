@@ -3,8 +3,6 @@ package uta.cse3310;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class IntegrationTest
         extends TestCase {
@@ -26,17 +24,17 @@ public class IntegrationTest
 
     //////////////////////////////////////////////////////////////////////
     // These are integration tests / component tests.
-    // Notice how they call methods directly
+    // Notice how they call methods directly. In the system tests, the
+    // data in and out is json strings.
+    //
+    // (the program is very small, it is hard to differentiate between an
+    // integration / component test and a system level test)
     //////////////////////////////////////////////////////////////////////
 
-    public void testOneGame() {
-        // this tests just shows one move...
-        // remember, this is "code", you can use functions
-        // and loops in the test code
+    public void singleGame(Game G) {
+
         int GameID = 1;
 
-        Game G = new Game();
- 
         G.GameId = 1;
         G.Players = PlayerType.OPLAYER;
         G.StartGame();
@@ -71,9 +69,25 @@ public class IntegrationTest
         // System.out.println(G.Msg[0]);
         // System.out.println(G.Msg[1]);
         // G.PrintGame();
+
         // X wins
         assertTrue(G.Msg[0] == "You Win!");
         assertTrue(G.Msg[1] == "You Lose!");
 
+    }
+
+    public void testOneGame() {
+        Game G=new Game();
+        singleGame(G);
+    }
+
+    public void testTwoGames() {
+        // this test does not do much,
+        // but it seemed like something to
+        // write quickly.
+        Game G0 = new Game();
+        Game G1 = new Game();
+        singleGame(G0);
+        singleGame(G1);
     }
 }

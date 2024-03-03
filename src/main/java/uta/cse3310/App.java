@@ -108,13 +108,13 @@ public class App extends WebSocketServer {
       G.GameId = GameId;
       GameId++;
       // Add the first player
-      G.Players = uta.cse3310.PlayerType.XPLAYER;
+      G.Players = PlayerType.XPLAYER;
       ActiveGames.add(G);
       System.out.println(" creating a new Game");
     } else {
       // join an existing game
       System.out.println(" not a new game");
-      G.Players = uta.cse3310.PlayerType.OPLAYER;
+      G.Players = PlayerType.OPLAYER;
       G.StartGame();
     }
 
@@ -133,11 +133,13 @@ public class App extends WebSocketServer {
     String jsonString = gson.toJson(E);
     conn.send(jsonString);
     System.out
-        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + jsonString);
+        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " "
+            + escape(jsonString));
 
     // The state of the game has changed, so lets send it to everyone
     jsonString = gson.toJson(G);
-    System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + jsonString);
+    System.out
+        .println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
     broadcast(jsonString);
 
   }
@@ -153,7 +155,7 @@ public class App extends WebSocketServer {
   @Override
   public void onMessage(WebSocket conn, String message) {
     System.out
-        .println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + message);
+        .println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message));
 
     // Bring in the data from the webpage
     // A UserEvent is all that is allowed at this point
@@ -171,7 +173,7 @@ public class App extends WebSocketServer {
     jsonString = gson.toJson(G);
 
     System.out
-        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + jsonString);
+        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
     broadcast(jsonString);
   }
 
@@ -193,6 +195,21 @@ public class App extends WebSocketServer {
   public void onStart() {
     setConnectionLostTimeout(0);
     startTime = Instant.now();
+  }
+
+  private String escape(String S) {
+    // turns " into \"
+    String retval = new String();
+    // this routine is very slow.
+    // but it is not called very often
+    for (int i = 0; i < S.length(); i++) {
+      Character ch = S.charAt(i);
+      if (ch == '\"') {
+        retval = retval + '\\';
+      }
+      retval = retval + ch;
+    }
+    return retval;
   }
 
   public static void main(String[] args) {

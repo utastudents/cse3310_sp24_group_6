@@ -1,30 +1,37 @@
-name: Deploy to remote server
-on:
-  push:
-  branches:
-    - main
- 
+name: CI
+on: [push, pull_request]
 jobs:
+  # test:
+  #   ...
   deploy:
-  runs-on: ubuntu-latest
-  steps:
-  - name: Checkout code
-    uses: actions/checkout@v2
-    
-   
-  - name: Setup SSH Key
-    uses: webfactory/ssh-agent@v0.5.0
-    with:
-    ssh-private-key: ${{ secrets.DEPLOY_KEY }}
-   
-  - name: Deploy code
-    uses: appleboy/ssh-action@master
-    with:
-    host: your-remote-server.com
-    username: your-ssh-username
-    key: ${{ secrets.SSH_PRIVATE_KEY }}
-    script: |
-      cd /var/www/my-app
-      git pull origin main
-      npm install
-      npm run build
+    name: "Deploy to staging"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    # needs: test
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+          SSH_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+
+      - name: Stop the server
+        run: ssh staging 'sudo systemctl stop my-application'
+
+      - name: Check out the source
+        run: ssh staging 'cd my-application && git fetch && git reset --hard origin/master'
+
+      - name: Start the server
+        if: ${{ always() }}
+        run: ssh staging 'sudo systemctl start my-application'

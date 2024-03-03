@@ -1,21 +1,29 @@
-name: Remote update execution
+name: Deploy to remote server
 on:
   push:
-    branches:
-      - main
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-                    bash /opt/git/my-repository/update.sh
-
-  
+  branches:
+    - main
  
+jobs:
+  deploy:
+  runs-on: ubuntu-latest
+  steps:
+  - name: Checkout code
+    uses: actions/checkout@v2
+   
+  - name: Setup SSH Key
+    uses: webfactory/ssh-agent@v0.5.0
+    with:
+    ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+   
+  - name: Deploy code
+    uses: appleboy/ssh-action@master
+    with:
+    host: your-remote-server.com
+    username: your-ssh-username
+    key: ${{ secrets.SSH_PRIVATE_KEY }}
+    script: |
+      cd /var/www/my-app
+      git pull origin main
+      npm install
+      npm run build

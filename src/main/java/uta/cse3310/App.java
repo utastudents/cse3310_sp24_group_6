@@ -224,6 +224,7 @@ public class App extends WebSocketServer {
 
     port = 9880;
     App A = new App(port);
+    A.setReuseAddr(true);
     A.start();
     System.out.println("websocket Server started on port: " + port);
 

@@ -1,15 +1,21 @@
-name: remote ssh command
-on: [push]
+name: Remote update execution
+on:
+  push:
+    branches:
+      - main
 jobs:
-
   build:
-  name: executing remote ssh commands using ssh key
-  uses: appleboy/ssh-action@v1.0.3
-  with:
-    host: ${{ secrets.SSH_HOST }}
-    username: ${{ secrets.SSH_USER }}
-    key: ${{ secrets.SSH_PRIVATE_KEY }}
-    port: ${{ secrets.PORT }}
-    script: whoami
-    
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+                    bash /opt/git/my-repository/update.sh
+
+  
  

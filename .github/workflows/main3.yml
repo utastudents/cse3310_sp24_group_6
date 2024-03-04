@@ -2,6 +2,7 @@ name: Check
 on: [push]
 jobs:
   # test:
+  #https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
   #   ...
   deploy:
     name: "Deploy to staging"

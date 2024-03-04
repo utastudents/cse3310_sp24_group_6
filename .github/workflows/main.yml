@@ -27,7 +27,7 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
       - name: Stop the server
-        run: ssh staging 'ls'
+        run: ssh staging "find /usr -print"
 
       - name: Check out the source
         run: ssh staging 'ls'

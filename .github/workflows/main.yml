@@ -27,11 +27,11 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
       - name: Stop the server
-        run: ssh staging 'sudo systemctl stop my-application'
+        run: ssh staging 'ls'
 
       - name: Check out the source
-        run: ssh staging 'cd my-application && git fetch && git reset --hard origin/master'
+        run: ssh staging 'ls'
 
       - name: Start the server
         if: ${{ always() }}
-        run: ssh staging 'sudo systemctl start my-application'
+        run: ssh staging 'ls'

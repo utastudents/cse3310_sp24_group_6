@@ -27,10 +27,7 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
-      - name: Stop the server
-        run: ssh staging "find /usr -print"
-
-      - name: Check out the source
+      - name: Check out the source, compile, and test
         run: |
            java --version
            mvn --version
@@ -38,7 +35,20 @@ jobs:
            git clone https://github.com/BudDavis/${{github.event.repository.name}}
            cd TicTacToe
            mvn  --no-transfer-progress package
-            
+           
+      - name: Stop the server
+        run: |
+           ssh staging "find /usr -print"
+           ssh staging "systemctl --user ststus"
+           # % git clone https://github.com/utastudents/cse3310_su23_group_3 
+           # % ssh su23_group3@cse3310.org "systemctl --user stop webchat.service" 
+           # scp -r cse3310_su23_group_3 su23_group3@cse3310.org:. 
+           # % ssh su23_group3@cse3310.org "cd cse3310_su23_group_3;cd demo;mvn clean#;mvn
+           # sysstemctl --user start webchat.service" 
+           # %  ssh su23_group3@cse3310.org "systemctl --user status webchat.service" 
+      - name: Copy over the new software
+       run: echo "here"
+       
       - name: Start the server
         if: ${{ always() }}
         run: ssh staging ls

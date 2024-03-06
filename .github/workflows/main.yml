@@ -37,7 +37,8 @@ jobs:
            git  --version
            git clone https://github.com/BudDavis/${{github.event.repository.name}}
            cd TicTacToe
-           mvn clean compile package
+           mvn  --no-transfer-progress 
+           clean compile package
 
       - name: Start the server
         if: ${{ always() }}

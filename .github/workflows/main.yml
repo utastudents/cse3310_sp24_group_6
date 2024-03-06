@@ -47,9 +47,6 @@ jobs:
            # sysstemctl --user start webchat.service" 
            # %  ssh su23_group3@cse3310.org "systemctl --user status webchat.service" 
            
-      - name: Copy over the new software
-        run: echo "here"
-       
       - name: Start the server
         if: ${{ always() }}
         run: ssh staging ls

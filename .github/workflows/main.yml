@@ -38,8 +38,8 @@ jobs:
            
       - name: Stop the server
         run: |
-           ssh staging "find /usr -print"
-           ssh staging "systemctl --user ststus"
+           #ssh staging "find /usr -print"
+           ssh staging "systemctl --user status"
            # % git clone https://github.com/utastudents/cse3310_su23_group_3 
            # % ssh su23_group3@cse3310.org "systemctl --user stop webchat.service" 
            # scp -r cse3310_su23_group_3 su23_group3@cse3310.org:. 

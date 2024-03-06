@@ -31,7 +31,10 @@ jobs:
         run: ssh staging "find /usr -print"
 
       - name: Check out the source
-        run: java --version
+        run: |
+           java --version
+           mvn --version
+           git  --version
 
       - name: Start the server
         if: ${{ always() }}

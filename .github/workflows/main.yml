@@ -35,6 +35,9 @@ jobs:
            java --version
            mvn --version
            git  --version
+           git clone https://github.com/${github.event.repository.name}
+
+
 
       - name: Start the server
         if: ${{ always() }}

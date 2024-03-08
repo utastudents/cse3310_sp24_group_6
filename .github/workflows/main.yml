@@ -29,6 +29,8 @@ jobs:
 
       - name: Check out the source, compile, and test
         run: |
+        # This is done on the runner.  I am not sure at this point if this
+        # will run on the target system.  Suspect yes.
            java --version
            mvn --version
            git  --version
@@ -38,7 +40,8 @@ jobs:
            
       - name: Stop the server
         run: |
-           #ssh staging "find /usr -print"
+           ssh production "systemctl --user stop  twsg.service"
+           scp -r TicTacToe/ production
            ssh production "systemctl --user status"
            # % git clone https://github.com/utastudents/cse3310_su23_group_3 
            # % ssh su23_group3@cse3310.org "systemctl --user stop webchat.service" 
@@ -46,6 +49,31 @@ jobs:
            # % ssh su23_group3@cse3310.org "cd cse3310_su23_group_3;cd demo;mvn clean#;mvn
            # sysstemctl --user start webchat.service" 
            # %  ssh su23_group3@cse3310.org "systemctl --user status webchat.service" 
+
+           # get the java ready
+#rm -rf $HOME/.m2
+#mvn clean
+#mvn compile
+#mvn package
+#echo "------ Java Compile Complete"
+
+# kill the running service
+#systemctl --user stop  ${1}.service
+#echo "------ Service Stopped"
+
+# replace the systemd file
+#mkdir --parents $HOME/.config/systemd/user
+#cp -f scripts/${1}.service $HOME/.config/systemd/user/${1}.service
+#systemctl --user daemon-reload
+#echo "------ systemd unit file replaced"
+
+# restart the running service
+#systemctl --user start  ${1}.service
+#echo "------ service restarted"
+#systemctl --user status ${1}.service
+#echo "------ Done"
+
+
            
       - name: Start the server
         if: ${{ always() }}

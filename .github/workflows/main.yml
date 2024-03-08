@@ -26,11 +26,9 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          
-       - name: Check out the source, compile, and test
+
+      - name: Check out the source, compile, and test
         run: |
-        # This is done on the runner.  I am not sure at this point if this
-        # will run on the target system.  Suspect yes.
            java --version
            mvn --version
            git  --version
@@ -40,22 +38,19 @@ jobs:
            
       - name: Stop the server
         run: |
-          # ssh production "systemctl --user stop  twsg.service"
-          # scp -r TicTacToe/ production
-          # ssh production "systemctl --user status"
+           #ssh staging "find /usr -print"
+           ssh production "systemctl --user status"
            # % git clone https://github.com/utastudents/cse3310_su23_group_3 
            # % ssh su23_group3@cse3310.org "systemctl --user stop webchat.service" 
            # scp -r cse3310_su23_group_3 su23_group3@cse3310.org:. 
            # % ssh su23_group3@cse3310.org "cd cse3310_su23_group_3;cd demo;mvn clean#;mvn
            # sysstemctl --user start webchat.service" 
            # %  ssh su23_group3@cse3310.org "systemctl --user status webchat.service" 
-
-           # get the java ready
-#rm -rf $HOME/.m2
-#mvn clean
-#mvn compile
-#mvn package
-#echo "------ Java Compile Complete"
+           
+      - name: Start the server
+        if: ${{ always() }}
+        run: ssh production ls
+ 
 
 # kill the running service
 #systemctl --user stop  ${1}.service

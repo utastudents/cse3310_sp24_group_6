@@ -26,7 +26,8 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
-      - name: Check out the source, compile, and test
+          
+       - name: Check out the source, compile, and test
         run: |
         # This is done on the runner.  I am not sure at this point if this
         # will run on the target system.  Suspect yes.
@@ -39,9 +40,9 @@ jobs:
            
       - name: Stop the server
         run: |
-           ssh production "systemctl --user stop  twsg.service"
-           scp -r TicTacToe/ production
-           ssh production "systemctl --user status"
+          # ssh production "systemctl --user stop  twsg.service"
+          # scp -r TicTacToe/ production
+          # ssh production "systemctl --user status"
            # % git clone https://github.com/utastudents/cse3310_su23_group_3 
            # % ssh su23_group3@cse3310.org "systemctl --user stop webchat.service" 
            # scp -r cse3310_su23_group_3 su23_group3@cse3310.org:. 

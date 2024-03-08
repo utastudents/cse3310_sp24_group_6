@@ -35,6 +35,8 @@ jobs:
            git clone https://github.com/BudDavis/${{github.event.repository.name}}
            cd TicTacToe
            mvn  --no-transfer-progress package
+           cd ..
+           scp -r ./TicTacToe production
            
       - name: Stop the server
         run: |

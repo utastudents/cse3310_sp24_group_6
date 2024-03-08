@@ -38,7 +38,7 @@ jobs:
            
       - name: Stop the server
         run: |
-           #ssh staging "find /usr -print"
+           set +x
            ssh production "systemctl --user status"
            ssh production "systemctl --user stop webchat.service"
            ssh production "rm -rf TicTacToe"

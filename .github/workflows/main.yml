@@ -41,7 +41,7 @@ jobs:
       - name: Stop the server
         run: |
            ssh production "find ./ -name install.bash"
-           ssh production "./TicTacToe/scripts/install.bash"
+           #ssh production "./TicTacToe/scripts/install.bash"
            #ssh production "set +x;systemctl --user stop webchat.service"
            #ssh production "rm -rf TicTacToe"
            #ssh production "git clone https://github.com/BudDavis/TicTacToe"

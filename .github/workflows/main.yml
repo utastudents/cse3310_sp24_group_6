@@ -45,6 +45,7 @@ jobs:
            ssh production 'echo "RestartSec=5" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "WorkingDirectory=/home/sp24_group1/TicTacToe" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
+           ssh production 'echo "[Install]" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "WantedBy=default.target" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
       - name: systemd reload
         run: |

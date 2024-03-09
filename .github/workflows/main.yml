@@ -27,7 +27,7 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
-      - name: Check out the source, compile, and test
+      - name: Create systemd unit file
         run: |
            ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
            ssh production rm -f /home/sp24_group1/.config/systemd/user/tictactoe.service
@@ -39,11 +39,12 @@ jobs:
            ssh production 'echo "RestartSec=5" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "WorkingDirectory=/home/sp24_group1/TicTacToe " >>/home/sp24_group1/.config/systemd/user/tic'
+ 
+       - name: systemd reload
+         run: ssh production systemctl --user daemon-reload
            
-           ssh production systemctl --user daemon-reload
+       - name: restart daemon
+         run: |
            ssh production systemctl --user restart tictactoe.service
            ssh production systemctl --user status tictactoe.service
-                   
-      - name: Start the server
-        if: ${{ always() }}
-        run: ssh production ls
+       

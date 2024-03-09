@@ -42,10 +42,8 @@ jobs:
            ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
            WorkingDirectory=/home/sp24_group1/TicTacToe 
            END
-           ls
-           cat servicefile
-           #ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
-           #scp production servicefile  /home/sp24_group1/.config/systemd/user/servicefile
+           ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
+           scp production servicefile  ${{SSH_USER}}@${{SSH_HOST}:/home/sp24_group1/.config/systemd/user/servicefile
            #ssh systemctl --user daemon-reload
            #ssh systemctl --user restart tictactoe.service
            #ssh systemctl --user status tictactoe.service

@@ -42,6 +42,7 @@ jobs:
            ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
            WorkingDirectory=/home/sp24_group1/TicTacToe 
            END
+           ls
            cat servicefile
            ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
            scp production servicefile  /home/sp24_group1/.config/systemd/user/servicefile

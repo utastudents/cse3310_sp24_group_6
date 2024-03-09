@@ -32,7 +32,10 @@ jobs:
            java --version
            mvn --version
            git  --version
-           cat >>servicefile <<END
+           ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
+           ssh production rm -f /home/sp24_group1/.config/systemd/user/tictactoe.service
+           ssh production echo "
+            
            [Unit]
            Description=webpoker
            [Service]
@@ -40,10 +43,10 @@ jobs:
            Restart=always
            RestartSec=5
            ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
-           WorkingDirectory=/home/sp24_group1/TicTacToe 
-           END
-           ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
-           scp production servicefile  $SSH_USER@$SSH_HOST:/home/sp24_group1/.config/systemd/user/servicefile
+           WorkingDirectory=/home/sp24_group1/TicTacToe " >>/home/sp24_group1/.config/systemd/user/tictactoe.service
+    
+           #ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
+           #scp production servicefile  $SSH_USER@$SSH_HOST:/home/sp24_group1/.config/systemd/user/servicefile
            #ssh systemctl --user daemon-reload
            #ssh systemctl --user restart tictactoe.service
            #ssh systemctl --user status tictactoe.service

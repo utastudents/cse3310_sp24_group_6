@@ -34,17 +34,15 @@ jobs:
            git  --version
            ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
            ssh production rm -f /home/sp24_group1/.config/systemd/user/tictactoe.service
-           ssh production echo "
-            
-           [Unit]
-           Description=webpoker
-           [Service]
-           Type=simple
-           Restart=always
-           RestartSec=5
-           ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
-           WorkingDirectory=/home/sp24_group1/TicTacToe " >>/home/sp24_group1/.config/systemd/user/tictactoe.service
-    
+           ssh production 'echo "[Unit]" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
+          #Description=webpoker
+           #[Service]
+           #Type=simple
+          # Restart=always
+           #RestartSec=5
+           #ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
+           #WorkingDirectory=/home/sp24_group1/TicTacToe " >>/home/sp24_group1/.config/systemd/user/tictactoe.service
+    #
            #ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
            #scp production servicefile  $SSH_USER@$SSH_HOST:/home/sp24_group1/.config/systemd/user/servicefile
            #ssh systemctl --user daemon-reload

@@ -43,7 +43,7 @@ jobs:
            WorkingDirectory=/home/sp24_group1/TicTacToe 
            END
            ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
-           scp production servicefile  ${{SSH_USER}}@${{SSH_HOST}:/home/sp24_group1/.config/systemd/user/servicefile
+           scp production servicefile  $SSH_USER@$SSH_HOST:/home/sp24_group1/.config/systemd/user/servicefile
            #ssh systemctl --user daemon-reload
            #ssh systemctl --user restart tictactoe.service
            #ssh systemctl --user status tictactoe.service

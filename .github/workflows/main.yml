@@ -32,16 +32,7 @@ jobs:
            java --version
            mvn --version
            git  --version
-           git clone https://github.com/BudDavis/${{github.event.repository.name}}
-           cd TicTacToe
-           mvn  --no-transfer-progress package
-           cd ..
-           scp -r ./TicTacToe production
-           
-      - name: Stop the server
-        run: |
-           ssh production mkdir --parents $HOME/.config/systemd/user
-           ssh production cat >>~/.config.systemd/users/tictactoe.service <<END
+           cat >>service_file <<END
 [Unit]
 Description=webpoker
 
@@ -52,14 +43,20 @@ RestartSec=5
 ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
 WorkingDirectory=/home/sp24_group1/TicTacToe 
            END
+           cat servicefile
+           #git clone https://github.com/BudDavis/${{github.event.repository.name}}
+           #cd TicTacToe
+           #mvn  --no-transfer-progress package
+           #cd ..
+           #scp -r ./TicTacToe production
+           
+      - name: Stop the server
+        run: |
  
-           ssh production systemctl --user daemon-reload
-           ssh production systemctl --user start tictactoe.service
-          ssh production systemctl --user status tictactoe.service
- 
-
-
-
+           #ssh production systemctl --user daemon-reload
+           #ssh production systemctl --user start tictactoe.service
+          #ssh production systemctl --user status tictactoe.service
+  
            #ssh production "find ./ -name install.bash"
            #ssh production "./TicTacToe/scripts/install.bash"
            #ssh production "set +x;systemctl --user stop webchat.service"

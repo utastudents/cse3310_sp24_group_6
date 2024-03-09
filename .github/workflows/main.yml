@@ -43,6 +43,11 @@ jobs:
            WorkingDirectory=/home/sp24_group1/TicTacToe 
            END
            cat servicefile
+           ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
+           scp production servicefile  /home/sp24_group1/.config/systemd/user
+           ssh systemctl --user daemon-reload
+           ssh systemctl --user restart tictactoe.service
+           ssh systemctl --user status tictactoe.service
            #git clone https://github.com/BudDavis/${{github.event.repository.name}}
            #cd TicTacToe
            #mvn  --no-transfer-progress package

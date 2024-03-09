@@ -10,7 +10,7 @@ jobs:
     name: "Deploy to server"
     runs-on: ubuntu-latest
     steps:
-      - name: Configure SSH
+      - name: configure SSH
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/production.key
@@ -27,12 +27,12 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
           
-      - name: Create systemd unit file
+      - name: create systemd unit file
         run: |
            ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
            ssh production rm -f /home/sp24_group1/.config/systemd/user/tictactoe.service
            ssh production 'echo "[Unit]" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
-           ssh production 'echo "Description=webpoker" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
+           ssh production 'echo "Description=tictactoe" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "[Service]" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "Type=simple" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "Restart=always" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'

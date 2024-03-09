@@ -44,60 +44,12 @@ jobs:
            END
            ls
            cat servicefile
-           ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
-           scp production servicefile  /home/sp24_group1/.config/systemd/user/servicefile
-           ssh systemctl --user daemon-reload
-           ssh systemctl --user restart tictactoe.service
-           ssh systemctl --user status tictactoe.service
-           #git clone https://github.com/BudDavis/${{github.event.repository.name}}
-           #cd TicTacToe
-           #mvn  --no-transfer-progress package
-           #cd ..
-           #scp -r ./TicTacToe production
-           
-      - name: Stop the server
-        run: |
- 
-           #ssh production systemctl --user daemon-reload
-           #ssh production systemctl --user start tictactoe.service
-          #ssh production systemctl --user status tictactoe.service
-  
-           #ssh production "find ./ -name install.bash"
-           #ssh production "./TicTacToe/scripts/install.bash"
-           #ssh production "set +x;systemctl --user stop webchat.service"
-           #ssh production "rm -rf TicTacToe"
-           #ssh production "git clone https://github.com/BudDavis/TicTacToe"
-           #ssh production "cd TicTacToe;mvn clean compile package"
-           # % git clone https://github.com/utastudents/cse3310_su23_group_3 
-           # % ssh su23_group3@cse3310.org "systemctl --user stop webchat.service" 
-           # scp -r cse3310_su23_group_3 su23_group3@cse3310.org:. 
-           # % ssh su23_group3@cse3310.org "cd cse3310_su23_group_3;cd demo;mvn clean#;mvn
-           # sysstemctl --user start webchat.service" 
-           # %  ssh su23_group3@cse3310.org "systemctl --user status webchat.service" 
-           
-      - name: Start the server
-        if: ${{ always() }}
-        run: ssh production ls
- 
-
-# kill the running service
-#systemctl --user stop  ${1}.service
-#echo "------ Service Stopped"
-
-# replace the systemd file
-#mkdir --parents $HOME/.config/systemd/user
-#cp -f scripts/${1}.service $HOME/.config/systemd/user/${1}.service
-#systemctl --user daemon-reload
-#echo "------ systemd unit file replaced"
-
-# restart the running service
-#systemctl --user start  ${1}.service
-#echo "------ service restarted"
-#systemctl --user status ${1}.service
-#echo "------ Done"
-
-
-           
+           #ssh production mkdir --parents /home/sp24_group1/.config/systemd/user
+           #scp production servicefile  /home/sp24_group1/.config/systemd/user/servicefile
+           #ssh systemctl --user daemon-reload
+           #ssh systemctl --user restart tictactoe.service
+           #ssh systemctl --user status tictactoe.service
+                   
       - name: Start the server
         if: ${{ always() }}
         run: ssh production ls

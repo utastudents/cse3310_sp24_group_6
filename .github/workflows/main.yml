@@ -32,16 +32,15 @@ jobs:
            java --version
            mvn --version
            git  --version
-           cat >>service_file <<END
-[Unit]
-Description=webpoker
-
-[Service]
-Type=simple
-Restart=always
-RestartSec=5
-ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
-WorkingDirectory=/home/sp24_group1/TicTacToe 
+           cat >>servicefile <<END
+           [Unit]
+           Description=webpoker
+           [Service]
+           Type=simple
+           Restart=always
+           RestartSec=5
+           ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
+           WorkingDirectory=/home/sp24_group1/TicTacToe 
            END
            cat servicefile
            #git clone https://github.com/BudDavis/${{github.event.repository.name}}

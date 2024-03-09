@@ -40,9 +40,9 @@ jobs:
            ssh production 'echo "ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App" >>/home/sp24_group1/.config/systemd/user/tictactoe.service'
            ssh production 'echo "WorkingDirectory=/home/sp24_group1/TicTacToe " >>/home/sp24_group1/.config/systemd/user/tic'
            
-           ssh systemctl --user daemon-reload
-           ssh systemctl --user restart tictactoe.service
-           ssh systemctl --user status tictactoe.service
+           ssh production systemctl --user daemon-reload
+           ssh production systemctl --user restart tictactoe.service
+           ssh production systemctl --user status tictactoe.service
                    
       - name: Start the server
         if: ${{ always() }}

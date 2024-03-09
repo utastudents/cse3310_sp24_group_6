@@ -40,7 +40,27 @@ jobs:
            
       - name: Stop the server
         run: |
-           ssh production "find ./ -name install.bash"
+           ssh production mkdir --parents $HOME/.config/systemd/user
+           ssh production cat >>~/.config.systemd/users/tictactoe.service <<END
+[Unit]
+Description=webpoker
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=mvn exec:java -Dexec.mainClass=uta.cse3310.App
+WorkingDirectory=/home/sp24_group1/TicTacToe 
+           END
+ 
+           ssh production systemctl --user daemon-reload
+           ssh production systemctl --user start tictactoe.service
+          ssh production systemctl --user status tictactoe.service
+ 
+
+
+
+           #ssh production "find ./ -name install.bash"
            #ssh production "./TicTacToe/scripts/install.bash"
            #ssh production "set +x;systemctl --user stop webchat.service"
            #ssh production "rm -rf TicTacToe"

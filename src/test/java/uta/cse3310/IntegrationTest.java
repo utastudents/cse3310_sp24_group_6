@@ -77,7 +77,7 @@ public class IntegrationTest
     }
 
     public void testOneGame() {
-        Game G=new Game();
+        Game G=new Game(new Statistics());
         singleGame(G);
     }
 
@@ -85,8 +85,8 @@ public class IntegrationTest
         // this test does not do much,
         // but it seemed like something to
         // write quickly.
-        Game G0 = new Game();
-        Game G1 = new Game();
+        Game G0 = new Game(new Statistics());
+        Game G1 = new Game(new Statistics());
         singleGame(G0);
         singleGame(G1);
     }

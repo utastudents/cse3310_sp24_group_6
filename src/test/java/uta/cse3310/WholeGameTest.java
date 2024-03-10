@@ -56,7 +56,7 @@ public class WholeGameTest
 
     ////////////////////////////////////////////////////////////////////////////
     public void testXWinGame() {
-        Game game = new Game();
+        Game game = new Game(new Statistics());
         String msg = new String();
         String result = new String();
 

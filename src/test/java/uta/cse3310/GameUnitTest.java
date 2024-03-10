@@ -32,7 +32,7 @@ public class GameUnitTest
     public void testDrawOrWinner() { // first create a game object
         // This method tests the ability to find a winner or
         // a draw game.
-        Game G = new Game();
+        Game G = new Game(new Statistics());
 
         // set it up for a draw game
 

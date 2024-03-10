@@ -12,8 +12,10 @@ public class Game {
 
     public String[] Msg;
     public int GameId;
+    public Statistics Stats;
 
-    Game() {
+    Game(Statistics s) {
+        Stats = s;
         Button = new PlayerType[9];
         // initialize it
         ResetBoard();
@@ -69,6 +71,7 @@ public class Game {
         Msg[0] = "You are X. Your turn";
         Msg[1] = "You are O. Other players turn";
         CurrentTurn = PlayerType.XPLAYER;
+        Stats.setGamesInProgress(Stats.getGamesInProgress() + 1);
     }
 
     private boolean CheckLine(int i, int j, int k, PlayerType player) {
@@ -149,14 +152,23 @@ public class Game {
                 Msg[0] = "You Win!";
                 Msg[1] = "You Lose!";
                 CurrentTurn = PlayerType.NOPLAYER;
+                Stats.setXWins(Stats.getXWins() + 1);
+                Stats.setGamesInProgress(Stats.getGamesInProgress() - 1);
+                Stats.setTotalGames(Stats.getTotalGames() + 1);
             } else if (CheckBoard(PlayerType.OPLAYER)) {
                 Msg[1] = "You Win!";
                 Msg[0] = "You Lose!";
                 CurrentTurn = PlayerType.NOPLAYER;
+                Stats.setOWins(Stats.getOWins() + 1);
+                Stats.setGamesInProgress(Stats.getGamesInProgress() - 1);
+                Stats.setTotalGames(Stats.getTotalGames() + 1);
             } else if (CheckDraw(U.PlayerIdx)) {
                 Msg[0] = "Draw";
                 Msg[1] = "Draw";
                 CurrentTurn = PlayerType.NOPLAYER;
+                Stats.setDraws(Stats.getDraws() + 1);
+                Stats.setGamesInProgress(Stats.getGamesInProgress() - 1);
+                Stats.setTotalGames(Stats.getTotalGames() + 1);
             }
         }
     }

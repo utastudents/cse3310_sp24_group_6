@@ -35,7 +35,7 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  *  OTHER DEALINGS IN THE SOFTWARE.
  */
-
+/* 
 package uta.cse3310;
 
 import java.io.BufferedReader;
@@ -54,25 +54,22 @@ import org.java_websocket.server.WebSocketServer;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
-import java.time.Instant;
-import java.time.Duration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class App extends WebSocketServer {
-
   // All games currently underway on this server are stored in
   // the vector ActiveGames
-  private Vector<Game> ActiveGames = new Vector<Game>();
+  Vector<Game> ActiveGames = new Vector<Game>();
 
-  private int GameId = 1;
-
-  private int connectionId = 0;
-
-  private Instant startTime;
-
-  private Statistics stats;
+  int GameId = 1;
+  int gP = 0; 
+  int pROG = 0; 
+  int xWin = 0; 
+  int yWin = 0;
+  int dRaws = 0;
+  String strApp;
 
   public App(int port) {
     super(new InetSocketAddress(port));
@@ -89,8 +86,6 @@ public class App extends WebSocketServer {
   @Override
   public void onOpen(WebSocket conn, ClientHandshake handshake) {
 
-    connectionId++;
-
     System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
 
     ServerEvent E = new ServerEvent();
@@ -106,47 +101,41 @@ public class App extends WebSocketServer {
 
     // No matches ? Create a new Game.
     if (G == null) {
-      G = new Game(stats);
+      G = new Game();
       G.GameId = GameId;
       GameId++;
       // Add the first player
-      G.Players = PlayerType.XPLAYER;
+      G.Players = uta.cse3310.PlayerType.XPLAYER;
       ActiveGames.add(G);
       System.out.println(" creating a new Game");
     } else {
       // join an existing game
       System.out.println(" not a new game");
-      G.Players = PlayerType.OPLAYER;
+      G.Players = uta.cse3310.PlayerType.OPLAYER;
       G.StartGame();
+      pROG++;
     }
-
+    G.setSendValues(gP, pROG, xWin, yWin, dRaws);
+    System.out.println("G.players is " + G.Players);
     // create an event to go to only the new player
     E.YouAre = G.Players;
     E.GameId = G.GameId;
-
-    // allows the websocket to give us the Game when a message arrives..
-    // it stores a pointer to G, and will give that pointer back to us
-    // when we ask for it
+    // allows the websocket to give us the Game when a message arrives
     conn.setAttachment(G);
 
     Gson gson = new Gson();
-
     // Note only send to the single connection
-    String jsonString = gson.toJson(E);
-    conn.send(jsonString);
-    System.out
-        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " "
-            + escape(jsonString));
-
-    // Update the running time
-    stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
+    conn.send(gson.toJson(E));
+    System.out.println(gson.toJson(E));
 
     // The state of the game has changed, so lets send it to everyone
+    String jsonString;
     jsonString = gson.toJson(G);
-    System.out
-        .println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
+
+    System.out.println(jsonString);
     broadcast(jsonString);
 
+    bottomText();
   }
 
   @Override
@@ -159,30 +148,50 @@ public class App extends WebSocketServer {
 
   @Override
   public void onMessage(WebSocket conn, String message) {
-    System.out
-        .println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message));
+    System.out.println(conn + ": " + message);
 
     // Bring in the data from the webpage
     // A UserEvent is all that is allowed at this point
     GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
     UserEvent U = gson.fromJson(message, UserEvent.class);
-
-    // Update the running time
-    stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
+    System.out.println(U.Button);
 
     // Get our Game Object
     Game G = conn.getAttachment();
     G.Update(U);
+    if(G.whoWon() != 0) {
+      if(G.whoWon() == 1)
+      {
+        xWin++;
+        gP++;
+        pROG--;
+      }
+      else if(G.whoWon() == 2)
+      {
+        yWin++;
+        gP++;
+        pROG--;
+      }
+      else if(G.whoWon() == 3)
+      {
+        dRaws++;
+        gP++;
+        pROG--;
+      }
+      G.resetWin();
+    }
+    G.setSendValues(gP, pROG, xWin, yWin, dRaws);
 
     // send out the game state every time
     // to everyone
     String jsonString;
     jsonString = gson.toJson(G);
 
-    System.out
-        .println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
+    System.out.println(jsonString);
     broadcast(jsonString);
+    
+    bottomText();
   }
 
   @Override
@@ -201,24 +210,8 @@ public class App extends WebSocketServer {
 
   @Override
   public void onStart() {
+    System.out.println("Server started!");
     setConnectionLostTimeout(0);
-    stats = new Statistics();
-    startTime = Instant.now();
-  }
-
-  private String escape(String S) {
-    // turns " into \"
-    String retval = new String();
-    // this routine is very slow.
-    // but it is not called very often
-    for (int i = 0; i < S.length(); i++) {
-      Character ch = S.charAt(i);
-      if (ch == '\"') {
-        retval = retval + '\\';
-      }
-      retval = retval + ch;
-    }
-    return retval;
   }
 
   public static void main(String[] args) {
@@ -227,15 +220,22 @@ public class App extends WebSocketServer {
     int port = 9080;
     HttpServer H = new HttpServer(port, "./html");
     H.start();
-    System.out.println("http Server started on port: " + port);
+    System.out.println("http Server started on port:" + port);
 
     // create and start the websocket server
 
     port = 9880;
     App A = new App(port);
-    A.setReuseAddr(true);
     A.start();
     System.out.println("websocket Server started on port: " + port);
 
   }
+
+  //Print out information regarding the game
+  //Print out # of games played, games in progress, games won by x &/ y, and games by draw
+  public void bottomText() {
+      System.out.println("[Games Played: " + gP + "] " + "[Games in Prog.: " + pROG + "] " + "[X wins: " + xWin + "] " + "[Y wins: " + yWin + "] " + "[Draws: " + dRaws + "]");
+  }
 }
+
+*/

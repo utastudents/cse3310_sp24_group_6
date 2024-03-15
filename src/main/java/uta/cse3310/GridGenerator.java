@@ -12,8 +12,8 @@ public void generateGrid(int row, int column){
 
 }
 
-public int calGridDensity(int charNum, int validChar){
-
+public float calGridDensity(int charNum, int validChar){
+    return gridDensity;
 }
 
 public void checkWordOverlap(){

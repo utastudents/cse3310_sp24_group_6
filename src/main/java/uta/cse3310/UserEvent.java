@@ -6,13 +6,11 @@ public class UserEvent {
     PlayerType PlayerIdx; // either an XPLAYER or an OPLAYER
     int Button; // button number from 0 to 8
 
-    UserEvent() {
-
-    }
+    UserEvent() {}
 
     UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button) {
-        GameId = _GameId;
+        /*GameId = _GameId;
         PlayerIdx = _PlayerIdx;
-        Button = _Button;
+        Button = _Button;*/
     }
 }

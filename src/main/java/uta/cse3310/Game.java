@@ -56,4 +56,10 @@ public class Game {
     public int calWinner() {
         return 0;
     }
+
+    public boolean end() {
+        return true;
+    }
+
+    public void hint() {}
 }

@@ -1,5 +1,7 @@
 package uta.cse3310;
 
+import java.util.Vector;
+
 public class Player {
     // Attributes
     private String PlayNick;
@@ -21,6 +23,10 @@ public class Player {
         this.highScore = 0;
         this.Coord1 = new int[0]; // Assuming default size
         this.Coord2 = new int[0];*/ 
+    }
+    
+    public boolean checkUnique(Vector<Player> PlayerList) {
+        return true;
     }
 
     // Method to save or update the SavedPin

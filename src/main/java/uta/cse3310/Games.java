@@ -16,7 +16,7 @@ public class Games {
     public PlayerType[] Button;
     public int GameId;
 
-    Game() {
+    public void Game() {
         //initializes Players, Button, and GameType
         //sets up the game visible to players
     }
@@ -43,7 +43,7 @@ public class Games {
         //timer function
     }
 
-    public bool wordCheck() {
+    public boolean wordCheck() {
         //validates a match was made by player
     }
 

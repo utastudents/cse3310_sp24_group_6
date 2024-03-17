@@ -1,40 +1,28 @@
 package uta.cse3310;
 
 public class Word {
-    private int Xval;
-    private int Yval;
+    private int coord1[];
+    private int coord2[];
     private WordType type;
+    private String word;
 
     // Constructor
-    public Word(int Xval, int Yval, WordType type) {
-        /*this.Xval = Xval;
-        this.Yval = Yval;
-        this.type = type;*/
+    public Word(int coord1[], int coord2[], WordType type, String word) {}
+
+    public int[] getCoord1() {
+        return coord1;
     }
 
-    // Getters and Setters
-    public int getXval() {
-        return Xval;
+    public int[] getCoord2() {
+        return coord2;
     }
 
-    public void setXval(int Xval) {
-        //this.Xval = Xval;
-    }
-
-    public int getYval() {
-        return Yval;
-    }
-
-    public void setYval(int Yval) {
-        //this.Yval = Yval;
-    }
-
-    public WordType getType() {
+    public WordType getWordType() {
         return type;
     }
 
-    public void setType(WordType type) {
-        //this.type = type;
+    public String getWord() {
+        return word;
     }
 
     public String read() {

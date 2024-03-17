@@ -2,19 +2,12 @@ package uta.cse3310;
 
 import java.util.*;
 
-public class messageBoard
-{
+public class messageBoard {
    String message;
    
-   public messageBoard()
-   {
+   public messageBoard() {}
    
-   }
-   
-   public void generateMessage()
-   {
-
-   }   
+   public void generateMessage() {}   
 }
 
 

@@ -3,10 +3,7 @@ import java.util.*;
 
 public class GameLobby {
 
-Vector<Player> playerList;
+    Vector<Player> playerList;
 
-public void matchMaking(){
-
-}
-
+    public void matchMaking() {}
 }

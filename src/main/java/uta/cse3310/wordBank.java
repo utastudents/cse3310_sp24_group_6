@@ -4,13 +4,7 @@ import java.util.*;
 
 public class wordBank
 {
-   public wordBank()
-   {
-   
-   }
-   public void generateWords()
-   {
-
-   }
+   public wordBank() {}
+   public void generateWords() {}
 
 }

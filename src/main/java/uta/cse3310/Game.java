@@ -9,7 +9,7 @@
 
 package uta.cse3310;
 
-public class Games {
+public class Game {
 
     PlayerType Players;             //referenced from <<PlayerType>> enum
     GameType GameType;              //referenced from <<GameType>> enum

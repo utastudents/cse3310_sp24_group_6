@@ -63,14 +63,11 @@ public class App extends WebSocketServer {
     // All games currently underway on this server are stored in
     // the vector ActiveGames
     private Vector<Game> ActiveGames = new Vector<Game>();
-
     private int GameId = 1;
-
     private int connectionId = 0;
-
     private Instant startTime;
 
-    private Statistics stats;
+    //private Statistics stats;
 
     public App(int port) {
         //super(new InetSocketAddress(port));
@@ -182,18 +179,18 @@ public class App extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-        ex.printStackTrace();
+        /*ex.printStackTrace();
         if (conn != null) {
         // some errors like port binding failed may not be assignable to a specific
         // websocket
-        }
+        }*/
     }
 
     @Override
     public void onStart() {
-        setConnectionLostTimeout(0);
+        /*setConnectionLostTimeout(0);
         stats = new Statistics();
-        startTime = Instant.now();
+        startTime = Instant.now();*/
     }
 
     private String escape(String S) {
@@ -209,6 +206,14 @@ public class App extends WebSocketServer {
         retval = retval + ch;
         }*/
         return retval;
+    }
+
+    public void writeToFile(Vector<Player> playerList) {}
+
+    public void readWordBank() {}
+
+    public int checkMaxGames() {
+        return 0;
     }
 
     public static void main(String[] args) {

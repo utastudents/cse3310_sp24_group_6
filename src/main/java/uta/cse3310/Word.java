@@ -18,7 +18,7 @@ public class Word {
     }
 
     public void setXval(int Xval) {
-        /*this.Xval = Xval;*/
+        //this.Xval = Xval;
     }
 
     public int getYval() {
@@ -26,7 +26,7 @@ public class Word {
     }
 
     public void setYval(int Yval) {
-        /*this.Yval = Yval;*/
+        //this.Yval = Yval;
     }
 
     public WordType getType() {
@@ -34,7 +34,11 @@ public class Word {
     }
 
     public void setType(WordType type) {
-        /*this.type = type;*/
+        //this.type = type;
+    }
+
+    public String read() {
+        return "";
     }
 
     // Might include additional methods as necessary

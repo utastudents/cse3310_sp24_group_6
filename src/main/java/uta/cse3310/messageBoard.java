@@ -3,7 +3,7 @@ package uta.cse3310;
 import java.util.*;
 
 public class messageBoard {
-   String message;
+   private String message;
    
    public messageBoard() {}
    

@@ -3,7 +3,9 @@ import java.util.*;
 
 public class GameLobby {
 
-    Vector<Player> playerList;
+    private Vector<Player> playerList = new Vector<>();
+
+    public GameLobby() {}
 
     public void matchMaking() {}
 }

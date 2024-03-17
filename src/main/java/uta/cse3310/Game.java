@@ -11,10 +11,11 @@ package uta.cse3310;
 
 public class Game {
 
-    PlayerType Players;             //referenced from <<PlayerType>> enum
-    GameType GameType;              //referenced from <<GameType>> enum
-    public PlayerType[] Button;
-    public int GameId;
+    private PlayerType Players;             //referenced from <<PlayerType>> enum
+    private GameType GameType;              //referenced from <<GameType>> enum
+    private PlayerType[] Button;
+    private int GameId;
+    private int time;
 
     public void Game() {
         //initializes Players, Button, and GameType
@@ -43,9 +44,16 @@ public class Game {
         //timer function
     }
 
-    public boolean wordCheck() {
+    public boolean verifyWord(String wordString, int coord1[], int coord2[], Word wordWord) {
         //validates a match was made by player
         return true;
     }
 
+    public int calpoints(Word word) {
+        return 0;
+    }
+
+    public int calWinner() {
+        return 0;
+    }
 }

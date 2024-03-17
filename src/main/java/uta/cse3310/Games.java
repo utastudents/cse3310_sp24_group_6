@@ -7,7 +7,7 @@
  * and so that I can reference the Game class while building
  */
 
-package main.java.uta.cse3310;
+package uta.cse3310;
 
 public class Games {
 
@@ -45,6 +45,7 @@ public class Games {
 
     public boolean wordCheck() {
         //validates a match was made by player
+        return true;
     }
 
 }

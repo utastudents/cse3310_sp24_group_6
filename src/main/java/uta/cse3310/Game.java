@@ -17,7 +17,7 @@ public class Game {
     private int GameId;
     private int time;
 
-    public void Game() {
+    public Game() {
         //initializes Players, Button, and GameType
         //sets up the game visible to players
     }

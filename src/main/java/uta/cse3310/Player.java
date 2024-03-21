@@ -10,8 +10,8 @@ public class Player {
     private int Points;
     private int SavedPin;
     private int highScore;
-    private int[] Coord1;
-    private int[] Coord2;
+    private int Coord1[];
+    private int Coord2[];
 
     // Constructor
     public Player(String PlayNick, int PlayerNum) {

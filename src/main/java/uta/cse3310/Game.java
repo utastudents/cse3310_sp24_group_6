@@ -13,7 +13,7 @@ public class Game {
 
     private PlayerType Players;             //referenced from <<PlayerType>> enum
     private GameType GameType;              //referenced from <<GameType>> enum
-    private PlayerType[] Button;
+    private PlayerType Button[];
     private int GameId;
     private int time;
 

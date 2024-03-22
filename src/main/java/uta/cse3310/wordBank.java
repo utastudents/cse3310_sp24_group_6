@@ -1,6 +1,6 @@
-package uta.cse3310
+package uta.cse3310;
 
-import java.util.*
+import java.util.*;
 import java.util.Vector;
 public class wordBank
 {
@@ -10,7 +10,7 @@ public class wordBank
    {
    
    }
-   public void add(Word)
+   public void add(Word newWord)
    {
 
    }
@@ -25,7 +25,7 @@ public class wordBank
       return null;
    }
    
-   public void generateWords(Vector<Word>)
+   public void generateWords(Vector<Word> wordList)
    {
       
    }

@@ -1,6 +1,6 @@
-package uta.cse3310
+package uta.cse3310;
 
-import java.util.*
+import java.util.*;
 
 public class messageBoard
 {

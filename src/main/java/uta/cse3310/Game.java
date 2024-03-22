@@ -1,22 +1,17 @@
 //Kaitlin Martin
 //Group 6
 
-/*notes:
- * created this new class to eventually replace Game.
- * I'm keeping them separate for now for organization purposes,
- * and so that I can reference the Game class while building
- */
-
 package uta.cse3310;
 
 public class Game {
 
     PlayerType Players;             //referenced from <<PlayerType>> enum
     GameType GameType;              //referenced from <<GameType>> enum
-    public PlayerType[] Button;
-    public int GameId;
+    private PlayerType[] Button;
+    private int GameId;
+    private int time;
 
-    public void Game() {
+    public Game() {
         //initializes Players, Button, and GameType
         //sets up the game visible to players
     }
@@ -27,8 +22,8 @@ public class Game {
     }
 
     public int PlayerToIdx(PlayerType P) {
-        //NOTE: this method may not be necessary since PlayerType enums
-        //are already indexed in this case (not X or O)
+        //returns an index for each player
+        //used to identify winner and assign color
         int idx = 0;
         return idx;
     }

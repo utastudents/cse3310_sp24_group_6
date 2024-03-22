@@ -2,12 +2,12 @@ package uta.cse3310;
 
 public class GridGenerator {
 
-    float maxRow;
-    float maxColumn;
-    int currentCoord[];
-    float gridDensity;  // # of char that are part of valid words / # of char in grid total
-    float validCharNum; // # of char in the grid total
-    int generationTime; // time in milliseconds taken to generate the grid
+    private float maxRow;
+    private float maxColumn;
+    private int currentCoord[];
+    private float gridDensity;  // # of char that are part of valid words / # of char in grid total
+    private float validCharNum; // # of char in the grid total
+    private int generationTime; // time in milliseconds taken to generate the grid
 
     public GridGenerator() {}
     

@@ -62,6 +62,11 @@ public class App extends WebSocketServer {
 
     // All games currently underway on this server are stored in
     // the vector ActiveGames
+
+    private Vector<Player> PlayerList = new Vector<Player>();
+
+    private Vector<Word> WordList = new Vector<Word>();
+
     private Vector<Game> ActiveGames = new Vector<Game>();
 
     private int GameId = 1;
@@ -209,6 +214,14 @@ public class App extends WebSocketServer {
         retval = retval + ch;
         }*/
         return retval;
+    }
+
+    public void writeToFile(Vector<Player> PlayerList) {}
+
+    public void readWordBank() {}
+
+    public boolean checkMaxGames() {
+        return true;
     }
 
     public static void main(String[] args) {

@@ -17,8 +17,8 @@ import net.freeutils.httpserver.HTTPServer.VirtualHost;
 public class HttpServer {
 
     private static final String HTML = "./html";
-    int port = 8080;
-    String dirname = HTML;
+    public int port = 8080;
+    public String dirname = HTML;
 
     public HttpServer(int portNum, String dirName) {
         /*port = portNum;

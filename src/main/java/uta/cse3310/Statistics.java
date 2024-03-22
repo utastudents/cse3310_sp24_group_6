@@ -10,7 +10,7 @@ public class Statistics {
     private Integer TotalGames;
     private Integer GamesInProgress;
 
-    /*public Statistics() {
+    public Statistics() {
         RunningTime = 0L;
         XWins = 0;
         OWins = 0;
@@ -65,5 +65,6 @@ public class Statistics {
 
     public void setGamesInProgress(Integer gamesInProgress) {
         GamesInProgress = gamesInProgress;
-    }*/
+    }
+
 }

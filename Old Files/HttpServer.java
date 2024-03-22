@@ -17,16 +17,16 @@ import net.freeutils.httpserver.HTTPServer.VirtualHost;
 public class HttpServer {
 
     private static final String HTML = "./html";
-    public int port = 8080;
-    public String dirname = HTML;
+    int port = 8080;
+    String dirname = HTML;
 
     public HttpServer(int portNum, String dirName) {
-        /*port = portNum;
-        dirname = dirName;*/
+        port = portNum;
+        dirname = dirName;
     }
 
     public void start() {
-        /*try {
+        try {
             File dir = new File(dirname);
             if (!dir.canRead())
                 throw new FileNotFoundException(dir.getAbsolutePath());
@@ -46,6 +46,8 @@ public class HttpServer {
             server.start();
         } catch (Exception e) {
             System.err.println("error: " + e);
-        }*/
+        }
+
     }
+
 }

@@ -1,21 +1,32 @@
 package uta.cse3310;
 
 import java.util.*;
-
+import java.util.Vector;
 public class WordBank
 {
-   private Vector<Word> wordList = new Vector<>();
-   private Vector<Word> foundWords = new Vector<>();
+   Vector<Word> WordList = new Vector<>();
+   Vector<Word> foundWords = new Vector<>();
+   public WordBank()
+   {
+   
+   }
+   public void add(Word newWord)
+   {
 
-   public WordBank() {}
-
-   public Vector<Word> getWordList() {
-      return wordList;
    }
 
-   public Vector<Word> getFoundWords() {
-      return foundWords;
+   public Word getWordList()
+   {
+      return null;
    }
    
-   public void generateWords(Vector<Word> wordList) {}
+   public Word getFoundWords()
+   {
+      return null;
+   }
+   
+   public void generateWords(Vector<Word> wordList)
+   {
+      
+   }
 }

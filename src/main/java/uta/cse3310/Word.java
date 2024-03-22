@@ -28,6 +28,4 @@ public class Word {
     public String read() {
         return "";
     }
-
-    // Might include additional methods as necessary
 }

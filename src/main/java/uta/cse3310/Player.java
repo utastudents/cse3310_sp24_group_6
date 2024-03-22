@@ -9,7 +9,7 @@ public class Player {
     private int Wins;
     private int Points;
     private int SavedPin;
-    private int highScore;
+    private int HighScore;
     private int Coord1[];
     private int Coord2[];
 
@@ -20,7 +20,7 @@ public class Player {
         this.Wins = 0;
         this.Points = 0;
         this.SavedPin = 0;
-        this.highScore = 0;
+        this.HighScore = 0;
         this.Coord1 = new int[0]; // Assuming default size
         this.Coord2 = new int[0];*/ 
     }
@@ -33,4 +33,6 @@ public class Player {
     public void SavePin(int newPin) {
         /*this.SavedPin = newPin;*/
     }
+
+    public void updateScore() {}
 }

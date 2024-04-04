@@ -1,4 +1,3 @@
-/* 
 package uta.cse3310;
 
 import java.io.File;
@@ -18,27 +17,16 @@ import net.freeutils.httpserver.HTTPServer.VirtualHost;
 public class HttpServer {
 
     private static final String HTML = "./html";
-    public int port = 8080;
-    public String dirname = HTML;
+    int port = 8080;
+    String dirname = HTML;
 
     public HttpServer(int portNum, String dirName) {
-<<<<<<< HEAD
-        System.out.println("creating http server port " + portNum);
         port = portNum;
         dirname = dirName;
     }
 
     public void start() {
-        System.out.println("in httpd server start");
         try {
-=======
-        /*port = portNum;
-        dirname = dirName;*/
-    }
-
-    public void start() {
-        /*try {
->>>>>>> main
             File dir = new File(dirname);
             if (!dir.canRead())
                 throw new FileNotFoundException(dir.getAbsolutePath());
@@ -56,16 +44,10 @@ public class HttpServer {
                 }
             });
             server.start();
-            System.out.println("HTTPServer is listening on port " + port);
         } catch (Exception e) {
             System.err.println("error: " + e);
-        }*/
+        }
+
     }
-<<<<<<< HEAD
 
 }
-
-*/
-=======
-}
->>>>>>> main

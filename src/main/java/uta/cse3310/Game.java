@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* 
 package uta.cse3310;
 
@@ -67,17 +68,40 @@ public class Game {
 
     // This function returns an index for each player
     // It does not depend on the representation of Enums
+=======
+//Kaitlin Martin
+//Group 6
+
+package uta.cse3310;
+
+public class Game {
+
+    PlayerType Players;             //referenced from <<PlayerType>> enum
+    GameType GameType;              //referenced from <<GameType>> enum
+    private PlayerType[] Button;
+    private int GameId;
+    private int time;
+
+    public Game() {
+        //initializes Players, Button, and GameType
+        //sets up the game visible to players
+    }
+
+    public void StartGame() {
+        //timer starts
+        //chat starts
+    }
+
+>>>>>>> main
     public int PlayerToIdx(PlayerType P) {
-        int retval = 0;
-        if (P == PlayerType.XPLAYER) {
-            retval = 0;
-        } else {
-            retval = 1;
-        }
-        return retval;
+        //returns an index for each player
+        //used to identify winner and assign color
+        int idx = 0;
+        return idx;
     }
 
     public void Update(UserEvent U) {
+<<<<<<< HEAD
         System.out.println("The user event is " + U.PlayerIdx + "  " + U.Button);
 
         if ((CurrentTurn == U.PlayerIdx) && (CurrentTurn == PlayerType.OPLAYER || CurrentTurn == PlayerType.XPLAYER)) {
@@ -136,15 +160,41 @@ public class Game {
     public void setSendValues(int gP, int pROG, int xWin, int yWin, int dRaws)
     {
         bText = "[Games Played: " + gP + "] " + "[Games in Prog.: " + pROG + "] " + "[X wins: " + xWin + "] " + "[Y wins: " + yWin + "] " + "[Draws: " + dRaws + "]";
+=======
+        //reacts to user input
+        //no turns, real time reaction for letter selections
+        //points update when word is won
+>>>>>>> main
     }
 
-    public void Tick() {
-        // this function can be called periodically if a
-        // timer is needed.
-
+    public void tick() {
+        //timer function
     }
+<<<<<<< HEAD
 }
 // In windows, shift-alt-F formats the source code
 // In linux, it is ctrl-shift-I
 
 */
+=======
+
+    public boolean verifyWord(String wordString, int coord1[], int coord2[], Word wordWord) {
+        //validates a match was made by player
+        return true;
+    }
+
+    public int calpoints(Word word) {
+        return 0;
+    }
+
+    public int calWinner() {
+        return 0;
+    }
+
+    public boolean end() {
+        return true;
+    }
+
+    public void hint() {}
+}
+>>>>>>> main

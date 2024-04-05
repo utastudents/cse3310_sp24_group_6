@@ -78,27 +78,27 @@ public class App extends WebSocketServer {
     private Statistics stats;
 
     public App(int port) {
-        //super(new InetSocketAddress(port));
+        super(new InetSocketAddress(port));
     }
 
     public App(InetSocketAddress address) {
-        //super(address);
+        super(address);
     }
 
     public App(int port, Draft_6455 draft) {
-        //super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
+        super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
-        /*connectionId++;
+        connectionId++;
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
     
         // search for a game needing a player
         Game G = null;
         for (Game i : ActiveGames) {
-            if (i.Players == uta.cse3310.PlayerType.XPLAYER) {
+            if (i.Players == uta.cse3310.PlayerType.Player1) {
             G = i;
             System.out.println("found a match");
             }
@@ -106,17 +106,17 @@ public class App extends WebSocketServer {
 
         // No matches ? Create a new Game.
         if (G == null) {
-            G = new Game(stats);
+            G = new Game();
             G.GameId = GameId;
             GameId++;
             // Add the first player
-            G.Players = PlayerType.XPLAYER;
+            G.Players = PlayerType.Player1;
             ActiveGames.add(G);
             System.out.println(" creating a new Game");
         } else {
             // join an existing game
             System.out.println(" not a new game");
-            G.Players = PlayerType.OPLAYER;
+            G.Players = PlayerType.Player2;
             G.StartGame();
         }
 
@@ -142,21 +142,21 @@ public class App extends WebSocketServer {
         // The state of the game has changed, so lets send it to everyone
         jsonString = gson.toJson(G);
         System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
-        broadcast(jsonString);*/
+        broadcast(jsonString);
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-        /*System.out.println(conn + " has closed");
+        System.out.println(conn + " has closed");
         
         // Retrieve the game tied to the websocket connection
         Game G = conn.getAttachment();
-        G = null;*/
+        G = null;
     }
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        /*System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message));
+        System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message));
 
         // Bring in the data from the webpage
         // A UserEvent is all that is allowed at this point
@@ -177,12 +177,12 @@ public class App extends WebSocketServer {
         jsonString = gson.toJson(G);
 
         System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
-        broadcast(jsonString);*/
+        broadcast(jsonString);
     }
 
     @Override
     public void onMessage(WebSocket conn, ByteBuffer message) {
-        //System.out.println(conn + ": " + message);
+        System.out.println(conn + ": " + message);
     }
 
     @Override
@@ -196,9 +196,9 @@ public class App extends WebSocketServer {
 
     @Override
     public void onStart() {
-        /*setConnectionLostTimeout(0);
+        setConnectionLostTimeout(0);
         stats = new Statistics();
-        startTime = Instant.now();*/
+        startTime = Instant.now();
     }
 
     private String escape(String S) {
@@ -206,13 +206,13 @@ public class App extends WebSocketServer {
         String retval = new String();
         // this routine is very slow.
         // but it is not called very often
-        /*for (int i = 0; i < S.length(); i++) {
+        for (int i = 0; i < S.length(); i++) {
         Character ch = S.charAt(i);
         if (ch == '\"') {
         retval = retval + '\\';
         }
         retval = retval + ch;
-        }*/
+        }
         return retval;
     }
 
@@ -227,7 +227,7 @@ public class App extends WebSocketServer {
     public static void main(String[] args) {
 
         // Set up the http server
-        /*int port = 9080;
+        int port = 9080;
         HttpServer H = new HttpServer(port, "./html");
         H.start();
         System.out.println("http Server started on port: " + port);
@@ -238,6 +238,6 @@ public class App extends WebSocketServer {
         App A = new App(port);
         A.setReuseAddr(true);
         A.start();
-        System.out.println("websocket Server started on port: " + port);*/
+        System.out.println("websocket Server started on port: " + port);
     }
 }

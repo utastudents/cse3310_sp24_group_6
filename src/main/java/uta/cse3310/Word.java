@@ -1,41 +1,62 @@
 package uta.cse3310;
 
 public class Word {
-    private int Xval;
-    private int Yval;
+    private int coord1[];
+    private int coord2[];
     private WordType type;
+    private String word;
 
     // Constructor
-    public Word(int Xval, int Yval, WordType type) {
-        this.Xval = Xval;
-        this.Yval = Yval;
-        this.type = type;
+    public Word(String word) {
+        this.word = word;
+        //coords are 2d arrays for simpler comparisons
+        this.coord1 = new int[2];
+        this.coord2 = new int[2];
     }
 
-    // Getters and Setters
-    public int getXval() {
-        return Xval;
+    public int[] getCoord1() {
+        return coord1;
     }
 
-    public void setXval(int Xval) {
-        this.Xval = Xval;
+    public int[] getCoord2() {
+        return coord2;
     }
 
-    public int getYval() {
-        return Yval;
-    }
-
-    public void setYval(int Yval) {
-        this.Yval = Yval;
-    }
-
-    public WordType getType() {
+    public WordType getWordType() {
         return type;
     }
 
-    public void setType(WordType type) {
+    public String getWord() {
+        return word;
+    }
+
+    public void setCoord1(int start, int end) {
+        this.coord1[0] = start;
+        this.coord1[1] = end;
+    }
+     
+    public void setCoord2(int start, int end) {
+        this.coord2[0] = start;
+        this.coord2[1] = end;
+    }
+
+    public void setWordType(WordType type) {
         this.type = type;
     }
 
-    // Might include additional methods as necessary
+    public int length() {
+        return this.word.length();
+    }
+
+    public String getLetter(int i) {
+        char c = this.word.charAt(i);
+        String s = String.valueOf(c);
+        return s;
+    }
+
+    @Override
+
+    public String toString() {
+        return this.word;
+    }
 }

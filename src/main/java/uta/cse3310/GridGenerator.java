@@ -7,19 +7,19 @@ public class GridGenerator {
 
     private float maxRow;
     private float maxColumn;
-    private int currentCoord[][];
+    //private int currentCoord[][];
     private String grid[][];
-    private float fillerChar[];
-    private float gridDensity;  // # of char that are part of valid words / # of char in grid total
-    private float validCharNum; // # of char in the grid total
-    private int generationTime; // time in milliseconds taken to generate the grid
-    private Word currentWord;
+    //private float fillerChar[];
+    //private float gridDensity;  // # of char that are part of valid words / # of char in grid total
+    //private float validCharNum; // # of char in the grid total
+    //private int generationTime; // time in milliseconds taken to generate the grid
+    //private Word currentWord;
 
     public GridGenerator() {
         this.maxRow = 50;
         this.maxColumn = 50;
-        this.currentCoord = new int[1][1];
-        this.generationTime = 0;
+        //this.currentCoord = new int[1][1];
+        //this.generationTime = 0;
         this.grid = new String[50][50];
         for(int i = 0; i < 50; i++) {
             for(int j = 0; j < 50; j++) {
@@ -45,7 +45,7 @@ public class GridGenerator {
                 this.grid[row + i][column] = word.getLetter(i);
             }*/
 
-            int orientation = r.nextInt(4) + 1;
+            int orientation = r.nextInt(8) + 1;
             if(orientation == 1) {
                 horizontal(word, r, placedWords);
             } else if(orientation == 2) {
@@ -93,6 +93,7 @@ public class GridGenerator {
         int row;
         int column;
         boolean loop = false;
+        
         do {
             row = r.nextInt(50);
             column = r.nextInt(50 - word.length());
@@ -116,6 +117,7 @@ public class GridGenerator {
         int row;
         int column;
         boolean loop = false;
+        
         do {
             row = r.nextInt(50);
             column = r.nextInt(50 - word.length()) + word.length();
@@ -139,6 +141,7 @@ public class GridGenerator {
         int row;
         int column;
         boolean loop = false;
+        
         do {
             row = r.nextInt(50 - word.length());
             column = r.nextInt(50);
@@ -161,6 +164,7 @@ public class GridGenerator {
         int row;
         int column;
         boolean loop = false;
+        
         do {
             row = r.nextInt(50 - word.length()) + word.length();
             column = r.nextInt(50);
@@ -180,8 +184,21 @@ public class GridGenerator {
     }
 
     private void topLeftBottomRight(Word word, Random r) {
-        int row = r.nextInt(50 - word.length());
-        int column = r.nextInt(50 - word.length());
+        int row; 
+        int column;
+        boolean loop = false;
+        
+        do {
+            row = r.nextInt(50 - word.length());
+            column = r.nextInt(50 - word.length());
+            loop = false;
+            for(int i = 0; i < word.length(); i++) {
+                if(this.grid[row + i][column + i] != "-" && this.grid[row + i][column + i] != word.getLetter(i)) {
+                    loop = true;
+                    break;
+                }
+            }
+        } while(loop);
 
         for(int i = 0; i < word.length(); i++) {
             this.grid[row + i][column + i] = word.getLetter(i);
@@ -190,8 +207,21 @@ public class GridGenerator {
     }
 
     private void topRightBottomLeft(Word word, Random r) {
-        int row = r.nextInt(50 - word.length());
-        int column = r.nextInt(50 - word.length()) + word.length();
+        int row;
+        int column;
+        boolean loop = false;
+        
+        do {
+            row = r.nextInt(50 - word.length());
+            column = r.nextInt(50 - word.length()) + word.length();
+            loop = false;
+            for(int i = 0; i < word.length(); i++) {
+                if(this.grid[row + i][column - i] != "-" && this.grid[row + i][column - i] != word.getLetter(i)) {
+                    loop = true;
+                    break;
+                }
+            }
+        } while(loop);
 
         for(int i = 0; i < word.length(); i++) {
             this.grid[row + i][column - i] = word.getLetter(i);
@@ -200,8 +230,21 @@ public class GridGenerator {
     }
 
     private void bottomLeftTopRight(Word word, Random r) {
-        int row = r.nextInt(50 - word.length()) + word.length();
-        int column = r.nextInt(50 - word.length());
+        int row;
+        int column;
+        boolean loop = false;
+        
+        do {
+            row = r.nextInt(50 - word.length()) + word.length();
+            column = r.nextInt(50 - word.length());
+            loop = false;
+            for(int i = 0; i < word.length(); i++) {
+                if(this.grid[row - i][column + i] != "-" && this.grid[row - i][column + i] != word.getLetter(i)) {
+                    loop = true;
+                    break;
+                }
+            }
+        } while(loop);
 
         for(int i = 0; i < word.length(); i++) {
             this.grid[row - i][column + i] = word.getLetter(i);
@@ -210,8 +253,21 @@ public class GridGenerator {
     }
 
     private void bottomRightTopLeft(Word word, Random r) {
-        int row = r.nextInt(50 - word.length()) + word.length();
-        int column = r.nextInt(50 - word.length()) + word.length();
+        int row;
+        int column;
+        boolean loop = false;
+
+        do {
+            row = r.nextInt(50 - word.length()) + word.length();
+            column = r.nextInt(50 - word.length()) + word.length();
+            loop = false;
+            for(int i = 0; i < word.length(); i++) {
+                if(this.grid[row - i][column - i] != "-" && this.grid[row - i][column - i] != word.getLetter(i)) {
+                    loop = true;
+                    break;
+                }
+            }
+        } while(loop);
 
         for(int i = 0; i < word.length(); i++) {
             this.grid[row - i][column - i] = word.getLetter(i);

@@ -21,6 +21,7 @@ public class GridGenerator {
         //this.currentCoord = new int[1][1];
         //this.generationTime = 0;
         this.grid = new String[50][50];
+        //Fill grid with "-", treated as blank space, helpful for spotting words in testing
         for(int i = 0; i < 50; i++) {
             for(int j = 0; j < 50; j++) {
                 this.grid[i][j] = "-";
@@ -30,22 +31,13 @@ public class GridGenerator {
     
     public void generateGrid(Vector<Word> wordList) {
         Random r = new Random();
+        //placedWords will be used in forced collision eventually
         int placedWords = 0;
         long start = System.nanoTime();
 
         for(Word word: wordList) {
-            /*int row;
-            int column;
-            do {
-            row = r.nextInt(50);
-            column = r.nextInt(50);
-            } while(50 - row < word.length());
-
-            for(int i = 0; i < word.length(); i++) {
-                this.grid[row + i][column] = word.getLetter(i);
-            }*/
-
             int orientation = r.nextInt(8) + 1;
+            
             if(orientation == 1) {
                 horizontal(word, r, placedWords);
             } else if(orientation == 2) {
@@ -65,6 +57,8 @@ public class GridGenerator {
             }
             placedWords++;
         }
+
+        //Fills all blank spaces with random letters, commented out so test grids are easier to read
 
         /*for(int i = 0; i < 50; i++) {
             for(int j = 0; j < 50; j++) {
@@ -94,11 +88,14 @@ public class GridGenerator {
         int column;
         boolean loop = false;
         
+        //Do while forces one loop
         do {
+            //Get random coords with respect to length of words so it doesn't go out of bounds
             row = r.nextInt(50);
             column = r.nextInt(50 - word.length());
             loop = false;
 
+            //Check path of word, if a space isn't blank/the correct letter, make new coords and try again
             for(int i =0; i < word.length(); i++) {
                 if(this.grid[row][column + i] != "-" && this.grid[row][column + i] != word.getLetter(i)) {
                     loop = true;
@@ -107,6 +104,7 @@ public class GridGenerator {
             }
         } while(loop);
         
+        //After path is verified, fill it
         for(int i = 0; i < word.length(); i++) {
             this.grid[row][column + i] = word.getLetter(i);
         }

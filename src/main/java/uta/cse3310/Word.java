@@ -9,6 +9,7 @@ public class Word {
     // Constructor
     public Word(String word) {
         this.word = word;
+        //coords are 2d arrays for simpler comparisons
         this.coord1 = new int[2];
         this.coord2 = new int[2];
     }

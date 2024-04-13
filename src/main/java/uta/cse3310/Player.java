@@ -5,7 +5,7 @@ import java.util.Vector;
 public class Player {
     // Attributes
     private String PlayNick;
-    private int PlayerNum;
+    public int PlayerNum;
     private int Wins;
     private int Points;
     private int SavedPin;

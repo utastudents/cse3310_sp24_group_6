@@ -19,4 +19,13 @@ public class Leaderboard {
     public Vector<Player> getPointsEarned() {
         return PointsEarnedPlace;
     }
+    public void setGamesWon(Player p)
+    {
+       GamesWonPlace.add(p);    
+    }
+    
+    public void setPointsEarned(Player p)
+    {
+       PointsEarnedPlace.add(p);
+    }
 }

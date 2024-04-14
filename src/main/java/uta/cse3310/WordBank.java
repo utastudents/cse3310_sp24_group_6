@@ -59,6 +59,15 @@ public class WordBank
       }
       System.out.println("");
    }
+
+   public void wordSort(Vector<Word> wordList) {
+      Collections.sort(wordList, new Comparator<Word>() {
+         @Override
+         public int compare(Word first, Word sec) {
+            return first.getWord().compareTo(sec.getWord());
+         }
+      });
+   }
    
    public void generateWords()
    {
@@ -78,6 +87,8 @@ public class WordBank
 
          this.WordList.add(new Word(this.totalList.get(rand)));   
       }
+
+      wordSort(this.WordList);
    }
 }
 

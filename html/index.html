@@ -55,7 +55,7 @@
   <div class="row">
       <p class="block" id="p4p">You Are:</p>
       <p class="block" id="p4p2">Game Type:</p>
-      <p class="block" id="p4p3">Active games:</p>
+      <p class="block" id="p4p3">Active games: 1/5</p>
   </div>
   <br><br>
   <table>
@@ -132,12 +132,11 @@
 <div id="page5"  style="display:none;">
   <center><h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORLD SEARCH GAME</h1></center>
   <div class="row">
-    <div class="" style="width:17%;float:left;">
+    <div class="" style="width:20%;float:left;">
       <p>GAME TIME LEFT:</p>
-      <label id="p5label">05:00<label>
-      <p>Game Chat</p>
+      <center><h1 id="p5h1">10:00</h1></center>
     </div>
-    <div class="" style="width:33%;float:left;">
+    <div class="" style="width:20%;float:left;">
       <h3 id="p5Msg" style="">Game Leaderboards</h3><br/>
   <table>
   <tr>
@@ -160,7 +159,7 @@
 </table>
       <p id="p5p">You are: Laura</p>
     </div>
-    <div class="" style="width:38%;float:left;">
+    <div class="" style="width:40%;float:left;">
   <h3 id="p4Msg3" style="">Server Leaderboards</h3><br/>
   <div class="row" style="">
   <table>
@@ -211,24 +210,27 @@
   </table>
   </div>
     </div>
-    <div class="" style="width:12%;float:left;">
+    <div class="" style="width:20%;float:left;">
       <p>Word Density: 0.68</p>
-      <p>Word Orientation<br>variance: 0.20</p>
-      <p>Filler letter<br>variance: 0.20</p>
+      <p>Word Orientation variance: 0.20</p>
+      <p>Filler letter variance: 0.20</p>
       <p>Words Left: 47</p><br/>
-      <p>WORD BANK<br/></p>
     </div>
   </div>
   <div class="row">
-    <div style="width:12%;float:left;" id="gamechat">
-      <br/><textarea id="p5ta" name="p5ta" rows="15" cols="17"></textarea>
+    <div style="width:13%;float:left;" id="gamechat">
+      <center><p>GAME CHAT</p></center>
+      <br/><textarea id="p5ta" name="p5ta" rows="15" cols="18"></textarea>
     </div>
     <div class="btn-group" style="width:76%;float:left;" id="board"></div>
-    <div style="width:12%;float:left;" id="wordbank">
-      <center><br/><iframe src="words.txt" title="Word Bank"></iframe><br><br>
-      <button class="button button3" onclick="ResetBoard()">Reset Board</button><br><br><br><br>
-      <button class="button button2" onclick="Winner()">Winners</button><br><br>
-      <button class="button button2" onclick="Loser()">Losers</button></center>
+    <div style="width:11%;float:right;" id="wordbank">
+      <center>
+         <p>WORD BANK</p>
+         <br/><iframe src="words.txt" title="Word Bank"></iframe><br><br>
+         <button class="button button3" onclick="ResetBoard()">Reset Board</button><br><br><br><br>
+         <button class="button button2" onclick="Winner()">Winners</button><br><br>
+         <button class="button button2" onclick="Loser()">Losers</button>
+      </center>
    </div>
   </div>
 </div>
@@ -294,51 +296,7 @@
   </center>
 </div>
 
-<!--
-<button class="button button2" onclick="NewPlayer()">New Player</button>
-<button class="button button3" onclick="location.assign('index.html')">Returning Player</button>
-<p>Welcome new player! Enter a unique player name</p>
-<input type="text" id="fName" name="fName">
-<p>Name taken.</p>
-<p>Enter a 4 digit PIN to be able to return as your unique player name to this server later.</p>
-<input type="text" id="1234">
-<p>Choose a game type.</p>
-<button class="button button15" onclick="NewPlayer()">2-Player</button>
-<button class="button button16" onclick="NewPlayer()">3-Player</button>
-<button class="button button17" onclick="NewPlayer()">4-Player</button>
-<button class="button button18" onclick="location.assign('index.html')">Find Game</button>
-<p>Name/pin/other error message</p>
--->
-<!--
-<label id="topMessage">Top Message</br></br></label>
-<div id="wrapper">
-<div class="btn-group" style="float:left;width:75%;overflow:hidden;" id="board"></div>
-<h2 align="center" style="color:green;">Score Board</h2>
-<div style="overflow:hidden;" id="demo2">
 
-<label id="scoreBoard" align="right" class="box-group">Score Board</label>
-
-<textarea id="p5ta" name="p5ta" align="center" text-align="center" rows="4" rows="60">
-
-</textarea>
-<h2 align="center" style="color:green;">Room Chat</h2>
-<textarea id="roomchat" name="roomchat" align="center" text-align="center" rows="4" rows="100">
-</textarea>
-<h2 align="center" style="color:green;">World Bank</h2>
-<iframe align="center" src="words.txt" frameBorder="0" title="World Bank" class="" style="background-color:powderblue;" scrolling="auto">
-</iframe>
-</div>
-</div>
- <div style="overflow:hidden;" id="demo3"> 
-<br/><br/><br/><br/><br/><br/><br/><br/>
-<button class="button button3" onclick="location.assign('index.html')">Exit Game</button>
-<br/><br/><br/><br/>
-<button class="button button4" onclick="location.reload()">Start Game/Play Again?</button>
-
-</div>
-<label id="timeMsg"></br>Time Message</br></br></label>
-<label id="statMsg">Statistic Message</br></br></label>
--->
 </body>
 
 <script src = "WordSearchGame.js"></script>

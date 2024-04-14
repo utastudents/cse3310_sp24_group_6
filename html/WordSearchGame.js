@@ -1,9 +1,12 @@
     const WIDTH = 50;
     const HEIGHT = 50;
     var selected_letters = "";
-    var players = 0;
+    var players = 2;
     var nick = "unknown";
-    var pin = "0000";
+    var pin = "XXXX";
+//let idx =  Math.round(0 + Math.random() * 4); 
+    var idx = 5;
+    const PlayerToColor = new Map([[0,"red"],[1,"orange"],[2,"green"],[3,"black"],[4,"royalblue"],[5,"DarkViolet"]]);
     function GameRoom()
     {
       document.getElementById("page4").style.display="none"; 
@@ -119,6 +122,7 @@
       pin=document.getElementById("pin").value;
       if(nick != "" && pin != "") {
       document.getElementById("p4p").innerHTML="You are: "+nick;
+      document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";
@@ -135,6 +139,7 @@
       let pin=document.getElementById("pin2").value;
       if(nick != "" && pin != "") {
       document.getElementById("p4p").innerHTML="You are: "+nick;
+      document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";
@@ -152,7 +157,7 @@
        let bcolor = document.getElementById(id).style.backgroundColor;
        if(bcolor == "royalblue")
           document.getElementById(id).style.backgroundColor = "PaleTurquoise";
-       else
+      else
           document.getElementById(id).style.backgroundColor = "royalblue";
     }
     const Buttons = new Array(WIDTH*HEIGHT);
@@ -172,7 +177,7 @@
     function ResetBoard() {
       for (let i=0;i<Buttons.length;i++) {
         let charCode = Math.round(65 + Math.random() * 25);
-        document.getElementById(i).value=String.fromCharCode(charCode);
+        document.getElementById(i).innerHTML=String.fromCharCode(charCode);
         let bcolor = document.getElementById(i).style.backgroundColor;
         if(bcolor == "royalblue")
           document.getElementById(i).style.backgroundColor = "PaleTurquoise";
@@ -180,7 +185,27 @@
       document.getElementById("p5ta").value=" ";
     }
 
-    var idx = -1;
+var countDownDate = new Date("April 13, 2024 22:00:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+//var distance = 10;
+  // Time calculations for days, hours, minutes and seconds
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  document.getElementById("p5h1").innerHTML = minutes + ":" + seconds;
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("p5h1").innerHTML = "GAME OVER";
+  }
+}, 1000);
+
+//    var idx = -1;
     var gameid = -1;
     class UserEvent {
         Name = "unknown";

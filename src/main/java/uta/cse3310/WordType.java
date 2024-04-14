@@ -6,8 +6,8 @@ package uta.cse3310;
 // (horizontal, vertical, diagonal, backwards)
 
 public enum WordType {
-    horizontal, backwardsHorizontal, 
-    vertical, backwardsVertical,
+    horizontal, bHorizontal, 
+    vertical, bVertical,
     topLeftBottomRight, topRightBottomLeft,
     bottomLeftTopRight, bottomRightTopLeft;
 }

@@ -14,7 +14,9 @@ public class Game {
     public int GameId;
     private int time;
 
-    public Game() {
+    public Game(GameType gameType, PlayerType players) {
+        this.GameType = gameType;
+        this.Players = players;
         //initializes Players, Button, and GameType
         //sets up the game visible to players
         Button = new PlayerType[9];

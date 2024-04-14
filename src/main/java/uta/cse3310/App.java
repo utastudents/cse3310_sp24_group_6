@@ -94,6 +94,8 @@ public class App extends WebSocketServer {
         connectionId++;
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
+
+        // Replace with matchmaking method to accomadate up to 4 players
     
         // search for a game needing a player
         Game G = null;
@@ -106,7 +108,7 @@ public class App extends WebSocketServer {
 
         // No matches ? Create a new Game.
         if (G == null) {
-            G = new Game();
+            G = new Game(GameType.Game2, PlayerType.Player1);
             G.GameId = GameId;
             GameId++;
             // Add the first player
@@ -239,5 +241,12 @@ public class App extends WebSocketServer {
         A.setReuseAddr(true);
         A.start();
         System.out.println("websocket Server started on port: " + port);
+        
+        //uncomment these lines to test gridGenerator
+        /*WordBank W = new WordBank();
+        W.generateWords();
+        W.printWordList(W.getWordList());
+        GridGenerator G = new GridGenerator();
+        G.generateGrid(W.getWordList());*/
     }
 }

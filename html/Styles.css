@@ -52,8 +52,8 @@
 .button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
 .button5 {background-color: #555555;} /* Black */
 
-textarea {resize:none;background-color:#e7e7e7;rows:4;cols:50;}
-iframe {background-color:powderblue;frameBorder:0;scrolling:auto;}
+textarea {resize:none;background-color:#e7e7e7;width:10;height:15;}
+iframe {background-color:powderblue;frameBorder:0;scrolling:auto;width:135px;height:200px;}
 table {
   border: 1px solid black;
   border-collapse: collapse;

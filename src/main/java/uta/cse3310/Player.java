@@ -28,6 +28,7 @@ public class Player {
     public boolean checkUnique(Vector<Player> PlayerList) {
         for(int i = 0; i < PlayerList.size(); i++) {            //  While going through the entire vector
             if(this.PlayNick == PlayerList.get(i).PlayNick) {   //  If there is a copy of a name
+                return false;   
             }
         }
         return true;                                            //  Otherwise it is true                

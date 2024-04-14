@@ -7,19 +7,12 @@ public class GridGenerator {
 
     private float maxRow;
     private float maxColumn;
-    //private int currentCoord[][];
     private String grid[][];
-    //private float fillerChar[];
-    //private float gridDensity;  // # of char that are part of valid words / # of char in grid total
-    //private float validCharNum; // # of char in the grid total
-    //private int generationTime; // time in milliseconds taken to generate the grid
-    //private Word currentWord;
+    private Vector<Word> placedWords = new Vector<>();
 
     public GridGenerator() {
         this.maxRow = 50;
         this.maxColumn = 50;
-        //this.currentCoord = new int[1][1];
-        //this.generationTime = 0;
         this.grid = new String[50][50];
         //Fill grid with "-", treated as blank space, helpful for spotting words in testing
         for(int i = 0; i < 50; i++) {
@@ -31,8 +24,6 @@ public class GridGenerator {
     
     public void generateGrid(Vector<Word> wordList) {
         Random r = new Random();
-        //placedWords will be used in forced collision eventually
-        int placedWords = 0;
         long start = System.nanoTime();
 
         for(Word word: wordList) {
@@ -55,7 +46,7 @@ public class GridGenerator {
             } else if(orientation == 8) {
                 bottomRightTopLeft(word, r);
             }
-            placedWords++;
+            placedWords.add(word);
         }
 
         //Fills all blank spaces with random letters, commented out so test grids are easier to read
@@ -83,10 +74,25 @@ public class GridGenerator {
         System.out.println(time + " seconds");
     }
 
-    private void horizontal(Word word, Random r, int placedWords) {
+    private void horizontal(Word word, Random r, Vector<Word> placedWords) {
         int row;
         int column;
         boolean loop = false;
+
+        //67% chance to force collision
+        /*if(r.nextInt(3) + 1 < 3) {
+            if(placedWords.size() == 0) {
+                break;
+            }
+            for(int i = 0; i < placedWords.size(); i++) {
+                if(placedWords[i].getWordType() != WordType.horizontal) {
+                    int result[2] = word.commonLetter(placedWords[i]);
+                    if(result[0] != -1 && result[1] != -1) {
+                        
+                    }
+                }
+            }
+        }*/
         
         //Do while forces one loop
         do {
@@ -108,10 +114,12 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row][column + i] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row, column + word.length());
         word.setWordType(WordType.horizontal);
     }
 
-    private void bHorizontal(Word word, Random r, int placedWords) {
+    private void bHorizontal(Word word, Random r, Vector<Word> placedWords) {
         int row;
         int column;
         boolean loop = false;
@@ -132,10 +140,12 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row][column - i] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row, column - word.length());
         word.setWordType(WordType.bHorizontal);
     }
 
-    private void vertical(Word word, Random r, int placedWords) {
+    private void vertical(Word word, Random r, Vector<Word> placedWords) {
         int row;
         int column;
         boolean loop = false;
@@ -155,10 +165,12 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row + i][column] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row + word.length(), column);
         word.setWordType(WordType.vertical);
     }
 
-    private void bVertical(Word word, Random r, int placedWords) {
+    private void bVertical(Word word, Random r, Vector<Word> placedWords) {
         int row;
         int column;
         boolean loop = false;
@@ -178,6 +190,8 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row - i][column] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row - word.length(), column);
         word.setWordType(WordType.bVertical);
     }
 
@@ -201,6 +215,8 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row + i][column + i] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row + word.length(), column + word.length());
         word.setWordType(WordType.topLeftBottomRight);
     }
 
@@ -224,6 +240,8 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row + i][column - i] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row + word.length(), column - word.length());
         word.setWordType(WordType.topRightBottomLeft);
     }
 
@@ -247,6 +265,8 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row - i][column + i] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row - word.length(), column + word.length());
         word.setWordType(WordType.bottomLeftTopRight);
     }
 
@@ -270,6 +290,8 @@ public class GridGenerator {
         for(int i = 0; i < word.length(); i++) {
             this.grid[row - i][column - i] = word.getLetter(i);
         }
+        word.setCoord1(row, column);
+        word.setCoord2(row - word.length(), column - word.length());
         word.setWordType(WordType.bottomRightTopLeft);
     }
 

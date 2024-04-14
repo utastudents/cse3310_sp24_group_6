@@ -16,7 +16,7 @@ public class GameLobby
     
     }
 
-    public void matchMaking(Vector<Game> ActiveGames, Vector<Player> PlayerList) 
+    public Game matchMaking(Vector<Game> ActiveGames, Vector<Player> PlayerList) 
     {
         Game G = null;
 
@@ -72,9 +72,10 @@ public class GameLobby
                         case Player2:
                             G.Players = PlayerType.Player3;
                             break;
-                        case Player3: // Player 4 is not included
+                        case Player3: 
                             G.Players = PlayerType.Player4;
                             break;
+                        // Player 4 is not included since it is the max player amount
                     }
 
                     playersInGame = G.Players.ordinal();
@@ -85,5 +86,6 @@ public class GameLobby
                 }
             }
         }
+        return G;
     }
 }

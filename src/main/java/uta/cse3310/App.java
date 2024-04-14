@@ -94,10 +94,12 @@ public class App extends WebSocketServer {
         connectionId++;
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
+        GameLobby GL = new GameLobby();
+        
+        Game G = GL.matchMaking(ActiveGames, PlayerList);
 
         // Replace with matchmaking method to accomadate up to 4 players
-    
-        // search for a game needing a player
+        /*// search for a game needing a player
         Game G = null;
         for (Game i : ActiveGames) {
             if (i.Players == uta.cse3310.PlayerType.Player1) {
@@ -120,7 +122,7 @@ public class App extends WebSocketServer {
             System.out.println(" not a new game");
             G.Players = PlayerType.Player2;
             G.StartGame();
-        }
+        }*/
 
         // create an event to go to only the new player
         E.YouAre = G.Players;
@@ -229,14 +231,14 @@ public class App extends WebSocketServer {
     public static void main(String[] args) {
 
         // Set up the http server
-        int port = 9080;
+        int port = 9006;
         HttpServer H = new HttpServer(port, "./html");
         H.start();
         System.out.println("http Server started on port: " + port);
 
         // create and start the websocket server
 
-        port = 9880;
+        port = 9106;
         App A = new App(port);
         A.setReuseAddr(true);
         A.start();

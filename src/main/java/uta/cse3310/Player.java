@@ -7,7 +7,6 @@ public class Player {
     private String PlayNick;
     public int PlayerNum;
     private int Wins;
-    private int Loss;
     private int Points;
     private int SavedPin;
     private int HighScore;
@@ -29,40 +28,25 @@ public class Player {
     public boolean checkUnique(Vector<Player> PlayerList) {
         for(int i = 0; i < PlayerList.size(); i++) {            //  While going through the entire vector
             if(this.PlayNick == PlayerList.get(i).PlayNick) {   //  If there is a copy of a name
-                return false;   
             }
         }
         return true;                                            //  Otherwise it is true                
     }
 
-    public boolean checkUniquePin(String pin) {
-        return false;
-    }
-
     // Method to save or update the SavedPin
-    public void SavePin(int newPin) {
-        this.SavedPin = newPin;                                 // Set the requested pin to the saved pin
+    public boolean savePin(int newPin) {
+        String pinStr = Integer.toString(newPin);
+        if (pinStr.length() == 4 && pinStr.matches("\\d{4}")) {
+            this.SavedPin = newPin; // Set the requested pin to the saved pin if valid
+            return true;
+        } else {
+            System.out.println("Invalid PIN. PIN must be a four-digit number.");
+            return false;
+        }
     }
 
     public int updateScore() {
         // Question: Update Highschore or score in game?
         return this.Points;
-    }
-
-    // Add Win, Add Loss, Getters 
-    public int addWin() {
-        return this.Wins++;
-    }
-
-    public int addLoss() {
-        return this.Loss++;
-    }
-
-    public int getWin() {
-        return this.Wins;
-    }
-
-    public int getLoss() {
-        return this.Loss;
     }
 }

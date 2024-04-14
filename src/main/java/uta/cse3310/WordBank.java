@@ -65,7 +65,7 @@ public class WordBank
       System.out.println("");
    }
 
-   public void wordsort(Vector<Word> wordList) {
+   public void wordSort(Vector<Word> wordList) {
       Collections.sort(wordList, new Comparator<Word>() {
          @Override
          public int compare(Word first, Word sec) {
@@ -93,7 +93,7 @@ public class WordBank
          this.WordList.add(new Word(this.totalList.get(rand)));   
       }
 
-      wordsort(this.WordList);
+      wordSort(this.WordList);
    }
 }
 

@@ -51,7 +51,7 @@ public class Player {
 
     // Add Win, Add Loss, Getters 
     public int addWin() {
-        return this.Win++;
+        return this.Wins++;
     }
 
     public int addLoss() {
@@ -59,7 +59,7 @@ public class Player {
     }
 
     public int getWin() {
-        return this.Win;
+        return this.Wins;
     }
 
     public int getLoss() {

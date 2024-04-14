@@ -7,6 +7,7 @@ public class Player {
     private String PlayNick;
     public int PlayerNum;
     private int Wins;
+    private int Loss;
     private int Points;
     private int SavedPin;
     private int HighScore;
@@ -34,6 +35,10 @@ public class Player {
         return true;                                            //  Otherwise it is true                
     }
 
+    public boolean checkUniquePin(String pin) {
+        return false;
+    }
+
     // Method to save or update the SavedPin
     public void SavePin(int newPin) {
         this.SavedPin = newPin;                                 // Set the requested pin to the saved pin
@@ -42,5 +47,22 @@ public class Player {
     public int updateScore() {
         // Question: Update Highschore or score in game?
         return this.Points;
+    }
+
+    // Add Win, Add Loss, Getters 
+    public int addWin() {
+        return this.Win++;
+    }
+
+    public int addLoss() {
+        return this.Loss++;
+    }
+
+    public int getWin() {
+        return this.Win;
+    }
+
+    public int getLoss() {
+        return this.Loss;
     }
 }

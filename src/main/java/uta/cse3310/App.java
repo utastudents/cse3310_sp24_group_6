@@ -224,8 +224,16 @@ public class App extends WebSocketServer {
 
     public void readWordBank() {}
 
-    public boolean checkMaxGames() {
-        return true;
+    public boolean checkMaxGames() // Returns true when 5 games are active
+    {
+        if(ActiveGames.size() == 5)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }   
     }
 
     public static void main(String[] args) {

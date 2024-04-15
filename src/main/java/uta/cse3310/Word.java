@@ -73,6 +73,6 @@ public class Word {
     @Override
 
     public String toString() {
-        return this.word + Arrays.toString(coord1) + Arrays.toString(coord2) + this.type.name();
+        return this.word + " " + Arrays.toString(coord1) + " " + Arrays.toString(coord2) + " " + this.type.name();
     }
 }

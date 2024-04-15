@@ -1,10 +1,6 @@
-    const WIDTH = 50;
-    const HEIGHT = 50;
-    var selected_letters = "";
     var players = 2;
     var nick = "unknown";
     var pin = "XXXX";
-//let idx =  Math.round(0 + Math.random() * 4); 
     var idx = 5;
     const PlayerToColor = new Map([[0,"red"],[1,"orange"],[2,"green"],[3,"black"],[4,"royalblue"],[5,"DarkViolet"]]);
     function GameRoom()
@@ -116,7 +112,7 @@
         document.getElementById("p7bt3").className="button button4";
       }  
    }
-    function FindGame()
+    function FindGame(i)
     { 
       nick=document.getElementById("name").value;
       pin=document.getElementById("pin").value;
@@ -128,46 +124,56 @@
       document.getElementById("page4").style.display="block";
       document.getElementById("page6").style.display="none";
       document.getElementById("page7").style.display="none";
+      if(i==1) 
+        addRow("p4table",nick,players+"-Player")
+      else {
+        deleteRow("p4table")
+        addRow("p4table",nick,players+"-Player");
+       }
       }
       else {
         document.getElementById("p2errMsg2").innerHTML="Please enter your name and create a new pin.";
       }       
     }
-    function FindGame2()
+    function FindGame2(i)
     { 
-      let nick=document.getElementById("name2").value;
-      let pin=document.getElementById("pin2").value;
+      nick=document.getElementById("name2").value;
+      pin=document.getElementById("pin2").value;
       if(nick != "" && pin != "") {
       document.getElementById("p4p").innerHTML="You are: "+nick;
       document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";
+      if(i==1) 
+        addRow("p4table",nick,players+"-Player")
+      else {
+        deleteRow("p4table")
+        addRow("p4table",nick,players+"-Player");
+        }
       }
       else {
         document.getElementById("p3errMsg2").innerHTML="Please enter your name and pin number";
       }       
     }
     function change_color(id) {
-       let x = id % WIDTH;
-       let y = Math.floor(id / HEIGHT);   
+       let x = id % 50;
+       let y = Math.floor(id / 50);   
        const letter = document.getElementById(id).innerHTML;
-       selected_letters += letter 
-       document.getElementById("p5ta").value="selected "+letter+" at coordinate ("+x+","+y+")\nselected letters="+selected_letters;
        let bcolor = document.getElementById(id).style.backgroundColor;
        if(bcolor == "royalblue")
           document.getElementById(id).style.backgroundColor = "PaleTurquoise";
       else
           document.getElementById(id).style.backgroundColor = "royalblue";
     }
-    const Buttons = new Array(WIDTH*HEIGHT);
-    for (let index=0;index<Buttons.length;index++) {
+    const squareGrid = new Array(2500);
+    for (let index=0;index<squareGrid.length;index++) {
         let charCode = Math.round(65 + Math.random() * 25);
-        Buttons[index]=String.fromCharCode(charCode);
+        squareGrid[index]=String.fromCharCode(charCode);
         const button = document.createElement("button");
         button.setAttribute("id",index);
         button.setAttribute("onclick","change_color("+index+");");
-        button.innerHTML = Buttons[index];
+        button.innerHTML = squareGrid[index];
         if(index % 50 == 0) {
            linebreak = document.createElement("br");
            board.appendChild(linebreak);
@@ -175,7 +181,7 @@
         board.appendChild(button);
      }
     function ResetBoard() {
-      for (let i=0;i<Buttons.length;i++) {
+      for (let i=0;i<squareGrid.length;i++) {
         let charCode = Math.round(65 + Math.random() * 25);
         document.getElementById(i).innerHTML=String.fromCharCode(charCode);
         let bcolor = document.getElementById(i).style.backgroundColor;
@@ -184,8 +190,20 @@
       }
       document.getElementById("p5ta").value=" ";
     }
+function addRow(tableID,item1,item2) {
+  var table = document.getElementById(tableID);
+  var row = table.insertRow(table.rows.length);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  cell1.innerHTML = item1;
+  cell2.innerHTML = item2;
+}
+function deleteRow(tableID) {
+  var table = document.getElementById(tableID);
+  table.deleteRow(table.rows.length-1);
+}
 
-var countDownDate = new Date("April 13, 2024 22:00:00").getTime();
+var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {

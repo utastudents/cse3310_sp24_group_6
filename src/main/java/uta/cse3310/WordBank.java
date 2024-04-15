@@ -74,7 +74,7 @@ public class WordBank
       Random rng = new Random();
 
       // Generate 100 words from the total list
-      for(int i = 0; i < 100; i++) {                            // For each word
+      for(int i = 0; i < 10; i++) {                            // For each word
          int rand = rng.nextInt(numwords);                     // create a random word 
 
          for(int j = 0; j < this.elements.size(); j++) {

@@ -68,11 +68,23 @@ public class GridTest extends TestCase {
             System.out.println("Standard Deviation good: " + stdDev);
         }
 
-
         for(int i = 0; i < test.size(); i++) {
             W.addList(test.elementAt(i));
         }
         W.generateWords();
+        
+        bool = true;
+        for(Word w: W.getWordList()) {
+            if(!(w.getWord().equals(G.read(w)))) {
+                bool = false;
+            }
+        }
+        assertTrue(bool);
+        if(bool) {
+            System.out.println("All words placed properly, no errors");
+        }
+        
+        System.out.println("");
         G.printGrid();
         System.out.println("");
         System.out.println("Cheat Sheet");

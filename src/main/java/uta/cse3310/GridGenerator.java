@@ -114,6 +114,51 @@ public class GridGenerator {
         return this.placedWords;
     }
 
+    public String read(Word word) {
+            ArrayList<String> result;
+            int size = word.getWord().length();
+            int[] coord1 = new int[2];
+            coord1 = word.getCoord1();
+            int row = coord1[0];
+            int column = coord1[1];
+            StringBuilder s = new StringBuilder(size);
+
+            if(word.getWordType() == WordType.horizontal) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row][column + i]);
+                }
+            } else if(word.getWordType() == WordType.bHorizontal) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row][column - i]);
+                }
+            } else if(word.getWordType() == WordType.vertical) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row + i][column]);
+                }
+            } else if(word.getWordType() == WordType.bVertical) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row - i][column]);
+                }
+            } else if(word.getWordType() == WordType.topLeftBottomRight) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row + i][column + i]);
+                }
+            } else if(word.getWordType() == WordType.topRightBottomLeft) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row + i][column - i]);
+                }
+            } else if(word.getWordType() == WordType.bottomLeftTopRight) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row - i][column + i]);
+                }
+            } else if(word.getWordType() == WordType.bottomRightTopLeft) {
+                for(int i = 0; i < size; i++) {
+                    s.append(this.grid[row - i][column - i]);
+                }
+            }
+        return s.toString();
+    }
+
     public double getGridDensity() {
         return this.gridDensity;
     }

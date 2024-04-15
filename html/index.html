@@ -8,13 +8,13 @@
 </head>
 <body>
 <div id="page1" style="display:block;">
-  <center><h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORLD SEARCH GAME</h1>
+  <center><h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORD SEARCH GAME</h1>
   <button class="button button4" onclick="NewPlayer()">New Player</button>
   <button class="button button4" onclick="ReturnPlayer()">Returning Player</button></center>
 </div>
 <div id="page2" style="display:none;">
   <center>
-  <h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORLD SEARCH GAME</h1>
+  <h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORD SEARCH GAME</h1>
   <button class="button" onclick="">New Player</button>
   <button class="button button4" onclick="ReturnPlayer()">Returning Player</button>
   <h3>Welcome new player! Enter a unique player name.</h3>
@@ -26,13 +26,13 @@
   <button id="p2bt3" class="button" onclick="SelectPlayer('p2bt3')">2-Player</button>
   <button id="p2bt4" class="button button4" onclick="SelectPlayer('p2bt4')">3-Player</button>
   <button id="p2bt5" class="button button4" onclick="SelectPlayer('p2bt5')">4-Player</button><br/>
-  <button id="p2bt6" class="button button2" onclick="FindGame()">Find Game</button><br>
+  <button id="p2bt6" class="button button2" onclick="FindGame(1)">Find Game</button><br>
   <label id="p2errMsg2" style="color:red;height:auto;"></label>
   </center>
 </div>
 <div id="page3" style="display:none;">
 <center>
-  <h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORLD SEARCH GAME</h1>
+  <h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORD SEARCH GAME</h1>
   <button class="button button4" onclick="NewPlayer()">New Player</button>
   <button class="button" onclick="">Returning Player</button>
   <h3>Welcome back! Enter your player name and PIN.</h3>
@@ -45,7 +45,7 @@
   <button id="p3bt3" class="button" onclick="SelectPlayer('p3bt3')">2-Player</button>
   <button id="p3bt4" class="button button4" onclick="SelectPlayer('p3bt4')">3-Player</button>
   <button id="p3bt5" class="button button4" onclick="SelectPlayer('p3bt5')">4-Player</button><br/>
-  <button id="p3bt6" class="button button2" onclick="FindGame2()">Find Game</button><br>
+  <button id="p3bt6" class="button button2" onclick="FindGame2(1)">Find Game</button><br>
   <label id="p3errMsg2" style="color:red;height:auto;"></label>
   </center>
 </div>
@@ -58,7 +58,7 @@
       <p class="block" id="p4p3">Active games: 1/5</p>
   </div>
   <br><br>
-  <table>
+  <table id="p4table">
   <tr >
     <th colspan="2">Players Waiting</th>
   </tr>
@@ -82,7 +82,7 @@
   <br/>
   <h3 id="p4Msg2" style="">Server Leaderboards</h3><br/>
   <div class="row" style="">
-  <table>
+  <table id="p4table2">
   <tr >
     <th colspan="2">Games Won Leaderboard</th>
   </tr>
@@ -104,7 +104,7 @@
     <td>1</td>
   </tr>
   </table>
-  <table>
+  <table id="p4table3">
   <tr >
     <th colspan="2">Points Leaderboard</th>
   </tr>
@@ -130,7 +130,7 @@
   </center>
 </div>
 <div id="page5"  style="display:none;">
-  <center><h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORLD SEARCH GAME</h1></center>
+  <center><h1 style="color:Navy;background-color:GreenYellow;display:block;">THE WORD SEARCH GAME</h1></center>
   <div class="row">
     <div class="" style="width:20%;float:left;">
       <p>GAME TIME LEFT:</p>
@@ -218,12 +218,12 @@
     </div>
   </div>
   <div class="row">
-    <div style="width:13%;float:left;" id="gamechat">
+    <div style="width:12%;float:left;" id="gamechat">
       <center><p>GAME CHAT</p></center>
       <br/><textarea id="p5ta" name="p5ta" rows="15" cols="18"></textarea>
     </div>
     <div class="btn-group" style="width:76%;float:left;" id="board"></div>
-    <div style="width:11%;float:right;" id="wordbank">
+    <div style="width:12%;float:right;" id="wordbank">
       <center>
          <p>WORD BANK</p>
          <br/><iframe src="words.txt" title="Word Bank"></iframe><br><br>
@@ -261,7 +261,7 @@
   <button id="p6bt3" class="button" onclick="SelectPlayer('p6bt3')">2-Player</button>
   <button id="p6bt4" class="button button4" onclick="SelectPlayer('p6bt4')">3-Player</button>
   <button id="p6bt5" class="button button4" onclick="SelectPlayer('p6bt5')">4-Player</button><br/>
-  <button id="p6bt6" class="button button2" onclick="FindGame()">Find Game</button><br>
+  <button id="p6bt6" class="button button2" onclick="FindGame(0)">Find Game</button><br>
   <label id="errMsg2" style="color:red;height:auto;"></label>
 
   </center>
@@ -291,13 +291,10 @@
   <button id="p7bt3" class="button" onclick="SelectPlayer('p7bt3')">2-Player</button>
   <button id="p7bt4" class="button button4" onclick="SelectPlayer('p7bt4')">3-Player</button>
   <button id="p7bt5" class="button button4" onclick="SelectPlayer('p7bt5')">4-Player</button><br/>
-  <button id="p7bt6" class="button button2" onclick="FindGame()">Find Game</button><br>
+  <button id="p7bt6" class="button button2" onclick="FindGame(0)">Find Game</button><br>
   <label id="errMsg2" style="color:red;height:auto;"></label>
   </center>
 </div>
-
-
 </body>
-
 <script src = "WordSearchGame.js"></script>
 </html>

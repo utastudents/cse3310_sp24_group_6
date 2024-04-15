@@ -52,7 +52,7 @@ public class Player {
     }
 
     public int updateScore() {
-        // Question: Update Highschore or score in game?
+        // Question: Update Highschore or score in game? 
         return this.Points;
     }
 

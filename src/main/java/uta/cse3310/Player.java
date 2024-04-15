@@ -40,8 +40,15 @@ public class Player {
     }
 
     // Method to save or update the SavedPin
-    public void SavePin(int newPin) {
-        this.SavedPin = newPin;                                 // Set the requested pin to the saved pin
+    public boolean savePin(int newPin) {
+        String pinStr = Integer.toString(newPin);
+        if (pinStr.length() == 4 && pinStr.matches("\\d{4}")) {
+            this.SavedPin = newPin; // Set the requested pin to the saved pin if valid
+            return true;
+        } else {
+            System.out.println("Invalid PIN. PIN must be a four-digit number.");
+            return false;
+        }
     }
 
     public int updateScore() {

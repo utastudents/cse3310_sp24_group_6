@@ -2,6 +2,7 @@ package uta.cse3310;
 import java.util.Vector;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 
 public class GridGenerator {
 
@@ -27,13 +28,13 @@ public class GridGenerator {
         long start = System.nanoTime();
 
         for(Word word: wordList) {
-            int orientation = r.nextInt(8) + 1;
+            int orientation = r.nextInt(2) + 1;
             
             if(orientation == 1) {
                 horizontal(word, r, placedWords);
-            } else if(orientation == 2) {
-                bHorizontal(word, r, placedWords);
             } else if(orientation == 3) {
+                bHorizontal(word, r, placedWords);
+            } else if(orientation == 2) {
                 vertical(word, r, placedWords);
             } else if(orientation == 4) {
                 bVertical(word, r, placedWords);
@@ -74,45 +75,116 @@ public class GridGenerator {
         System.out.println(time + " seconds");
     }
 
-    private void horizontal(Word word, Random r, Vector<Word> placedWords) {
-        int row;
-        int column;
-        boolean loop = false;
+    private int[] findCoords(Word word, int letter) {
+        int arr[] = new int[2];
+        if(word.getWordType() == WordType.horizontal) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0];
+            arr[1] = temp[1] + letter;
+        } else if(word.getWordType() == WordType.bHorizontal) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0];
+            arr[1] = temp[1] - letter;
+        } else if(word.getWordType() == WordType.vertical) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0] + letter;
+            arr[1] = temp[1];
+        } else if(word.getWordType() == WordType.bVertical) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0] - letter;
+            arr[1] = temp[1];
+        } else if(word.getWordType() == WordType.topLeftBottomRight) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0] + letter;
+            arr[1] = temp[1] + letter;
+        } else if(word.getWordType() == WordType.topRightBottomLeft) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0] + letter;
+            arr[1] = temp[1] - letter;
+        } else if(word.getWordType() == WordType.bottomLeftTopRight) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0] - letter;
+            arr[1] = temp[1] + letter;
+        } else if(word.getWordType() == WordType.bottomRightTopLeft) {
+            int temp[] = new int[2];
+            temp = word.getCoord1();
+            arr[0] = temp[0] - letter;
+            arr[1] = temp[1] - letter;
+        }
+        return arr;
+    }
 
-        //67% chance to force collision
-        /*if(r.nextInt(3) + 1 < 3) {
-            if(placedWords.size() == 0) {
-                break;
-            }
-            for(int i = 0; i < placedWords.size(); i++) {
-                if(placedWords[i].getWordType() != WordType.horizontal) {
-                    int result[2] = word.commonLetter(placedWords[i]);
-                    if(result[0] != -1 && result[1] != -1) {
-                        
-                    }
-                }
-            }
-        }*/
+    private void horizontal(Word word, Random r, Vector<Word> placedWords) {
+        int row = -1;
+        int column = -1;
+        //for indexing placedWords
+        int p = 0;
+        //controls do while
+        boolean loop = false;
+        //50/50 to force intersection
+        int intersect = 1;
         
         //Do while forces one loop
         do {
-            //Get random coords with respect to length of words so it doesn't go out of bounds
-            row = r.nextInt(50);
-            column = r.nextInt(50 - word.length());
             loop = false;
+            //forced intersection logic
+            if(intersect == 1) {
+                if(p == placedWords.size()) {
+                    //if no matches in placedWords, get random coords
+                    intersect = 2;
+                } else {
+                    //find common letter, letter[0] is letter in word, letter[1] is letter in placedWords[p]
+                    p++;
+                    if(placedWords.elementAt(p - 1).getWordType() != WordType.horizontal) {
+                        int letter[] = new int[2];
+                        letter = word.commonLetter(placedWords.elementAt(p - 1));
+                        if(letter[0] != -1 && letter[1] != -1) {
+                            int coords[] = new int[2];
+                            coords = findCoords(placedWords.elementAt(p - 1), letter[1]);
+                            row = coords[0];
+                            column = coords[1] - letter[0];
+                            if(column < 0 || column > (50 - word.length())) {
+                                row = -1;
+                                column = -1;
+                            }
+                        }
+                    }
+                }
+            }
+            //Random coords logic
+            //Get random coords with respect to length of words so it doesn't go out of bounds
+            if(intersect == 2) {
+                row = r.nextInt(50);
+                column = r.nextInt(50 - word.length());
+            }
 
             //Check path of word, if a space isn't blank/the correct letter, make new coords and try again
-            for(int i =0; i < word.length(); i++) {
-                if(this.grid[row][column + i] != "-" && this.grid[row][column + i] != word.getLetter(i)) {
-                    loop = true;
-                    break;
+            if(row != -1 && column != -1) {
+                for(int i = 0; i < word.length(); i++) {
+                    if(!(this.grid[row][column + i].equals("-")) && !(this.grid[row][column + i].equals(String.valueOf(word.getLetter(i))))) {
+                        //System.out.println(this.grid[row][column + i] + " " + word.getLetter(i));
+                        loop = true;
+                        break;
+                    }
                 }
+            } else {
+                loop = true;
             }
         } while(loop);
         
         //After path is verified, fill it
         for(int i = 0; i < word.length(); i++) {
             this.grid[row][column + i] = word.getLetter(i);
+        }
+        if(intersect == 1) {
+            System.out.println("Success!!!");
         }
         word.setCoord1(row, column);
         word.setCoord2(row, column + word.length());
@@ -332,7 +404,7 @@ public class GridGenerator {
         return 0;
     }
 
-    public boolean checkWordOverlap() {
+    private boolean checkWordOverlap() {
         return true;
     }
 }

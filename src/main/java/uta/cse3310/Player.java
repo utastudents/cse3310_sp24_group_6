@@ -35,9 +35,18 @@ public class Player {
         return true;                                            //  Otherwise it is true                
     }
 
+    /* 
     public boolean checkUniquePin(String pin) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        }
+        catch(NumberFormatException e) {
+            return false;
+        }
         return false;
     }
+    */
 
     // Method to save or update the SavedPin
     public boolean savePin(int newPin) {

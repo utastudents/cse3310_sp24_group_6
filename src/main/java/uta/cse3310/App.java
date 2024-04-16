@@ -89,6 +89,19 @@ public class App extends WebSocketServer {
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
+    /*public boolean checkMaxGames() // Returns true when 5 games are active
+    {
+        if(ActiveGames.size() == 5)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }   
+    }*/
+    // Made part of the matchmaking method in GameLobby
+
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         connectionId++;
@@ -97,32 +110,6 @@ public class App extends WebSocketServer {
         GameLobby GL = new GameLobby();
         
         Game G = GL.matchMaking(ActiveGames, PlayerList);
-
-        // Replace with matchmaking method to accomadate up to 4 players
-        /*// search for a game needing a player
-        Game G = null;
-        for (Game i : ActiveGames) {
-            if (i.Players == uta.cse3310.PlayerType.Player1) {
-            G = i;
-            System.out.println("found a match");
-            }
-        }
-
-        // No matches ? Create a new Game.
-        if (G == null) {
-            G = new Game(GameType.Game2, PlayerType.Player1);
-            G.GameId = GameId;
-            GameId++;
-            // Add the first player
-            G.Players = PlayerType.Player1;
-            ActiveGames.add(G);
-            System.out.println(" creating a new Game");
-        } else {
-            // join an existing game
-            System.out.println(" not a new game");
-            G.Players = PlayerType.Player2;
-            G.StartGame();
-        }*/
 
         // create an event to go to only the new player
         E.YouAre = G.Players;
@@ -220,21 +207,9 @@ public class App extends WebSocketServer {
         return retval;
     }
 
-    public void writeToFile(Vector<Player> PlayerList) {}
+    //public void writeToFile(Vector<Player> PlayerList) {}
 
-    public void readWordBank() {}
-
-    public boolean checkMaxGames() // Returns true when 5 games are active
-    {
-        if(ActiveGames.size() == 5)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }   
-    }
+    //public void readWordBank() {}
 
     public static void main(String[] args) {
 
@@ -251,5 +226,6 @@ public class App extends WebSocketServer {
         A.setReuseAddr(true);
         A.start();
         System.out.println("websocket Server started on port: " + port);
+
     }
 }

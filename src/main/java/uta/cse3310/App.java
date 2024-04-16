@@ -251,12 +251,5 @@ public class App extends WebSocketServer {
         A.setReuseAddr(true);
         A.start();
         System.out.println("websocket Server started on port: " + port);
-        
-        //uncomment these lines to test gridGenerator
-        /*WordBank W = new WordBank();
-        W.generateWords();
-        GridGenerator G = new GridGenerator();
-        G.generateGrid(W.getWordList());
-        W.printWordList(W.getWordList());*/
     }
 }

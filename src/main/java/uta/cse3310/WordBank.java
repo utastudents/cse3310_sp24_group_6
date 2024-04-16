@@ -16,8 +16,7 @@ public class WordBank
    private Vector<Word> foundWords = new Vector<>();
    private int numwords;
 
-   public WordBank()
-   {
+   public WordBank() {
       // Checking the amount of lines in a file
        // Amount of words 
       try { 
@@ -38,18 +37,23 @@ public class WordBank
       }
    } 
    
-   public void add(Word newWord)
-   {
+   public void add(Word newWord) {
       this.foundWords.add(newWord);   // adds new word to the foundwords
    }
 
-   public Vector<Word> getWordList()
-   {
+   public void addList(Word newWord) {
+      this.WordList.add(newWord);
+   }
+
+   public Vector<Word> getWordList() {
       return this.WordList;                 // returns the word list
    }
+
+   public Vector<String> getTotalList() {
+      return this.totalList;
+   }
    
-   public Vector<Word> getFoundWords()
-   {
+   public Vector<Word> getFoundWords() {
       return this.foundWords;               // returns the foundwords list
    }
 
@@ -69,12 +73,11 @@ public class WordBank
       });
    }
    
-   public void generateWords()
-   {
-      Random rng = new Random();
+   public void generateWords() {
+      //Random rng = new Random();
 
       // Generate 100 words from the total list
-      for(int i = 0; i < 10; i++) {                            // For each word
+      /*for(int i = 0; i < 100; i++) {                            // For each word
          int rand = rng.nextInt(numwords);                     // create a random word 
 
          for(int j = 0; j < this.elements.size(); j++) {
@@ -86,15 +89,8 @@ public class WordBank
          }
 
          this.WordList.add(new Word(this.totalList.get(rand)));   
-      }
+      }*/
 
       wordSort(this.WordList);
    }
 }
-
-/*
- * things to be done for generator:
- * - Create a random coordinate assignment 
- * - coorisponding type assignment
- * - optimizations to the code.
- */

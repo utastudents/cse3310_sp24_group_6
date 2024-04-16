@@ -3,6 +3,7 @@ import junit.framework.TestCase;
 import junit.framework.Assert;
 import java.util.Vector;
 import java.util.Arrays;
+import java.lang.System;
 
 public class GridTest extends TestCase {
     
@@ -15,13 +16,20 @@ public class GridTest extends TestCase {
         double[] orientation = new double[8];
         double stdDev;
         boolean bool;
+        int seed;
+
+        if(System.getenv("GRID_TEST") != null) {
+            seed = Integer.parseInt(System.getenv("GRID_TEST"));
+        } else {
+            seed = -1;
+        }
 
         System.out.println("");
         System.out.println("Grid Gen Unit Test");
         System.out.println("------------------");
         System.out.println("");
 
-        test = G.generateGrid(W.getTotalList());
+        test = G.generateGrid(W.getTotalList(), seed);
         
         bool = false;
         genTime = G.getGenTime();

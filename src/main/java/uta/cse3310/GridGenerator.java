@@ -32,8 +32,11 @@ public class GridGenerator {
         }
     }
     
-    public Vector<Word> generateGrid(Vector<String> wordList) {
+    public Vector<Word> generateGrid(Vector<String> wordList, int seed) {
         Random r = new Random();
+        if(seed != -1) {
+            r.setSeed(seed);
+        } 
         double timeStart = System.nanoTime();
         int result;
         int orientation = 0;

@@ -13,6 +13,9 @@ public class Game {
     private PlayerType[] Button;
     public int GameId;
     private int time;
+    PlayerType CurrentTurn;
+    String[] Msg;
+    String[] bottomMsg;
 
     public Game(GameType gameType, PlayerType players) {
         this.GameType = gameType;
@@ -40,7 +43,9 @@ public class Game {
     }
 
     public void StartGame() {
-        //timer starts
+        CurrentTurn = PlayerType.Player1;
+        Msg[0] = "Game has started! It's Player 1's turn.";
+        tick();  // Start the timer
         //chat starts
     }
 
@@ -88,10 +93,12 @@ public class Game {
 
             @Override
             public void run() {
-                System.out.println(count);
+                System.out.println("Time left: " + count + " seconds");
 
                 if (count <= 0) {
                     timer.cancel();
+                    System.out.println("Time's up!");
+                    endGame("Time`s up!"); //call to the game
                 }
 
                 count--;
@@ -114,6 +121,10 @@ public class Game {
         return points;
     }
 
+    public void endGame(String reason) {
+        System.out.println("Game Over: " + reason);
+    }
+
     public int calWinner() {
         return 0;
     }
@@ -122,5 +133,7 @@ public class Game {
         return true;
     }
 
-    public void hint() {}
+    public void hint() {
+
+    }
 }

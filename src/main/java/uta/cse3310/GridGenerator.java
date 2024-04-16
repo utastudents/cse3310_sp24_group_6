@@ -40,7 +40,9 @@ public class GridGenerator {
         Arrays.fill(gridOrient, 0);
         Arrays.fill(fillerLetters, 0);
 
+        //Fills grid until 67% are letters instead of "-"
         while(this.getDensity() < 0.67) {
+            //following code up to orientation++ was written by Rudy Orozco and taken from WordBank.java because I needed a non-static word list to hit 67% density
             result = -1;
             int rand = r.nextInt(wordList.size());                     // create a random word 
 
@@ -54,6 +56,7 @@ public class GridGenerator {
             this.elements.add(rand);
             Word word = new Word(wordList.elementAt(rand));
 
+            //Cycles through orientations, regardless of success/failure. Generally still well balanced
             orientation++;
             if(orientation > 8) {
                 orientation = 1;
@@ -82,16 +85,22 @@ public class GridGenerator {
             }
         }
 
+        //Stores gridDensity for test purposes
         this.gridDensity = this.getDensity();
 
+        //Fills board with random letters after words are placed
         int rand = 0;
         for(int i = 0; i < 50; i++) {
             for(int j = 0; j < 50; j++) {
+                //Check for empty space
                 if(this.grid[i][j].equals("-")) {
                     boolean loop = false;
+                    //Prevents infinite loops when all values in fillerLetters are identical
                     int failsafe = 0;
                     do {
+                        //Random lowercase ASCII value
                         rand = r.nextInt(26) + 97;
+                        //Checks if value is most prominent among placed random letters, if true, loop again and try a new letter
                         if(this.fillerLetters[rand - 97] >= arrMax(this.fillerLetters)) {
                             loop = true;
                             failsafe++;
@@ -100,9 +109,10 @@ public class GridGenerator {
                             loop = false;
                             failsafe = 0;
                         }
-                    }
-                    while(loop);
+                    } while(loop);
+                    //Once suitable letter found, put into grid
                     this.grid[i][j] = Character.toString(rand);
+                    //Keep track of how many of each letter have been placed
                     double temp = this.fillerLetters[rand - 97];
                     this.fillerLetters[rand - 97] = temp + 1;
                 }
@@ -110,7 +120,9 @@ public class GridGenerator {
         }
 
         double timeEnd = System.nanoTime();
+        //genTime stored for test purposes
         this.genTime = (timeEnd - timeStart) / 1000000000;
+        //Returns words used in grid for storing in WordBank
         return this.placedWords;
     }
 
@@ -122,6 +134,8 @@ public class GridGenerator {
             int row = coord1[0];
             int column = coord1[1];
             StringBuilder s = new StringBuilder(size);
+
+            //Simple function that steps through coordinates and checks against the string stored in a word object, used in unit test
 
             if(word.getWordType() == WordType.horizontal) {
                 for(int i = 0; i < size; i++) {
@@ -168,21 +182,18 @@ public class GridGenerator {
     }
 
     public double arrMax(double[] input) {
+        //Simple findMax function, nothing special here
         double max = 0;
-        double failsafe = 0;
         for(int i = 0; i < input.length; i++) {
             if(input[i] > max) {
                 max = input[i];
-                failsafe++;
             }
-        }
-        if(failsafe >= 25) {
-            return 100000;
         }
         return max;
     }
 
     public double standardDeviation(double mean) {
+        //Mathematical definition of standard deviation in Java form
         double sum = 0;
         for(int i = 0; i < 26; i++) {
             sum += ((this.fillerLetters[i] - mean) * (this.fillerLetters[i] - mean));
@@ -191,6 +202,7 @@ public class GridGenerator {
     }
 
     public void printGrid() {
+        //Exactly what you'd imagine, used for testing
         for(int i = 0; i < this.maxRow; i++) {
             for(int j = 0; j < this.maxColumn; j++) {
                 System.out.print(this.grid[i][j] + " ");
@@ -200,6 +212,7 @@ public class GridGenerator {
     }
 
     public double fillerMean() {
+        //Necessary for standard deviation
         double sum = 0;
         for(int i = 0; i < 26; i++) {
             sum += this.fillerLetters[i];
@@ -208,6 +221,7 @@ public class GridGenerator {
     }
 
     public double[] getOrientation() {
+        //Returns percent of words oriented a certain direction for all 8 directions
         double[] result = new double[8];
         result[0] = this.gridOrient[0] / this.placedWords.size();
         result[1] = this.gridOrient[1] / this.placedWords.size();
@@ -221,6 +235,7 @@ public class GridGenerator {
     }
 
     private double getDensity() {
+        //Counts letters not "-" out of 2500, doing it this way means letters used in multiple words are counted only once and the answer is accurate
         double letters = 0;
         for(int i = 0; i < this.maxRow; i++) {
             for(int j = 0; j < this.maxColumn; j++) {
@@ -233,6 +248,7 @@ public class GridGenerator {
     }
 
     private int[] findCoords(Word word, int letter) {
+        //Finds where a letter in a word is located given the starting coordinates, used in forced intersection
         int arr[] = new int[2];
         if(word.getWordType() == WordType.horizontal) {
             int temp[] = new int[2];
@@ -303,6 +319,7 @@ public class GridGenerator {
                     if(placedWords.elementAt(p - 1).getWordType() != WordType.horizontal) {
                         int letter[] = new int[2];
                         letter = word.commonLetter(placedWords.elementAt(p - 1));
+                        //If letter found, calculate coordinates needed for words to properly intersect
                         if(letter[0] != -1 && letter[1] != -1) {
                             int coords[] = new int[2];
                             coords = findCoords(placedWords.elementAt(p - 1), letter[1]);
@@ -319,6 +336,7 @@ public class GridGenerator {
             //Random coords logic
             //Get random coords with respect to length of words so it doesn't go out of bounds
             if(intersect == 2) {
+                //Prevents pseudo-infinite loops where there are very few/no possible places for a word/orientation combo to fit
                 if(failsafe > 50) {
                     return -1;
                 }
@@ -331,7 +349,6 @@ public class GridGenerator {
             if(row != -1 && column != -1) {
                 for(int i = 0; i < word.length(); i++) {
                     if(!(this.grid[row][column + i].equals("-")) && !(this.grid[row][column + i].equals(String.valueOf(word.getLetter(i))))) {
-                        //System.out.println(this.grid[row][column + i] + " " + word.getLetter(i));
                         loop = true;
                         break;
                     }
@@ -350,6 +367,8 @@ public class GridGenerator {
         word.setWordType(WordType.horizontal);
         return 1;
     }
+
+//Remaining functions have the same logic as horizontal, with slightly different math
 
     private int bHorizontal(Word word, Random r, Vector<Word> placedWords) {
         int row = -1;

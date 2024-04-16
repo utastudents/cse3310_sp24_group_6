@@ -14,6 +14,7 @@ public class Word {
         this.coord2 = new int[2];
     }
 
+    //Basic getters/setters, setters never really used, but it's not like they were hard to implement
     public int[] getCoord1() {
         return coord1;
     }
@@ -44,16 +45,19 @@ public class Word {
         this.type = type;
     }
 
+    //Very useful for loops
     public int length() {
         return this.word.length();
     }
 
+    //Simple stuff
     public String getLetter(int i) {
         char c = this.word.charAt(i);
         String s = String.valueOf(c);
         return s;
     }
 
+    //Finds first common letter between two words, doesn't check past first match
     public int[] commonLetter(Word w) {
         int result[] = new int[2];
         result[0] = -1;
@@ -72,6 +76,7 @@ public class Word {
 
     @Override
 
+    //Just used for testing
     public String toString() {
         return this.word + " " + Arrays.toString(coord1) + " " + Arrays.toString(coord2) + " " + this.type.name();
     }

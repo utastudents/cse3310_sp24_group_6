@@ -89,18 +89,6 @@ public class App extends WebSocketServer {
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
-    /*public boolean checkMaxGames() // Returns true when 5 games are active
-    {
-        if(ActiveGames.size() == 5)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }   
-    }*/
-    // Made part of the matchmaking method in GameLobby
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
@@ -108,9 +96,46 @@ public class App extends WebSocketServer {
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
         GameLobby GL = new GameLobby();
-        
-        Game G = GL.matchMaking(ActiveGames, PlayerList);
 
+        Player player = null;
+
+        //TODO - Retrieve playernick and num from ui 
+        String playerNick = "TEST";
+        int playerNum = 2; // Gametype the player is seeking
+
+        // If PlayerList is not empty,
+        // look through player list to check if this player is a returning player
+        int foundPlayer = 0;
+
+        if(PlayerList.size() != 0)
+        {
+            for(int i = 0; i < PlayerList.size(); i++)
+            {
+                Player P = PlayerList.get(i);
+                if(playerNick == P.getPlayerNick())
+                {
+                    // This is a returning player, don't make a new player obj
+                    player = P;
+                    foundPlayer = 1;
+                }
+            }
+        }
+        if (foundPlayer == 0)
+        {
+            // Not found in PlayerList or PlayerList was empty, this is a new player
+            player = new Player(playerNick, playerNum);
+            PlayerList.add(player);
+        }
+        
+        Game G = null;
+        while(G == null) // Keep trying until matched with game 
+        {
+            if(ActiveGames.size() < 5)
+            {
+                G = GL.matchMaking(ActiveGames, player);
+            }
+        }
+        
         // create an event to go to only the new player
         E.YouAre = G.Players;
         E.GameId = G.GameId;

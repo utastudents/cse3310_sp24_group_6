@@ -232,10 +232,6 @@ public class App extends WebSocketServer {
         return retval;
     }
 
-    //public void writeToFile(Vector<Player> PlayerList) {}
-
-    //public void readWordBank() {}
-
     public static void main(String[] args) {
 
         // Set up the http server

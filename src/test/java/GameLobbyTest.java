@@ -72,10 +72,42 @@ public class GameLobbyTest extends TestCase {
 
         if ((gameNum == 4) && (playersInGame == 1)) // If the newest game made is a 4 player game with 1 player waiting
         {
-            System.out.println("Joining lobby for new game test success\n");
+            System.out.println("Joining lobby for newly created game test success\n");
         }
+
+        // Reset the ActiveGames vector
+        ActiveGames.clear();
+        System.out.println("Count ActiveGames = "+ActiveGames.size());
 
         // ------------ TEST 3 ------------ TODO
         // Tests that a player can join a active game if it matches the game type they wanted and has space for them
+
+        System.out.println("");
+        System.out.println("Join Active Game Test");
+        System.out.println("---------------------------");
+        System.out.println("");
+
+        // Initalize game of the same type that the player wants that has just enough space for the player to join it
+        Game F = new Game(GameType.Game4, PlayerType.Player3);
+        ActiveGames.add(F);
+
+        bCount = ActiveGames.size(); // Should be 1 right now
+        System.out.println("Num of Active Games before matching = "+bCount);
+
+        G = GL.matchMaking(ActiveGames, player);
+
+        aCount = ActiveGames.size(); // Should still be 1 right now
+        System.out.println("Num of Active Games after matching = "+aCount);
+
+        // No new games should have been created and the player type of G should have changed to Player4 if the player 
+        // will be joining this game
+        // G should also not be null
+
+        playersInGame = G.Players.ordinal(); // Players currently in G
+
+        if(ActiveGames.size() == 1 && playersInGame == 4 && G != null)
+        {
+            System.out.println("Joining active game test success\n");
+        }
     }
 }

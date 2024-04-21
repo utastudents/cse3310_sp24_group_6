@@ -89,6 +89,37 @@ public class App extends WebSocketServer {
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
+    private static String getCurrHash()
+    {
+        try {
+            // Execute Git command to retrieve the latest commit hash
+            Process process = Runtime.getRuntime().exec("git rev-parse HEAD");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            // Read the output of the command and add it to a string, this should be the hash
+            String line; 
+            StringBuilder hash = new StringBuilder();
+            while ((line = reader.readLine()) != null) 
+            {
+                    hash.append(line); 
+            }
+
+            // Wait for the command to finish and get the exit code
+            int exitCode = process.waitFor();
+
+            // If the command was successful, return the commit hash
+            if (exitCode == 0) // Git returns 0 if everything went well
+            { 
+                System.out.println("Current git hash: "+ hash);
+                return hash.toString().trim(); // Success
+            } else {
+                System.err.println("Error: Git command failed with exit code " + exitCode);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "unknown"; // Defaut if there is an issue getting the hash
+    }
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
@@ -152,7 +183,7 @@ public class App extends WebSocketServer {
         conn.send(jsonString);
         System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + escape(jsonString));
 
-        // Update the running time
+        // Update the running time and github hash
         stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
 
         // The state of the game has changed, so lets send it to everyone
@@ -186,6 +217,8 @@ public class App extends WebSocketServer {
         // Get our Game Object
         Game G = conn.getAttachment();
         G.Update(U);
+
+        // Save game stats here?
 
         // send out the game state every time
         // to everyone

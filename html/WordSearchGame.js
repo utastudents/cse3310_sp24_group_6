@@ -7,8 +7,9 @@
     var start = 0;
     var idx = Math.round(1 + Math.random()*3);
     const PlayerToColor = new Map([[0,"royalblue"],[1,"blue"],[2,"red"],[3,"yellow"],[4,"green"],[5,"brown"]]);
-    const NumberToDirection = new Map([[1,"HORIZONTAL"],[2,"LHORIZONTAL"],[3,"VERTICAL"],[4,"DVERTICAL"],[5,"NEDIAGONAL"],[6,"SWDIAGONAL"],[7,"NWDIAGONAL"],[8,"SEDIAGONAL"]]); 
-    const DirectionToNumber = new Map(["horizontal",1],["bhorizontal",2],["vertical",3],["bvertical",4],["bottomLeftTopRight",5],["topRightBottomLeft",6],["bottomRightTopLeft",7],["topLeftBottomRight",8]]);
+//    const NumberToDirection = new Map([[1,"HORIZONTAL"],[2,"LHORIZONTAL"],[3,"VERTICAL"],[4,"DVERTICAL"],[5,"NEDIAGONAL"],[6,"SWDIAGONAL"],[7,"NWDIAGONAL"],[8,"SEDIAGONAL"]]); 
+//    const DirectionToNumber = new Map(["horizontal",1],["bhorizontal",2],["vertical",3],["bvertical",4],
+//["bottomLeftTopRight",5],["topRightBottomLeft",6],["bottomRightTopLeft",7],["topLeftBottomRight",8]]);
     function GameRoom()
     {
       document.getElementById("page4").style.display="none"; 

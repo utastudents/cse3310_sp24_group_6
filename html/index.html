@@ -4,7 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Styles.css">
-    <title>Game</title>
+    <title>Loading...</title>
+    <script>
+      // Retrieve the version from the environment variable hopefully?
+      const version = process.env.VERSION;
+      document.title = `${version}`;
+    </script>
 </head>
 <body>
 <div id="page1" style="display:block;">

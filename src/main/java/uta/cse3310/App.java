@@ -89,18 +89,37 @@ public class App extends WebSocketServer {
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
-    /*public boolean checkMaxGames() // Returns true when 5 games are active
+    private static String getCurrHash()
     {
-        if(ActiveGames.size() == 5)
-        {
-            return true;
+        try {
+            // Execute Git command to retrieve the latest commit hash
+            Process process = Runtime.getRuntime().exec("git rev-parse HEAD");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            // Read the output of the command and add it to a string, this should be the hash
+            String line; 
+            StringBuilder hash = new StringBuilder();
+            while ((line = reader.readLine()) != null) 
+            {
+                    hash.append(line); 
+            }
+
+            // Wait for the command to finish and get the exit code
+            int exitCode = process.waitFor();
+
+            // If the command was successful, return the commit hash
+            if (exitCode == 0) // Git returns 0 if everything went well
+            { 
+                System.out.println("Current git hash: "+ hash);
+                return hash.toString().trim(); // Success
+            } else {
+                System.err.println("Error: Git command failed with exit code " + exitCode);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
-        else
-        {
-            return false;
-        }   
-    }*/
-    // Made part of the matchmaking method in GameLobby
+        return "unknown"; // Defaut if there is an issue getting the hash
+    }
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
@@ -108,9 +127,46 @@ public class App extends WebSocketServer {
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
         GameLobby GL = new GameLobby();
-        
-        Game G = GL.matchMaking(ActiveGames, PlayerList);
 
+        Player player = null;
+
+        //TODO - Retrieve playernick and num from ui 
+        String playerNick = "TEST";
+        int playerNum = 2; // Gametype the player is seeking
+
+        // If PlayerList is not empty,
+        // look through player list to check if this player is a returning player
+        int foundPlayer = 0;
+
+        if(PlayerList.size() != 0)
+        {
+            for(int i = 0; i < PlayerList.size(); i++)
+            {
+                Player P = PlayerList.get(i);
+                if(playerNick == P.getPlayerNick())
+                {
+                    // This is a returning player, don't make a new player obj
+                    player = P;
+                    foundPlayer = 1;
+                }
+            }
+        }
+        if (foundPlayer == 0)
+        {
+            // Not found in PlayerList or PlayerList was empty, this is a new player
+            player = new Player(playerNick, playerNum);
+            PlayerList.add(player);
+        }
+        
+        Game G = null;
+        while(G == null) // Keep trying until matched with game 
+        {
+            if(ActiveGames.size() < 5)
+            {
+                G = GL.matchMaking(ActiveGames, player);
+            }
+        }
+        
         // create an event to go to only the new player
         E.YouAre = G.Players;
         E.GameId = G.GameId;
@@ -127,7 +183,7 @@ public class App extends WebSocketServer {
         conn.send(jsonString);
         System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + escape(jsonString));
 
-        // Update the running time
+        // Update the running time and github hash
         stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
 
         // The state of the game has changed, so lets send it to everyone
@@ -161,6 +217,8 @@ public class App extends WebSocketServer {
         // Get our Game Object
         Game G = conn.getAttachment();
         G.Update(U);
+
+        // Save game stats here?
 
         // send out the game state every time
         // to everyone
@@ -206,10 +264,6 @@ public class App extends WebSocketServer {
         }
         return retval;
     }
-
-    //public void writeToFile(Vector<Player> PlayerList) {}
-
-    //public void readWordBank() {}
 
     public static void main(String[] args) {
 

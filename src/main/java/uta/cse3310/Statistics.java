@@ -1,10 +1,8 @@
 package uta.cse3310;
 
 public class Statistics {
-    // this class stores global statistics of the
-    // program
+    // this class stores global statistics of the program
 
-    // Might just be added into Game or app
     private Long RunningTime;
     private Integer TotalGames;
     private Integer GamesInProgress;

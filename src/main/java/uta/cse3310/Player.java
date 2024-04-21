@@ -25,6 +25,11 @@ public class Player {
         //this.Coord1 = new int[MAX_GRID_SIZE-1]; // Assuming default size
         //this.Coord2 = new int[MAX_GRID_SIZE-1]; 
     }
+
+    public String getPlayerNick()
+    {
+        return this.PlayNick;
+    }
     
     public boolean checkUnique(Vector<Player> PlayerList) {
         for(int i = 0; i < PlayerList.size(); i++) {            //  While going through the entire vector

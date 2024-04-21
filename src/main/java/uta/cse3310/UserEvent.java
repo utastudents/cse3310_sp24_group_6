@@ -8,6 +8,9 @@ public class UserEvent {
     String Name;
     String Pin;
     int Players;
+    int StartCoordinate;
+    int EndCoordinate;
+    int Direction;
     UserEvent() {}
     
     UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button) {

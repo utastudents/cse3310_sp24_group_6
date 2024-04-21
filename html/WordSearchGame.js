@@ -1,13 +1,19 @@
     var players = 2;
     var nick = "unknown";
     var pin = "XXXX";
-    var idx = 5;
-    const PlayerToColor = new Map([[0,"red"],[1,"orange"],[2,"green"],[3,"black"],[4,"royalblue"],[5,"DarkViolet"]]);
+    var direction = 1;
+    var startCoordinate = -1;
+    var endCoordinate = -1;
+    var start = 0;
+    var idx = Math.round(1 + Math.random()*3);
+    const PlayerToColor = new Map([[0,"royalblue"],[1,"blue"],[2,"red"],[3,"yellow"],[4,"green"],[5,"brown"]]);
+    const NumberToDirection = new Map([[1,"HORIZONTAL"],[2,"LHORIZONTAL"],[3,"VERTICAL"],[4,"DVERTICAL"],[5,"NEDIAGONAL"],[6,"SWDIAGONAL"],[7,"NWDIAGONAL"],[8,"SEDIAGONAL"]]); 
+    const DirectionToNumber = new Map(["horizontal",1],["bhorizontal",2],["vertical",3],["bvertical",4],["bottomLeftTopRight",5],["topRightBottomLeft",6],["bottomRightTopLeft",7],["topLeftBottomRight",8]]);
     function GameRoom()
     {
       document.getElementById("page4").style.display="none"; 
       document.getElementById("page5").style.display="block";
-      document.getElementById("p5p").innerHTML="You are: "+nick;        
+      document.getElementById("p5p").innerHTML="You are: "+nick;
     }
     function Winner()
     {
@@ -111,7 +117,7 @@
         document.getElementById("p7bt4").className="button button4"; 
         document.getElementById("p7bt3").className="button button4";
       }  
-   }
+    }
     function FindGame(i)
     { 
       nick=document.getElementById("name").value;
@@ -134,6 +140,7 @@
       else {
         document.getElementById("p2errMsg2").innerHTML="Please enter your name and create a new pin.";
       }       
+      sendUpdate();
     }
     function FindGame2(i)
     { 
@@ -155,16 +162,55 @@
       else {
         document.getElementById("p3errMsg2").innerHTML="Please enter your name and pin number";
       }       
+      sendUpdate();
     }
     function change_color(id) {
        let x = id % 50;
        let y = Math.floor(id / 50);   
        const letter = document.getElementById(id).innerHTML;
        let bcolor = document.getElementById(id).style.backgroundColor;
-       if(bcolor == "royalblue")
-          document.getElementById(id).style.backgroundColor = "PaleTurquoise";
-      else
-          document.getElementById(id).style.backgroundColor = "royalblue";
+       document.getElementById(id).style.backgroundColor = PlayerToColor.get(idx);
+      if(start==0) {
+         startCoordinate = id;
+         start = 1;
+      }
+      else {
+        endCoordinate = id;
+        start = 0;
+      }         
+      if(startCoordinate >= 0 && endCoordinate >= 0) {
+	highlightWord();
+        sendUpdate();
+        startCoordinate=endCoordinate=-1;
+        start=0;
+      }
+    }
+    function highlightWord() {
+       direction = getDirection(startCoordinate,endCoordinate);
+       if(direction==1) 
+         for(let i=startCoordinate;i<endCoordinate;i++)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+       else if(direction==2)      
+         for(let i=startCoordinate;i>endCoordinate;i--)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+       else if(direction==3)      
+         for(let i=startCoordinate-50;i>=endCoordinate;i -=50)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+       else if(direction==4)      
+         for(let i=startCoordinate+50;i<=endCoordinate;i +=50)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+       else if(direction==5)      
+         for(let i=startCoordinate-50+1;i>=endCoordinate;i -=49)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+       else if(direction==6)      
+         for(let i=startCoordinate-50-1;i>=endCoordinate;i -=51)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+       else if(direction==7)      
+         for(let i=startCoordinate+50+1;i<=endCoordinate;i +=51)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+       else if(direction==8)      
+         for(let i=startCoordinate+50-1;i<=endCoordinate;i +=49)
+           document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
     }
     const squareGrid = new Array(2500);
     for (let index=0;index<squareGrid.length;index++) {
@@ -180,16 +226,53 @@
         }
         board.appendChild(button);
      }
+      addWordToGrid("ABRACADEBRA",1,110);
+      addWordToGrid("VALERIE",2,975);
+      addWordToGrid("LAURA",5,300);
+      addWordToGrid("MISSISSIPPI",3,422);
+      addWordToGrid("ABILITIES",4,849);
+      addWordToGrid("ACCESSIBILITY",1,462);
+      addWordToGrid("ACCOUNTS",7,562);
+      addWordToGrid("ULTIMATE",6,340);
+      addWordToGrid("ABLE",8,462);
+
     function ResetBoard() {
-      for (let i=0;i<squareGrid.length;i++) {
-        let charCode = Math.round(65 + Math.random() * 25);
-        document.getElementById(i).innerHTML=String.fromCharCode(charCode);
-        let bcolor = document.getElementById(i).style.backgroundColor;
-        if(bcolor == "royalblue")
-          document.getElementById(i).style.backgroundColor = "PaleTurquoise";
-      }
+      start = 0;
+      startCoordinate=endCoordinate=-1;
+      for (let i=0;i<squareGrid.length;i++)
+        document.getElementById(i).style.backgroundColor = "PaleTurquoise";
       document.getElementById("p5ta").value=" ";
     }
+
+    function addWordToGrid(Word,dir,startPosition) {
+       let A = Array.from(Word);
+       let l = A.length;
+       if(dir==1)
+         for(let i=startPosition;i<startPosition+l;i++)
+           document.getElementById(i).innerHTML=A[i-startPosition];
+       else if(dir==2)
+         for(let i=0;i<l;i++)
+           document.getElementById(startPosition-i).innerHTML=A[i];
+       else if(dir==3)
+         for(let i=0;i<l;i++)
+           document.getElementById(startPosition+i*50).innerHTML=A[i];
+       else if(dir==4)
+         for(let i=0;i<l;i++)
+           document.getElementById(startPosition-i*50).innerHTML=A[i];
+       else if(dir==5)
+         for(let i=0;i<l;i++)
+           document.getElementById(startPosition-i*(50-1)).innerHTML=A[i];
+       else if(dir==6)
+         for(let i=0;i<l;i++)
+           document.getElementById(startPosition+i*(50-1)).innerHTML=A[i];
+       else if(dir==7)
+         for(let i=0;i<l;i++)
+           document.getElementById(startPosition-i*(50+1)).innerHTML=A[i];
+        else if(dir==8)
+         for(let i=0;i<l;i++)
+           document.getElementById(startPosition+i*(50+1)).innerHTML=A[i];
+    }
+
 function addRow(tableID,item1,item2) {
   var table = document.getElementById(tableID);
   var row = table.insertRow(table.rows.length);
@@ -232,6 +315,9 @@ var x = setInterval(function() {
         Button = -1;
         PlayerIdx = -1;
         GameId = 0;
+        StartCoordinate = -1;
+        EndCoordinate = -1;
+        Direction = 1;
     }
     var connection = null;
     var serverUrl;
@@ -299,21 +385,60 @@ var x = setInterval(function() {
         }
     }
 
-    function buttonclick(i) {
+    function getDirection(v1, v2) {
+       let x = v1 % 50;
+       let y = Math.floor(v1 / 50);
+       let x2 = v2 % 50;
+       let y2 = Math.floor(v2 / 50);
+       if((v1<0) || (v2<0)) return -2;
+       if(y==y2)
+       {
+         if(x2-x>0)
+           return 1;
+         else
+           return 2;
+       }
+       else if (x==x2)
+       {
+         if(y-y2>0)
+           return 3;
+         else
+           return 4;
+       } 
+       else if(Math.abs(x2-x) == Math.abs(y2-y))
+       {
+         if((x2-x)>0 && (y-y2)>0)
+           return 5;
+         else if((x2-x)<0 && (y-y2)>0)
+           return 6;
+         else if((x2-x)>0 && (y-y2)<0)
+           return 7;
+         else if((x2-x)<0 && (y-y2)<0)
+           return 8;
+       }
+       else
+         return -1;
+    }
+
+    function sendUpdate() {
         U = new UserEvent();
-        U.Button = i;
+        U.Button = -1;
         if(idx == 0)
-            U.PlayerIdx = "PLAYER0";
+            U.PlayerIdx = "Player1";
         else if(idx == 1)
-            U.PlayerIdx = "PLAYER1";
+            U.PlayerIdx = "Player2";
          else if(idx == 2)
-            U.PlayerIdx = "PLAYER2";
+            U.PlayerIdx = "Player3";
         else if(idx == 3)
-            U.PlayerIdx = "PLAYER3";
+            U.PlayerIdx = "Player4";
         U.GameId = gameid;
         U.Name = nick;
         U.Players = players;
         U.Pin = pin;
+        U.StartCoordinate = startCoordinate;
+        U.EndCoordinate = endCoordinate;
+        U.Direction = direction;
+//        console.log(U);
         connection.send(JSON.stringify(U));
         console.log(JSON.stringify(U))
     }

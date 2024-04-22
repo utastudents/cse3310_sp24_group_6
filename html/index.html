@@ -218,10 +218,15 @@
     </div>
   </div>
   <div class="row">
-    <div style="width:13%;float:left;" id="gamechat">
+    <div id="mb-gamechat" style="width: 300px; height: 450px; overflow: auto; border: 1px solid #ccc; padding: 10px; margin-top: 18px;">
       <center><p>GAME CHAT</p></center>
-      <br/><textarea id="p5ta" name="p5ta" rows="15" cols="18"></textarea>
-    </div>
+      <div id="mb-messages">
+          <!-- Messages will be dynamically inserted here -->
+      </div>
+      <input type="text" id="mb-messageInput" placeholder="Type your message here..." style="width: 100%; box-sizing: border-box; padding: 8px;">
+      <button id="mb-sendButton" onclick="postMessage()">Send Message</button>
+  </div>
+
     <div class="btn-group" style="width:74%;float:left;" id="board"></div>
     <div style="width:12%;float:right;" id="wordbank">
       <center>

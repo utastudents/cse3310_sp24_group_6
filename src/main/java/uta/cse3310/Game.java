@@ -1,12 +1,11 @@
-//Kaitlin Martin
-//Group 6
-
 package uta.cse3310;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 import java.util.Iterator;
+import java.util.Arrays;
+import java.time.LocalTime;
 
 public class Game {
 
@@ -15,10 +14,13 @@ public class Game {
     WordBank wbank = new WordBank();
     GridGenerator g = new GridGenerator(50,50);
     Vector<Word> totalwords = new Vector<>();
+    PlayerType Players;
+    static LocalTime start = LocalTime.now();
 
     static long startTime;
     public int GameId;
     private int time;
+    public PlayerType CurrentTurn;
     
     // Constructor for the different game types
     public Game(Player player1, Player player2) {
@@ -26,9 +28,10 @@ public class Game {
         this.player.add(player2);
         this.gameType = GameType.Game2;
         totalwords = g.generateGrid(wbank.getTotalList(), -1);
-
+        
         player1.setPlayerType(PlayerType.Player1);
         player2.setPlayerType(PlayerType.Player2);
+        
     }
     public Game(Player player1, Player player2, Player player3) {
         this.player.add(player1);
@@ -36,10 +39,11 @@ public class Game {
         this.player.add(player3);
         this.gameType = GameType.Game3;
         totalwords = g.generateGrid(wbank.getTotalList(), -1);
-
+         
         player1.setPlayerType(PlayerType.Player1);
         player2.setPlayerType(PlayerType.Player2);
         player3.setPlayerType(PlayerType.Player3);
+        
     }
     public Game(Player player1, Player player2, Player player3, Player player4) {
         this.player.add(player1);
@@ -48,16 +52,17 @@ public class Game {
         this.player.add(player4);
         this.gameType = GameType.Game4;
         totalwords = g.generateGrid(wbank.getTotalList(), -1);
-
+        
         player1.setPlayerType(PlayerType.Player1);
         player2.setPlayerType(PlayerType.Player2);
         player3.setPlayerType(PlayerType.Player3);
         player4.setPlayerType(PlayerType.Player4);
+        
     }
 
     public void StartGame() {
         CurrentTurn = PlayerType.Player1;
-        Msg[0] = "Game has started! It's Player 1's turn.";
+        //Msg[0] = "Game has started! It's Player 1's turn.";
         tick();  // Start the timer
         //chat starts
     }
@@ -89,16 +94,16 @@ public class Game {
 
         return idx;
     }
-
+    /* 
     public void Update(UserEvent U) {
         //reacts to user input
         //no turns, real time reaction for letter selections
         //points update when word is won
     }
+    */
 
     public void tick() {
         //SREQ025
-        //TODO: format display
         Timer timer = new Timer();
         long startTime = System.currentTimeMillis();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -113,7 +118,6 @@ public class Game {
                     System.out.println("Time's up!");
                     endGame("Time`s up!"); //call to the game
                 }
-
                 count--;
             }
         }, 0, 1000);
@@ -134,8 +138,12 @@ public class Game {
 
     public static int calPoints(Word word) {
         //SREQ021
+        LocalTime currentTime = LocalTime.now();
+        int elapsedMin = Math.abs(currentTime.getMinute() - start.getMinute());
+        int elapsedSec = Math.abs(currentTime.getSecond() - start.getSecond());
+        int time = (elapsedMin*60) + elapsedSec;
         System.out.println("POINTS: " + points);
-        return (word.length())*(this.time);
+        return (word.length())*(time);
     }
 
     public void endGame(String reason) {

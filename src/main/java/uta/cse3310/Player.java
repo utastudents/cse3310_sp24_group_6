@@ -8,7 +8,7 @@ public class Player {
     public int PlayerNum;
     private int Wins;
     private int Loss;
-    private int Points;
+    public int Points;
     private int SavedPin;
     private int HighScore;
     private int Coord1[];
@@ -87,7 +87,7 @@ public class Player {
     public int getLoss() {
         return this.Loss;
     }
-
+    
     public int chooseCoord1() {     // THIS IS JSON
         
     }
@@ -103,4 +103,5 @@ public class Player {
     public int getPoints() {
         return this.Points;
     }
+    
 }

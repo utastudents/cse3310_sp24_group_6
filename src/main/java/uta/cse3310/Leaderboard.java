@@ -3,8 +3,10 @@
 
 package uta.cse3310;
 import java.util.Vector;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class Leaderboard {
+public class Leaderboard implements Comparator<Player> {
     //private Vector<Player> GamesWonPlace = new Vector<>();
     private Vector<Player> PointsEarnedPlace = new Vector<>();
 
@@ -20,6 +22,8 @@ public class Leaderboard {
          }
       });
     }
+
+    
 
     /*public Vector<Player> getGamesWon() {
         return GamesWonPlace;

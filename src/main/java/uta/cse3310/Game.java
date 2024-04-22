@@ -10,39 +10,49 @@ import java.util.Iterator;
 
 public class Game {
 
-    PlayerType Players;             //referenced from <<PlayerType>> enum
-    GameType GameType;              //referenced from <<GameType>> enum
-    private PlayerType[] Button;
+    Vector<Player> player = new Vector<>();
+    GameType gameType;                          //referenced from <<GameType>> enum
+    WordBank wbank = new WordBank();
+    GridGenerator g = new GridGenerator(50,50);
+    Vector<Word> totalwords = new Vector<>();
+
+    static long startTime;
     public int GameId;
     private int time;
-    PlayerType CurrentTurn;
-    String[] Msg;
-    String[] bottomMsg;
-    static long startTime;
+    
+    // Constructor for the different game types
+    public Game(Player player1, Player player2) {
+        this.player.add(player1);
+        this.player.add(player2);
+        this.gameType = GameType.Game2;
+        totalwords = g.generateGrid(wbank.getTotalList(), -1);
 
-    public Game(GameType gameType, PlayerType players) {
-        this.GameType = gameType;
-        this.Players = players;
-        //initializes Players, Button, and GameType
-        //sets up the game visible to players
-        Button = new PlayerType[9];
-        // initialize it
-        for (int i = 0; i < Button.length; i++) {
-            Button[i] = PlayerType.Player0;
-        }
-        /*
-        Msg = new String[2];
-        bottomMsg = new String[5];
-        Players = PlayerType.XPLAYER;
-        CurrentTurn = PlayerType.NOPLAYER;
-        Msg[0] = "Waiting for other player to join";
-        Msg[1] = "";
-        bottomMsg[0] = "Total games played: " + S.played;
-        bottomMsg[1] = "Games currently in progress: " + S.concurrent;
-        bottomMsg[2] = "Games won by X: " + S.xwin;
-        bottomMsg[3] = "Games won by O: " + S.owin;
-        bottomMsg[4] = "Games that have been draws: " + S.draw;
-        */
+        player1.setPlayerType(PlayerType.Player1);
+        player2.setPlayerType(PlayerType.Player2);
+    }
+    public Game(Player player1, Player player2, Player player3) {
+        this.player.add(player1);
+        this.player.add(player2);
+        this.player.add(player3);
+        this.gameType = GameType.Game3;
+        totalwords = g.generateGrid(wbank.getTotalList(), -1);
+
+        player1.setPlayerType(PlayerType.Player1);
+        player2.setPlayerType(PlayerType.Player2);
+        player3.setPlayerType(PlayerType.Player3);
+    }
+    public Game(Player player1, Player player2, Player player3, Player player4) {
+        this.player.add(player1);
+        this.player.add(player2);
+        this.player.add(player3);
+        this.player.add(player4);
+        this.gameType = GameType.Game4;
+        totalwords = g.generateGrid(wbank.getTotalList(), -1);
+
+        player1.setPlayerType(PlayerType.Player1);
+        player2.setPlayerType(PlayerType.Player2);
+        player3.setPlayerType(PlayerType.Player3);
+        player4.setPlayerType(PlayerType.Player4);
     }
 
     public void StartGame() {
@@ -110,15 +120,12 @@ public class Game {
     }
 
     public boolean verifyWord(String wordString, int coord1[], int coord2[], Word wordWord) {  
-        //validates a match was made by player
-        WordBank wb = new WordBank();
-        Vector<Word> Wds = wb.getWordList();    // Somehow retrieve the current word bank and use it to check the word.
-
         boolean result = false;
 
-        for (int i = 0; i < Wds.size(); i++) {
-            if(wordString.equals(Wds.getWord()) && Arrays.equals(coord1, Wds.getCoord1()) && Arrays.equals(coord2, Wds.getCoord2())) {
+        for(Word w : totalwords) {
+            if(Arrays.equals(coord1, w.getCoord1()) && Arrays.equals(coord2, w.getCoord2())) {
                 result = true;
+                break;
             }
         }
 
@@ -127,7 +134,6 @@ public class Game {
 
     public static int calPoints(Word word) {
         //SREQ021
-        int points = 0;
         System.out.println("POINTS: " + points);
         return (word.length())*(this.time);
     }
@@ -136,13 +142,6 @@ public class Game {
         System.out.println("Game Over: " + reason);
     }
 
-    public int calWinner() {    
-        // If the current player has the most points, send to win. 
-
-        // Otherwise, send to lose.
-
-        return 0;
-    }
 
     public boolean end() {      // I dont know if there is any more implementation -RUDY
         return true;

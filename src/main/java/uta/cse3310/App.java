@@ -75,8 +75,6 @@ public class App extends WebSocketServer {
 
     private Statistics stats;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   @Override
   public void onOpen(WebSocket conn, ClientHandshake handshake) {
 
@@ -199,8 +197,7 @@ public class App extends WebSocketServer {
     if (conn != null) {
       // some errors like port binding failed may not be assignable to a specific
       // websocket
-=======
-=======
+
     WordBank W = new WordBank();
 
     public WordBank getWordBankW() 
@@ -208,7 +205,6 @@ public class App extends WebSocketServer {
         return W;
     }
 
->>>>>>> main
     public App(int port) {
         super(new InetSocketAddress(port));
     }
@@ -218,10 +214,9 @@ public class App extends WebSocketServer {
     }
 
     public App(int port, Draft_6455 draft) {
-<<<<<<< HEAD
+
         //super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
->>>>>>> main
-=======
+
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
@@ -255,16 +250,8 @@ public class App extends WebSocketServer {
             e.printStackTrace();
         }
         return "unknown"; // Defaut if there is an issue getting the hash
->>>>>>> main
     }
 
-<<<<<<< HEAD
-  @Override
-  public void onStart() {
-    System.out.println("Server started!");
-    setConnectionLostTimeout(0);
-  }
-=======
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         connectionId++;
@@ -408,27 +395,19 @@ public class App extends WebSocketServer {
         }
         return retval;
     }
->>>>>>> main
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
     // Set up the http server
     int port = 9080;
     HttpServer H = new HttpServer(port, "./html");
     H.start();
     System.out.println("http Server started on port:" + port);
-=======
+
     public void readWordBank() {}
->>>>>>> main
 
     public boolean checkMaxGames() {
         return true;
     }
-=======
->>>>>>> main
 
-<<<<<<< HEAD
     port = 9880;
     App A = new App(port);
     A.start();
@@ -443,8 +422,6 @@ public class App extends WebSocketServer {
   }
 }
 
-*/
-=======
     public static void main(String[] args) {
 
         // Set up the http server
@@ -464,7 +441,3 @@ public class App extends WebSocketServer {
 
     }
 }
-<<<<<<< HEAD
->>>>>>> main
-=======
->>>>>>> main

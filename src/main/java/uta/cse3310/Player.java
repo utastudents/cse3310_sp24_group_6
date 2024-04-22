@@ -13,6 +13,7 @@ public class Player {
     private int HighScore;
     private int Coord1[];
     private int Coord2[];
+    private PlayerType pt = PlayerType.Player0;
 
     // Constructor
     public Player(String PlayNick, int PlayerNum) {
@@ -93,5 +94,13 @@ public class Player {
 
     public int chooseCoord2() {
         
+    }
+
+    public int setPlayerType(PlayerType _pt) {
+        this.pt = _pt;
+    }
+
+    public int getPoints() {
+        return this.Points;
     }
 }

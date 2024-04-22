@@ -4,12 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Styles.css">
-    <title>Loading...</title>
-    <script>
-      // Retrieve the version from the environment variable hopefully?
-      const version = process.env.VERSION;
-      document.title = `${version}`;
-    </script>
+    <title>Game</title>
 </head>
 <body>
 <div id="page1" style="display:block;">
@@ -219,7 +214,7 @@
       <h4>Word Density: 0.68</h4>
       <h4>Word Orientation variance: <em>0.20</em></h4>
       <h4>Filler letter variance: <em>0.20</em></h4>
-      <h4>Words Left: <em>47</em></h4><br/>
+      <h4 id="p5h4_7">Words Left: <em>47</em></h4><br/>
     </div>
   </div>
   <div class="row">
@@ -227,11 +222,16 @@
       <center><p>GAME CHAT</p></center>
       <br/><textarea id="p5ta" name="p5ta" rows="15" cols="18"></textarea>
     </div>
-    <div class="btn-group" style="width:75%;float:left;" id="board"></div>
+    <div class="btn-group" style="width:74%;float:left;" id="board"></div>
     <div style="width:12%;float:right;" id="wordbank">
       <center>
-         <p>WORD BANK</p>
-         <br/><iframe src="words.txt" title="Word Bank"></iframe><br><br>
+<!--         <p>WORD BANK</p>  -->
+<!--         <br/><iframe id="p5iframe" title="Word Bank"></iframe><br><br>  -->
+         <table id="p5table4" class="center">
+            <tr>
+              <th>WORD BANK</th>
+            </tr>
+         </table>
          <button class="button button3" onclick="ResetBoard()">Reset Board</button><br><br><br><br>
          <button class="button button2" onclick="Winner()">Winners</button><br><br>
          <button class="button button2" onclick="Loser()">Losers</button>

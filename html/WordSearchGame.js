@@ -1,49 +1,152 @@
+/*
+    Variables for player and words
+*/
     var players = 2;
     var nick = "unknown";
     var pin = "XXXX";
     var direction = 1;
+    var words = 0;
     var startCoordinate = -1;
     var endCoordinate = -1;
     var start = 0;
     var idx = Math.round(1 + Math.random()*3);
     const PlayerToColor = new Map([[0,"royalblue"],[1,"blue"],[2,"red"],[3,"yellow"],[4,"green"],[5,"brown"]]);
-//    const NumberToDirection = new Map([[1,"HORIZONTAL"],[2,"LHORIZONTAL"],[3,"VERTICAL"],[4,"DVERTICAL"],[5,"NEDIAGONAL"],[6,"SWDIAGONAL"],[7,"NWDIAGONAL"],[8,"SEDIAGONAL"]]); 
-//    const DirectionToNumber = new Map(["horizontal",1],["bhorizontal",2],["vertical",3],["bvertical",4],
-//["bottomLeftTopRight",5],["topRightBottomLeft",6],["bottomRightTopLeft",7],["topLeftBottomRight",8]]);
+/*
+    Create a one-dimensional array of 2500 elements for the grid 50 by 50.
+    Random fill the array with 2500 characters     
+*/
+    const squareGrid = new Array(2500);
+    for (let index=0;index<squareGrid.length;index++) {
+        let charCode = Math.round(65 + Math.random() * 25);
+        squareGrid[index]=String.fromCharCode(charCode);
+        const button = document.createElement("button");
+        button.setAttribute("id",index);
+        button.setAttribute("onclick","change_color("+index+");");
+        button.innerHTML = squareGrid[index];
+        if(index % 50 == 0) {
+           linebreak = document.createElement("br");
+           board.appendChild(linebreak);
+        }
+        board.appendChild(button);
+     }
+/*
+   add a list of words to the grid.
+*/
+      addWordToGrid("ARLINGTON",1,110);
+      addWordToGrid("TEXAS",2,975);
+      addWordToGrid("SPIRITUALITY",5,1000);
+      addWordToGrid("MISSISSIPPI",3,422);
+      addWordToGrid("ABILITIES",4,849);
+      addWordToGrid("ACCESSIBILITY",1,462);
+      addWordToGrid("ACCOUNTS",7,562);
+      addWordToGrid("ULTIMATE",6,340);
+      addWordToGrid("ACCORDING",8,462);
+// Display how many words in Word Bank
+      document.getElementById("p5h4_7").innerHTML="Words Left: "+words
+/*
+   Function to add a word to the table Word Bank
+*/
+      function addWordBank(tableID,item1) {
+        var table = document.getElementById(tableID);
+        var row = table.insertRow(table.rows.length);
+        var cell1 = row.insertCell(0);
+        cell1.innerHTML = item1;
+      }
+/*
+   Function to find the direction of a word based on the start coorrdinate and end coordinate.
+   There are eight directions: 1=horizontal;2=left-horizontal;3=vertical;4=down vertical;5=northeast diagonal;
+   6=southwest diagonal;7=northwest diagonal;8=southeast diagonal;
+*/
+    function getDirection(v1, v2) {
+       let x = v1 % 50;
+       let y = Math.floor(v1 / 50);
+       let x2 = v2 % 50;
+       let y2 = Math.floor(v2 / 50);
+       if((v1<0) || (v2<0)) return -2;
+       if(y==y2)
+       {
+         if(x2-x>0)
+           return 1;
+         else
+           return 2;
+       }
+       else if (x==x2)
+       {
+         if(y-y2>0)
+           return 3;
+         else
+           return 4;
+       } 
+       else if(Math.abs(x2-x) == Math.abs(y2-y))
+       {
+         if((x2-x)>0 && (y-y2)>0)
+           return 5;
+         else if((x2-x)<0 && (y-y2)>0)
+           return 6;
+         else if((x2-x)>0 && (y-y2)<0)
+           return 7;
+         else if((x2-x)<0 && (y-y2)<0)
+           return 8;
+       }
+       else
+         return -1;
+    }
+/*
+   When the button Game Room is clicked, this function is ran. It will display the page 5 and hide page 4.
+*/
     function GameRoom()
     {
       document.getElementById("page4").style.display="none"; 
       document.getElementById("page5").style.display="block";
       document.getElementById("p5p").innerHTML="You are: "+nick;
     }
+/*
+   When the button Winner is clicked, this function is ran. It will display the page 6 and hide page 5.
+*/
     function Winner()
     {
       document.getElementById("page5").style.display="none"; 
       document.getElementById("page6").style.display="block";
     }
+/*
+   When the button Loser is clicked, this function is ran. It will display the page 7 and hide page 5.
+*/
     function Loser()
     {
       document.getElementById("page5").style.display="none"; 
       document.getElementById("page7").style.display="block";
     }
+/*
+   This function will display the page 1 and hide page 2 and 3.
+
     function ReturnPage1()
     {
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page1").style.display="block";        
     }
+*/
+/*
+   When the button New Player is clicked, this function is ran. It will display the page 2 and hide page 1 and 3.
+*/
     function NewPlayer()
     {
       document.getElementById("page1").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page2").style.display="block";        
     }
+/*
+   When the button Return Player is clicked, this function is ran. It will display the page 3 and hide page 1 and 2.
+*/
     function ReturnPlayer()
     {
       document.getElementById("page1").style.display="none"; 
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="block";        
     }
+/*
+   This function will set the game type (2-player,3-player,4-player) and change the background color of the selected button  .
+*/
     function SelectPlayer(id)
     {
       if(id=="p2bt3") {
@@ -119,7 +222,11 @@
         document.getElementById("p7bt3").className="button button4";
       }  
     }
-    function FindGame(i)
+ /*
+   When the button Find Game is clicked, this function is executed. This function ensure that name and pin are filled; otherwise, 
+   it will display the page Game Lobby and add the palyer name to the table Players Waiting and send the player info to the app server.  
+*/
+   function FindGame(i)
     { 
       nick=document.getElementById("name").value;
       pin=document.getElementById("pin").value;
@@ -143,6 +250,11 @@
       }       
       sendUpdate();
     }
+ /*
+   Same as FindGame,but from page Return Player (page 3)
+   When the button Find Game is clicked, this function is executed. This function ensure that name and pin are filled; otherwise, 
+   it will display the page Game Lobby and add the palyer name to the table Players Waiting and send the player info to the app server.  
+*/
     function FindGame2(i)
     { 
       nick=document.getElementById("name2").value;
@@ -165,6 +277,11 @@
       }       
       sendUpdate();
     }
+/*
+    When any button in the grid is clicked, this function is executed. The background color is changed to the color associated with 
+    the player,the color of the word will be changed if the start and the end coordinates are found. Also, send the found word back to the 
+    App server.    
+*/
     function change_color(id) {
        let x = id % 50;
        let y = Math.floor(id / 50);   
@@ -186,6 +303,10 @@
         start=0;
       }
     }
+/*
+   This function will highlight the word based on the start and end coordinated. It will get the direction of the word and hightlight all
+   the characters of the word according to the direction.
+*/
     function highlightWord() {
        direction = getDirection(startCoordinate,endCoordinate);
        if(direction==1) 
@@ -213,41 +334,23 @@
          for(let i=startCoordinate+50-1;i<=endCoordinate;i +=49)
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
     }
-    const squareGrid = new Array(2500);
-    for (let index=0;index<squareGrid.length;index++) {
-        let charCode = Math.round(65 + Math.random() * 25);
-        squareGrid[index]=String.fromCharCode(charCode);
-        const button = document.createElement("button");
-        button.setAttribute("id",index);
-        button.setAttribute("onclick","change_color("+index+");");
-        button.innerHTML = squareGrid[index];
-        if(index % 50 == 0) {
-           linebreak = document.createElement("br");
-           board.appendChild(linebreak);
-        }
-        board.appendChild(button);
-     }
-      addWordToGrid("ABRACADEBRA",1,110);
-      addWordToGrid("VALERIE",2,975);
-      addWordToGrid("LAURA",5,300);
-      addWordToGrid("MISSISSIPPI",3,422);
-      addWordToGrid("ABILITIES",4,849);
-      addWordToGrid("ACCESSIBILITY",1,462);
-      addWordToGrid("ACCOUNTS",7,562);
-      addWordToGrid("ULTIMATE",6,340);
-      addWordToGrid("ABLE",8,462);
-
+/*
+   When the button Reset Board is clicked, this function is executed. It will reset the bacground color of all the selected buttons. 
+*/
     function ResetBoard() {
       start = 0;
       startCoordinate=endCoordinate=-1;
       for (let i=0;i<squareGrid.length;i++)
         document.getElementById(i).style.backgroundColor = "PaleTurquoise";
-      document.getElementById("p5ta").value=" ";
     }
-
+/*
+    This function add a word to the grid. The word can be added using any direction and start array element
+*/
     function addWordToGrid(Word,dir,startPosition) {
        let A = Array.from(Word);
        let l = A.length;
+       addWordBank("p5table4",Word);
+       words++;
        if(dir==1)
          for(let i=startPosition;i<startPosition+l;i++)
            document.getElementById(i).innerHTML=A[i-startPosition];
@@ -273,42 +376,47 @@
          for(let i=0;i<l;i++)
            document.getElementById(startPosition+i*(50+1)).innerHTML=A[i];
     }
+/*
+   This function adds a row at the bottom of table Player Waiting or Games Won Leaderboard or Points LeaderBoard
+*/
+    function addRow(tableID,item1,item2) {
+      var table = document.getElementById(tableID);
+      var row = table.insertRow(table.rows.length);  
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      cell1.innerHTML = item1;
+      cell2.innerHTML = item2;
+    }
+/*
+   This function removes the last row of table Player Waiting or Games Won Leaderboard or Points LeaderBoard
+*/
+    function deleteRow(tableID) {
+      var table = document.getElementById(tableID);
+      table.deleteRow(table.rows.length-1);
+    }
 
-function addRow(tableID,item1,item2) {
-  var table = document.getElementById(tableID);
-  var row = table.insertRow(table.rows.length);
-  var cell1 = row.insertCell(0);
-  var cell2 = row.insertCell(1);
-  cell1.innerHTML = item1;
-  cell2.innerHTML = item2;
-}
-function deleteRow(tableID) {
-  var table = document.getElementById(tableID);
-  table.deleteRow(table.rows.length-1);
-}
-
+/*
+   This code is for the clock timer . Get it from W3schools.com
+*/
 var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
-
 // Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get today's date and time
-  var now = new Date().getTime();
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
-//var distance = 10;
-  // Time calculations for days, hours, minutes and seconds
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  document.getElementById("p5h1").innerHTML = minutes + ":" + seconds;
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("p5h1").innerHTML = "GAME OVER";
-  }
+    var x = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("p5h1").innerHTML = minutes + ":" + seconds;
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("p5h1").innerHTML = "GAME OVER";
+    }
 }, 1000);
+/*
+    This section setup websocket connection and receives data objects from the app server using json.
+    Based on the TicTacToe codes. 
+    
 
-//    var idx = -1;
-    var gameid = -1;
+*/
     class UserEvent {
         Name = "unknown";
         Pin = "0000";
@@ -322,6 +430,7 @@ var x = setInterval(function() {
     }
     var connection = null;
     var serverUrl;
+    var gameid = -1;
     serverUrl = "ws://" + window.location.hostname +":"+ (parseInt(location.port) + 100);
     // Create the connection with the server
     connection = new WebSocket(serverUrl);
@@ -340,17 +449,20 @@ var x = setInterval(function() {
         const obj = JSON.parse(msg);
 
         if ('YouAre' in obj) {
-            if (obj.YouAre == "PLAYER0") {
+            if (obj.YouAre == "player0") {
                 idx = 0;
             }
-            else if(obj.YouAre == "PLAYER1"){
+            else if(obj.YouAre == "player1"){
                 idx = 1;
             }
-            else if(obj.YouAre == "PLAYER2"){
+            else if(obj.YouAre == "player2"){
                 idx = 2;
             }
-            else if(obj.YouAre == "PLAYER3"){
+            else if(obj.YouAre == "player3"){
                 idx = 3;
+            }
+            else if(obj.YouAre == "player4"){
+                idx = 4;
             }
             gameid = obj.GameId;
         }
@@ -385,52 +497,19 @@ var x = setInterval(function() {
             }
         }
     }
-
-    function getDirection(v1, v2) {
-       let x = v1 % 50;
-       let y = Math.floor(v1 / 50);
-       let x2 = v2 % 50;
-       let y2 = Math.floor(v2 / 50);
-       if((v1<0) || (v2<0)) return -2;
-       if(y==y2)
-       {
-         if(x2-x>0)
-           return 1;
-         else
-           return 2;
-       }
-       else if (x==x2)
-       {
-         if(y-y2>0)
-           return 3;
-         else
-           return 4;
-       } 
-       else if(Math.abs(x2-x) == Math.abs(y2-y))
-       {
-         if((x2-x)>0 && (y-y2)>0)
-           return 5;
-         else if((x2-x)<0 && (y-y2)>0)
-           return 6;
-         else if((x2-x)>0 && (y-y2)<0)
-           return 7;
-         else if((x2-x)<0 && (y-y2)<0)
-           return 8;
-       }
-       else
-         return -1;
-    }
-
+/*
+    Send info about player info and game status (UserEvent class) using json to the app server
+*/
     function sendUpdate() {
         U = new UserEvent();
         U.Button = -1;
-        if(idx == 0)
+        if(idx == 1)
             U.PlayerIdx = "Player1";
-        else if(idx == 1)
+        else if(idx == 2)
             U.PlayerIdx = "Player2";
-         else if(idx == 2)
+         else if(idx == 3)
             U.PlayerIdx = "Player3";
-        else if(idx == 3)
+        else if(idx == 4)
             U.PlayerIdx = "Player4";
         U.GameId = gameid;
         U.Name = nick;
@@ -439,7 +518,6 @@ var x = setInterval(function() {
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
         U.Direction = direction;
-//        console.log(U);
         connection.send(JSON.stringify(U));
         console.log(JSON.stringify(U))
     }

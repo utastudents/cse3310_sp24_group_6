@@ -88,11 +88,11 @@ public class Player {
         return this.Loss;
     }
 
-    public int chooseCoord1() {
+    public int chooseCoord1() {     // THIS IS JSON
         
     }
 
-    public int chooseCoord2() {
+    public int chooseCoord2() {     // THIS IS JSON
         
     }
 

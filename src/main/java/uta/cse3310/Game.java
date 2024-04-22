@@ -94,14 +94,13 @@ public class Game {
 
         return idx;
     }
-    /* 
+    
     public void Update(UserEvent U) {
         //reacts to user input
         //no turns, real time reaction for letter selections
         //points update when word is won
     }
-    */
-
+    
     public void tick() {
         //SREQ025
         Timer timer = new Timer();
@@ -142,8 +141,10 @@ public class Game {
         int elapsedMin = Math.abs(currentTime.getMinute() - start.getMinute());
         int elapsedSec = Math.abs(currentTime.getSecond() - start.getSecond());
         int time = (elapsedMin*60) + elapsedSec;
+
+        int points = (word.length())*time;
         System.out.println("POINTS: " + points);
-        return (word.length())*(time);
+        return points;
     }
 
     public void endGame(String reason) {

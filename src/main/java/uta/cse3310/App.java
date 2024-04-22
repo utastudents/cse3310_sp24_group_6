@@ -170,7 +170,7 @@ public class App extends WebSocketServer {
         {
             if(ActiveGames.size() < 5)
             {
-                G = GL.matchMaking(ActiveGames, PlayerList);
+                G = GL.matchMaking(player, PlayerList);
             }
         }
         

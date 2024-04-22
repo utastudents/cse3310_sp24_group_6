@@ -24,9 +24,9 @@ public class GameLobby
         int pForFour = 0;
 
         // Count up how many players currently want each type of game
-        for (Player player : PlayerList) 
+        for (Player p : PlayerList) 
         {
-            gtWanted = player.PlayerNum;
+            gtWanted = p.PlayerNum;
             // player will have a PlayerNum of 0 after they are put into a game 
 
             if (gtWanted == 2)
@@ -159,7 +159,8 @@ public class GameLobby
     
             return G;
         }
-
+        
+        return G;
     }
         
         // OLD MATCH MAKING---------------------------------------------------------------------------------------------

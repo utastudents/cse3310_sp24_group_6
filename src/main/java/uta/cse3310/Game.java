@@ -96,9 +96,16 @@ public class Game {
     }
     
     public void Update(UserEvent U) {
-        //reacts to user input
-        //no turns, real time reaction for letter selections
-        //points update when word is won
+        // Check if a chosen word is legitimate
+            //Insert implementation here and show across
+            //the different clients
+
+        // Check if the time is up, the game is over and choose who won
+            //if player won, send to win screen
+            //if player lost, send to lose screen
+
+        // Check if a message has been sent to the chat box
+            //if a message has been sent, send to the clients
     }
     
     public void tick() {

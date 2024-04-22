@@ -131,10 +131,13 @@ public class App extends WebSocketServer {
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         connectionId++;
-        System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
-        ServerEvent E = new ServerEvent();
-        GameLobby GL = new GameLobby();
 
+        System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
+
+        ServerEvent E = new ServerEvent();
+        
+        // Search for a game needing a player
+        GameLobby GL = new GameLobby();
         Player player = null;
 
         //TODO - Retrieve playernick and num from ui 

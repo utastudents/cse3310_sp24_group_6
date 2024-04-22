@@ -23,6 +23,7 @@ public class HttpServer {
 
     public HttpServer(int portNum, String dirName) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         System.out.println("creating http server port " + portNum);
         port = portNum;
         dirname = dirName;
@@ -38,6 +39,14 @@ public class HttpServer {
 
     public void start() {
         /*try {
+>>>>>>> main
+=======
+        port = portNum;
+        dirname = dirName;
+    }
+
+    public void start() {
+        try {
 >>>>>>> main
             File dir = new File(dirname);
             if (!dir.canRead())
@@ -59,7 +68,7 @@ public class HttpServer {
             System.out.println("HTTPServer is listening on port " + port);
         } catch (Exception e) {
             System.err.println("error: " + e);
-        }*/
+        }
     }
 <<<<<<< HEAD
 

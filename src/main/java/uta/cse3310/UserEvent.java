@@ -7,10 +7,19 @@ public class UserEvent {
     PlayerType PlayerIdx; // either an XPLAYER or an OPLAYER
     int Button; // button number from 0 to 8
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
+=======
+    String Name;
+    String Pin;
+    int Players;
+    int StartCoordinate;
+    int EndCoordinate;
+    int Direction;
+>>>>>>> main
     UserEvent() {}
-
+    
     UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button) {
         /*GameId = _GameId;
         PlayerIdx = _PlayerIdx;

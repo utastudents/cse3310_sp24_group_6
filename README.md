@@ -6,6 +6,7 @@
 % mvn compile
 % mvn package
 % mvn exec:java -Dexec.mainClass=uta.cse3310.App
+% mvn clean compile package exec:java -Dexec.mainClass=uta.cse3310.App -DskipTests
 ```
 Information on deployment:
 

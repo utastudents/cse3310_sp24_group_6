@@ -10,14 +10,13 @@ import java.util.*;
 
 public class WordBank
 {
-   List<Integer> elements = new ArrayList<>();
-   Vector<String> totalList = new Vector<>();
-   Vector<Word> WordList = new Vector<>();
-   Vector<Word> foundWords = new Vector<>();
-   int numwords;
+   private List<Integer> elements = new ArrayList<>();
+   private Vector<String> totalList = new Vector<>();
+   private Vector<Word> WordList = new Vector<>();
+   private Vector<Word> foundWords = new Vector<>();
+   private int numwords;
 
-   public WordBank()
-   {
+   public WordBank() {
       // Checking the amount of lines in a file
        // Amount of words 
       try { 
@@ -25,8 +24,11 @@ public class WordBank
          Scanner scan = new Scanner(file);
 
          while(scan.hasNextLine()) {
-            totalList.add(scan.nextLine());
-            numwords++;
+            String s = scan.nextLine();
+            if(s.length() > 4) {
+               totalList.add(s);
+               numwords++;
+            }
          }
          scan.close();
       }
@@ -35,49 +37,60 @@ public class WordBank
       }
    } 
    
-   public void add(Word newWord)
-   {
+   public void add(Word newWord) {
       this.foundWords.add(newWord);   // adds new word to the foundwords
    }
 
-   public Vector<Word> getWordList()
-   {
-      return WordList;                 // returns the word list
+   public void addList(Word newWord) {
+      this.WordList.add(newWord);
    }
-   
-   public Vector<Word> getFoundWords()
-   {
-      return foundWords;               // returns the foundwords list
-   }
-   
-   public void generateWords(Vector<Word> wordList)
-   {
-      Random rng = new Random();
 
-      // Generate 20 words from the total list
-      for(int i = 0; i < 20; i++) {                            // For each word
+   public Vector<Word> getWordList() {
+      return this.WordList;                 // returns the word list
+   }
+
+   public Vector<String> getTotalList() {
+      return this.totalList;
+   }
+   
+   public Vector<Word> getFoundWords() {
+      return this.foundWords;               // returns the foundwords list
+   }
+
+   public void printWordList(Vector<Word> wordList) {
+      for(Word w: wordList) {
+         System.out.println(w);
+      }
+      System.out.println("");
+   }
+
+   public void wordSort(Vector<Word> wordList) {
+      Collections.sort(wordList, new Comparator<Word>() {
+         @Override
+         public int compare(Word first, Word sec) {
+            return first.getWord().compareTo(sec.getWord());
+         }
+      });
+   }
+   
+   public void generateWords() {
+      //Random rng = new Random();
+
+      // Generate 100 words from the total list
+      /*for(int i = 0; i < 100; i++) {                            // For each word
          int rand = rng.nextInt(numwords);                     // create a random word 
 
-         for(int j = 0; j < elements.size(); j++) {
-            if(elements.contains(rand))                        // if an element already exists
+         for(int j = 0; j < this.elements.size(); j++) {
+            if(this.elements.contains(rand))                        // if an element already exists
             {
                rand = rng.nextInt(numwords);                   // run the random generator again
                j = 0;                                          // set the increment back to 0 and run the for loop again
             }
          }
-         
-         WordType type = WordType.horizontal;   
-         int[] xcoord = new int[50];                           // NOTE: Probably need to change the type of parameters from an int[] to int
-         int[] ycoord = new int[50];                           // As there is no need to really have an array and rather just a value of those coordinates instead.
 
-         wordList.add(new Word(xcoord, ycoord, type, totalList.get(rand)));   
-      }
+         this.WordList.add(new Word(this.totalList.get(rand)));   
+      }*/
+
+      wordSort(this.WordList);
    }
 }
-
-/*
- * things to be done for generator:
- * - Create a random coordinate assignment 
- * - coorisponding type assignment
- * - optimizations to the code.
- */

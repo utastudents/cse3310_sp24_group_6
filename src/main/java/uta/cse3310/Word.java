@@ -6,12 +6,14 @@ public class Word {
     private int coord2[];
     private WordType type;
     private String word;
+    private boolean found;
 
     // Constructor
     public Word(String word) {
         this.word = word;
         this.coord1 = new int[2];
         this.coord2 = new int[2];
+        this.found = false;
     }
 
     //Basic getters/setters, setters never really used, but it's not like they were hard to implement

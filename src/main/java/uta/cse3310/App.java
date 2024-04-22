@@ -77,6 +77,13 @@ public class App extends WebSocketServer {
 
     private Statistics stats;
 
+    WordBank W = new WordBank();
+
+    public WordBank getWordBankW() 
+    {
+        return W;
+    }
+
     public App(int port) {
         super(new InetSocketAddress(port));
     }
@@ -163,7 +170,7 @@ public class App extends WebSocketServer {
         {
             if(ActiveGames.size() < 5)
             {
-                G = GL.matchMaking(ActiveGames, player);
+                G = GL.matchMaking(ActiveGames, PlayerList);
             }
         }
         
@@ -218,7 +225,10 @@ public class App extends WebSocketServer {
         Game G = conn.getAttachment();
         G.Update(U);
 
-        // Save game stats here?
+        
+
+
+        
 
         // send out the game state every time
         // to everyone
@@ -265,6 +275,8 @@ public class App extends WebSocketServer {
         return retval;
     }
 
+
+
     public static void main(String[] args) {
 
         // Set up the http server
@@ -280,6 +292,7 @@ public class App extends WebSocketServer {
         A.setReuseAddr(true);
         A.start();
         System.out.println("websocket Server started on port: " + port);
+
 
     }
 }

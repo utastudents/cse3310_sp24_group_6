@@ -7,11 +7,90 @@ public class GameLobbyTest extends TestCase {
 
     private Vector<Game> ActiveGames = new Vector<Game>();
     private Vector<Player> PlayerList = new Vector<Player>();
-    private Vector<Player> LobbyList = new Vector<Player>();
 
     public void testGameLobby()
     {
+        // TEST 1
+        System.out.println("");
+        System.out.println("Not Enough Players For New Game Test");
+        System.out.println("------------------------------------");
+        System.out.println("");
 
+        String playerNick = "PLAYER1";
+        int playerNum = 2; // Gametype the player is seeking
+        Player player1 = new Player(playerNick, playerNum);
+        PlayerList.add(player1);
+
+        playerNick = "PLAYER2";
+        playerNum = 3;
+        Player player2 = new Player(playerNick, playerNum);
+
+        playerNick = "PLAYER3";
+        playerNum = 4;
+        Player player3 = new Player(playerNick, playerNum);
+
+        GameLobby GL = new GameLobby();
+        Game G = GL.matchMaking(PlayerList, ActiveGames);
+        System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be no games
+        if(ActiveGames.size() == 0)
+        {
+            System.out.println("Not enough players for a new game test success");
+        }
+        
+        PlayerList.clear(); // Clear out the player list
+
+        // TEST 2
+        System.out.println("");
+        System.out.println("Two Player Game");
+        System.out.println("------------------");
+        System.out.println("");
+
+        // Create 2 players that want a 2 player game
+
+        playerNick = "PLAYER1";
+        playerNum = 4; // Gametype the player is seeking
+        Player player1 = new Player(playerNick, playerNum);
+        PlayerList.add(player1);
+
+        playerNick = "PLAYER2";
+        playerNum = 5;
+        Player player2 = new Player(playerNick, playerNum);
+
+        playerNick = "PLAYER3";
+        playerNum = 6;
+        Player player3 = new Player(playerNick, playerNum);
+
+        GameLobby GL = new GameLobby();
+        Game G = GL.matchMaking(PlayerList, ActiveGames);
+        System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be no games
+        if(ActiveGames.size() == 0)
+        {
+            System.out.println("Not enough players for a new game test success");
+        }
+
+        // TEST 3
+        System.out.println("");
+        System.out.println("Three Player Game");
+        System.out.println("------------------");
+        System.out.println("");
+
+        // Add 3 players that all want a 3 player game
+
+        // TEST 4
+        System.out.println("");
+        System.out.println("Four Player Game");
+        System.out.println("------------------");
+        System.out.println("");
+
+
+
+
+
+
+
+
+
+        
         // ------------ TEST 1 ------------
         // Tests that you cannot create a new game if there are already 5 in progress
         System.out.println("");
@@ -110,7 +189,7 @@ public class GameLobbyTest extends TestCase {
         {
             System.out.println("Joining active game test success\n");
         }
+        
     }
 }
-
 */

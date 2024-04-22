@@ -77,6 +77,8 @@ public class App extends WebSocketServer {
 
     private Statistics stats;
 
+    private String version = null;
+
     WordBank W = new WordBank();
 
     public WordBank getWordBankW() 
@@ -94,38 +96,6 @@ public class App extends WebSocketServer {
 
     public App(int port, Draft_6455 draft) {
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
-    }
-
-    private static String getCurrHash()
-    {
-        try {
-            // Execute Git command to retrieve the latest commit hash
-            Process process = Runtime.getRuntime().exec("git rev-parse HEAD");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            // Read the output of the command and add it to a string, this should be the hash
-            String line; 
-            StringBuilder hash = new StringBuilder();
-            while ((line = reader.readLine()) != null) 
-            {
-                    hash.append(line); 
-            }
-
-            // Wait for the command to finish and get the exit code
-            int exitCode = process.waitFor();
-
-            // If the command was successful, return the commit hash
-            if (exitCode == 0) // Git returns 0 if everything went well
-            { 
-                System.out.println("Current git hash: "+ hash);
-                return hash.toString().trim(); // Success
-            } else {
-                System.err.println("Error: Git command failed with exit code " + exitCode);
-            }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return "unknown"; // Defaut if there is an issue getting the hash
     }
 
     @Override
@@ -170,7 +140,7 @@ public class App extends WebSocketServer {
         {
             if(ActiveGames.size() < 5)
             {
-                G = GL.matchMaking(player, PlayerList);
+                G = GL.matchMaking(PlayerList, ActiveGames);
             }
         }
         
@@ -293,6 +263,12 @@ public class App extends WebSocketServer {
         A.start();
         System.out.println("websocket Server started on port: " + port);
 
+        A.version = System.getenv("VERSION");
+        System.out.println("Current github hash : " + A.version);
+
+        // Testing env 
+        String WSPort = System.getenv("WEBSOCKET_PORT");
+        System.out.println("Current port : " +WSPort);
 
     }
 }

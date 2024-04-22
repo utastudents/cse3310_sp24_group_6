@@ -22,6 +22,7 @@ public class Game {
     private int time;
     public PlayerType CurrentTurn;
     
+    
     // Constructor for the different game types
     public Game(Player player1, Player player2) {
         this.player.add(player1);

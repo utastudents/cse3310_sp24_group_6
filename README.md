@@ -11,3 +11,6 @@
 Information on deployment:
 
 https://www.programonaut.com/how-to-deploy-a-git-repository-to-a-server-using-github-actions/
+
+cd cse3310_sp24_group_6
+cd TicTacToe

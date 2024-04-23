@@ -11,6 +11,7 @@ public class UserEvent {
     int StartCoordinate;
     int EndCoordinate;
     int Direction;
+    int points;
     
     UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button) {
         GameId = _GameId;

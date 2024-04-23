@@ -198,11 +198,6 @@ public class App extends WebSocketServer {
         Game G = conn.getAttachment();
         G.Update(U);
 
-        
-
-
-        
-
         // send out the game state every time
         // to everyone
         String jsonString;
@@ -228,6 +223,7 @@ public class App extends WebSocketServer {
 
     @Override
     public void onStart() {
+        System.out.println("Server started!");
         setConnectionLostTimeout(0);
         stats = new Statistics();
         startTime = Instant.now();
@@ -247,8 +243,6 @@ public class App extends WebSocketServer {
         }
         return retval;
     }
-
-
 
     public static void main(String[] args) {
 

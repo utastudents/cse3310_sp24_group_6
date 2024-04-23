@@ -15,7 +15,19 @@
     Create a one-dimensional array of 2500 elements for the grid 50 by 50.
     Random fill the array with 2500 characters     
 */
+    // USE THE GRIDGENERATED ARRAY TO FILL
     const squareGrid = new Array(2500);
+
+    var sgindx = 0;  
+    for(let i = 0; i < 50; i++)
+    {
+      for(let j = 0; j < 50; j++)
+      {
+        squareGrid[sgindx] = // gridgeneratorarray[i][j];
+        sgindx++;
+      }
+    }
+    
     for (let index=0;index<squareGrid.length;index++) {
         let charCode = Math.round(65 + Math.random() * 25);
         squareGrid[index]=String.fromCharCode(charCode);
@@ -427,6 +439,7 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
         StartCoordinate = -1;
         EndCoordinate = -1;
         Direction = 1;
+        points = 0;
     }
     var connection = null;
     var serverUrl;

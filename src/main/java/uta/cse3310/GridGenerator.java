@@ -129,6 +129,11 @@ public class GridGenerator {
         return this.placedWords;
     }
 
+    public String[][] getGrid()
+    {
+        return this.grid;
+    }
+
     public String read(Word word) {
             ArrayList<String> result;
             int size = word.getWord().length();

@@ -103,13 +103,25 @@ public class Game {
     }
     
     public void Update(UserEvent U) {
-        // Check if a chosen word is legitimate
-            //Insert implementation here and show across
-            //the different clients
+        System.out.println("The user event is " + U.PlayerIdx + "  " + U.Button);
+        // Check if a chosen word is legitimate and is correct
+        int[] coord1 = new int[2];
+        int[] coord2 = new int[2];
+
+        coord1[0] = U.StartCoordinate/50;
+        coord1[1] = U.EndCoordinate % 50;
+        coord2[0] = U.StartCoordinate/50;
+        coord2[1] = U.EndCoordinate % 50;
+        if(verifyWord(coord1, coord2))
+        {
+            U.points++;
+        }
 
         // Check if the time is up, the game is over and choose who won
             //if player won, send to win screen
             //if player lost, send to lose screen
+
+        
 
         // Check if a message has been sent to the chat box
             //if a message has been sent, send to the clients
@@ -136,7 +148,7 @@ public class Game {
         }, 0, 1000);
     }
 
-    public boolean verifyWord(String wordString, int coord1[], int coord2[], Word wordWord) {  
+    public boolean verifyWord(int coord1[], int coord2[]) {  
         boolean result = false;
 
         for(Word w : totalwords) {

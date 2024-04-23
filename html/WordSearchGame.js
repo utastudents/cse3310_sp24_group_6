@@ -7,7 +7,7 @@ var array2D;
 var Name = "";
 var nick = "";
 var Pin = -1;
-//var Players = "Player0";
+var Players = -1;
 var Button = -1;
 var PlayerIdx = -1;
 var GameId = -1;

@@ -4,7 +4,7 @@ package uta.cse3310;
 
 public class UserEvent {
     int GameId; // the game ID on the server
-    PlayerType PlayerIdx; // 
+    PlayerType PlayerIdx = PlayerType.Player0;
     int Button; // 
     String PlayerNick;
     String Pin;
@@ -14,7 +14,9 @@ public class UserEvent {
     WordType wordType;
     boolean newPlayer;
     
-    UserEvent() {}
+    UserEvent() {
+        
+    }
     
     UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button, String PlayerNick) {
         GameId = _GameId;

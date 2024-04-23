@@ -35,7 +35,17 @@ public class WordBank
       catch (Exception e) {
          e.getStackTrace();
       }
-   } 
+   }
+
+   public String[] getWordString() {
+      String[] result = new String[this.WordList.size()];
+      int i = 0;
+      for(Word w: this.WordList) {
+         result[i] = w.getWord();
+         i++;
+      }
+      return result;
+   }
    
    public void add(Word newWord) {
       this.foundWords.add(newWord);   // adds new word to the foundwords

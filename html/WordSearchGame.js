@@ -1,6 +1,7 @@
 var connection = null;
 var serverUrl;
 var gameid = -1;
+var idx = 0;
 var array2D;
 
 var Name;
@@ -44,7 +45,6 @@ connection.onclose = function (evt) {
 }
 connection.onmessage = function (evt) {
     var msg;
-    var idx = 0;
     msg = evt.data;
 
     console.log("Message received: " + msg);

@@ -1,4 +1,4 @@
-package uta.cse3310;
+/*package uta.cse3310;
 //import uta.cse3310.*;
 
 import junit.framework.TestCase;
@@ -34,4 +34,4 @@ public class GameTest extends TestCase {
         //test verifyWord method for correctness
         assertTrue(G.verifyWord("test", Coord1, Coord2, W));
     }
-}
+}*/

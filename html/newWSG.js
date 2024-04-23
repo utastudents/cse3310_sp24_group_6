@@ -10,23 +10,14 @@
     var endCoordinate = -1;
     var start = 0;
     var idx = Math.round(1 + Math.random()*3);
+    var version = "unknown";
     const PlayerToColor = new Map([[0,"royalblue"],[1,"blue"],[2,"red"],[3,"yellow"],[4,"green"],[5,"brown"]]);
 /*
     Create a one-dimensional array of 2500 elements for the grid 50 by 50.
     Random fill the array with 2500 characters     
 */
-    // USE THE GRIDGENERATED ARRAY TO FILL
-    const squareGrid = new Array(2500);
-
-    var sgindx = 0;  
-    for(let i = 0; i < 50; i++)
-    {
-      for(let j = 0; j < 50; j++)
-      {
-        squareGrid[sgindx] = // gridgeneratorarray[i][j];
-        sgindx++;
-      }
-    }
+    var js2darrstring = '$(js2darrstring)';
+    var jv2darray = JSON.parse(js2darrstring);
     
     for (let index=0;index<squareGrid.length;index++) {
         let charCode = Math.round(65 + Math.random() * 25);
@@ -388,6 +379,18 @@
          for(let i=0;i<l;i++)
            document.getElementById(startPosition+i*(50+1)).innerHTML=A[i];
     }
+
+    addWordToGrid(array2D)
+    {
+      var sgindx = 0;  
+      for(let i = 0; i < 50; i++)
+      {
+        for(let j = 0; j < 50; j++)
+        {
+          squareGrid[sgindx] = // gridgeneratorarray[i][j];
+        }
+      }
+    }
 /*
    This function adds a row at the bottom of table Player Waiting or Games Won Leaderboard or Points LeaderBoard
 */
@@ -440,6 +443,7 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
         EndCoordinate = -1;
         Direction = 1;
         points = 0;
+        version = "uknown"
     }
     var connection = null;
     var serverUrl;
@@ -533,6 +537,7 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
         U.Direction = direction;
+        U.version = version;
         connection.send(JSON.stringify(U));
         console.log(JSON.stringify(U))
     }

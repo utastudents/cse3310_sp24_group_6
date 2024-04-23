@@ -151,7 +151,8 @@ public class App extends WebSocketServer {
         // allows the websocket to give us the Game when a message arrives..
         // it stores a pointer to G, and will give that pointer back to us
         // when we ask for it
-        conn.setAttachment(G);
+        conn.setAttachment(G); // Takes a pointer and stores it in the websocket object
+        // UPDATE HERE 
 
         Gson gson = new Gson();
 
@@ -194,11 +195,6 @@ public class App extends WebSocketServer {
         // Get our Game Object
         Game G = conn.getAttachment();
         G.Update(U);
-
-        
-
-
-        
 
         // send out the game state every time
         // to everyone
@@ -264,11 +260,6 @@ public class App extends WebSocketServer {
         System.out.println("websocket Server started on port: " + port);
 
         A.version = System.getenv("VERSION");
-        System.out.println("Current github hash : " + A.version);
-
-        // Testing env 
-        String WSPort = System.getenv("WEBSOCKET_PORT");
-        System.out.println("Current port : " +WSPort);
-
+        System.out.println("Current github hash : " + A.version); // Will work once it is connected to the web site
     }
 }

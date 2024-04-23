@@ -7,11 +7,6 @@ public class GameLobby
     //private int playersInGame = 0;  // Number of players currently in a game
     private int gtWanted = 0;       // Game type the player is seeking
     private Game G = null;          // Game that will be returned 
-    //private int matchFound = 0;
-
-    private Vector<Player> LobbyList = new Vector<Player>();
-    // PlayerList is all players that have logged into the game in this instance of the program running
-    // LobbyList is all players who are waiting for their game to start, or who are currently in a game
 
     public GameLobby() {}
 
@@ -19,9 +14,9 @@ public class GameLobby
     // instead of making a new game whenever a player requests a game type that has not already been requested
     public Game matchMaking(Vector<Player> PlayerList, Vector<Game> ActiveGames ) 
     {
-        int pForTwo = 0;
-        int pForThree = 0;
-        int pForFour = 0;
+        int pForTwo = 0; // The number of players that currently want a 2 player game
+        int pForThree = 0; // 3 player game
+        int pForFour = 0; // 4 player game
 
         // Count up how many players currently want each type of game
         for (Player p : PlayerList) 
@@ -42,6 +37,10 @@ public class GameLobby
                 ++pForFour;
             }
         }
+
+        System.out.println("Players that want 2 player: "+pForTwo);
+        System.out.println("Players that want 3 player: "+pForThree);
+        System.out.println("Players that want 4 player: "+pForFour);
 
         Player player1 = null;
         Player player2 = null;
@@ -100,12 +99,12 @@ public class GameLobby
                         ++playersNeeded;
 
                     }
-                    else if (gtWanted == 3 && playersNeeded == 2)
+                    else if (gtWanted == 3 && playersNeeded == 1)
                     {
                         player2 = currPlayer;
                         ++playersNeeded;
                     }
-                    else if (gtWanted == 3 && playersNeeded == 3)
+                    else if (gtWanted == 3 && playersNeeded == 2)
                     {
                         player3 = currPlayer;
                         ++playersNeeded;
@@ -136,12 +135,12 @@ public class GameLobby
                         player1 = currPlayer;
                         ++playersNeeded;
                     }
-                    else if (gtWanted == 3 && playersNeeded == 2)
+                    else if (gtWanted == 3 && playersNeeded == 1)
                     {
                         player2 = currPlayer;
                         ++playersNeeded;
                     }
-                    else if (gtWanted == 3 && playersNeeded == 3)
+                    else if (gtWanted == 3 && playersNeeded == 2)
                     {
                         player3 = currPlayer;
                         ++playersNeeded;
@@ -162,3 +161,5 @@ public class GameLobby
         return G; // Returns null if not enough players for any game
     }
 }
+
+// Change player num to 0 to show that they are no longer looking for a game once they are added to a new game?

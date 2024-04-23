@@ -55,9 +55,15 @@ function FindGame() {
     Pin_=document.getElementById("pin").value;
     Invoke_= 1;
 
-    U.PlayerNick = PlayerNick_;
+    U.Playernick = PlayerNick_;
     U.Pin = Pin_;
 
     connection.send(JSON.stringify(U));
     console.log(JSON.stringify(U));
+
+    document.getElementById("page2").style.display="none"; 
+    document.getElementById("page3").style.display="none"; 
+    document.getElementById("page4").style.display="block";
+    document.getElementById("page6").style.display="none";
+    document.getElementById("page7").style.display="none";
 }

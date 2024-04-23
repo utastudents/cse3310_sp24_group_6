@@ -8,7 +8,7 @@ class UserEvent {
     Button = -1;
     Playernick = -1;
     Pin = -1;
-    CallMatchMake = 0;
+    Invoke = 0;
     Status = -1;   
 }
 

@@ -160,6 +160,8 @@ public class GameLobby
         }
         return G; // Returns null if not enough players for any game
     }
-}
 
-// Change player num to 0 to show that they are no longer looking for a game once they are added to a new game?
+    public void Update(UserEvent U) {
+    
+    }
+}

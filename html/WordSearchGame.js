@@ -286,8 +286,8 @@ function FindGame(i)
       newPlayer = true; 
       sendUpdate();
       if(nick != "" && pin != "") {
-      document.getElementById("p4p").innerHTML="You are: "+nick;
-      document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
+      document.getElementById("p4h4").innerHTML="You are: "+nick;
+      document.getElementById("p4h4_2").innerHTML="Game Type: "+players+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";

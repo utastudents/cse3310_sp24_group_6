@@ -137,14 +137,7 @@ public class App extends WebSocketServer {
             PlayerList.add(player);
         }
         
-        Game G = null;
-        while(G == null) // Keep trying until matched with game 
-        {
-            if(ActiveGames.size() < 5)
-            {
-                G = GL.matchMaking(PlayerList, ActiveGames);
-            }
-        }
+        Game G = GL.matchMaking(PlayerList, ActiveGames); // Changing to this till better solution is found 
         
         // create an event to go to only the new player
         E.YouAre = G.Players;

@@ -476,7 +476,8 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
     var connection = null;
     var serverUrl;
     var gameid = -1;
-    serverUrl = "ws://" + window.location.hostname +":"+ (parseInt(location.port) + 100);
+//    serverUrl = "ws://" + window.location.hostname +":"+ (parseInt(location.port) + 100);
+    let serverUrl = "ws://" + window.location.hostname + `:${parseInt(window.location.port) + 100}`;
     // Create the connection with the server
     connection = new WebSocket(serverUrl);
     connection.onopen = function (evt) {
@@ -566,7 +567,7 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
         U.wordType = DirToWordType.get(direction);
-console.log(U);
+        console.log(U);
         if (connection.readyState === WebSocket.OPEN) {
           connection.send(JSON.stringify(U));
           console.log(JSON.stringify(U))

@@ -113,6 +113,8 @@ var jsongame = JSON.parse(jsonstringgame)
 
 var count = 0;
 
+console.log("test");
+
 // Make conversion from 2D to 1D array
 for (let i = 0; i < 50; i++) {
     for (let j = 0; j < 50; j++) {
@@ -120,6 +122,7 @@ for (let i = 0; i < 50; i++) {
         count++;
     }
 }
+console.log("test");
 
 // Add words from list to the html wordbank
 let A = Array.from(listofwords);
@@ -128,6 +131,7 @@ for(let i = 0; i < l; i++)
 {
     addWordBank("p5table4",A[i]);
 }
+console.log("test");
 
 // Add button functionality to the grid
 for (let index=0;index<squareGrid.length;index++) {
@@ -141,6 +145,7 @@ for (let index=0;index<squareGrid.length;index++) {
     }
     board.appendChild(button);
 }
+console.log("test");
 
 /* ========================================================================================================================== */
 

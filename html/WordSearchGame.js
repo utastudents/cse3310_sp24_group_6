@@ -147,7 +147,9 @@ for (let index=0;index<squareGrid.length;index++) {
 function sendUpdate() {
     U = new UserEvent();
     U.Button = -1;
-    if(idx == 1)
+    if(idx == 0)
+        U.PlayerIdx = "Player0";
+    else if(idx == 1)
         U.PlayerIdx = "Player1";
     else if(idx == 2)
         U.PlayerIdx = "Player2";

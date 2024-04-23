@@ -79,9 +79,9 @@ public class App extends WebSocketServer {
 
     private String version = null;
 
-    GameLobby GL = new GameLobby();
-
     WordBank W = new WordBank();
+    
+    GameLobby GL = new GameLobby();
 
     public WordBank getWordBankW() 
     {
@@ -110,8 +110,11 @@ public class App extends WebSocketServer {
         Player player = null;
 
         //TODO - Retrieve playernick and num from ui 
+
         String playerNick = "TEST";
         int playerNum = 2; // Gametype the player is seeking
+        System.out.println("Player nick name is: "+playerNick+"\n");
+        System.out.println("Player requested game type is: "+playerNum+"\n");
 
         // If PlayerList is not empty,
         // look through player list to check if this player is a returning player
@@ -126,6 +129,7 @@ public class App extends WebSocketServer {
                 {
                     // This is a returning player, don't make a new player obj
                     player = P;
+                    // TO DO : CHANGE PLAYER num to the requested player num 
                     foundPlayer = 1;
                 }
             }
@@ -136,7 +140,7 @@ public class App extends WebSocketServer {
             player = new Player(playerNick, playerNum);
             PlayerList.add(player);
         }
-        
+
         Game G = GL.matchMaking(PlayerList, ActiveGames); // Changing to this till better solution is found 
         
         // create an event to go to only the new player
@@ -240,6 +244,28 @@ public class App extends WebSocketServer {
 
     public static void main(String[] args) {
 
+        String HttpPort = System.getenv("HTTP_PORT");
+        int port = 9006;
+        if (HttpPort!=null) {
+            port = Integer.valueOf(HttpPort);
+        }
+
+        HttpServer H = new HttpServer(port, "./html");
+        H.start();
+        System.out.println("http Server started on port: " + port);
+
+        port = 9106;
+        String WSPort = System.getenv("WEBSOCKET_PORT");
+        if (WSPort!=null) {
+            port = Integer.valueOf(WSPort);
+        }
+
+        App A = new App(port);
+        A.setReuseAddr(true);
+        A.start();
+        System.out.println("websocket Server started on port: " + port);
+
+        /* 
         // Set up the http server
         int port = 9006;
         HttpServer H = new HttpServer(port, "./html");
@@ -252,9 +278,10 @@ public class App extends WebSocketServer {
         App A = new App(port);
         A.setReuseAddr(true);
         A.start();
-        System.out.println("websocket Server started on port: " + port);
+        System.out.println("websocket Server started on port: " + port); */
 
         A.version = System.getenv("VERSION");
         System.out.println("Current github hash : " + A.version); // Will work once it is connected to the web site
+
     }
 }

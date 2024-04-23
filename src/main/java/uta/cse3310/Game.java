@@ -61,6 +61,11 @@ public class Game {
         
     }
 
+    // Added to be used by GameLobbyTest
+    public GameType getGameType() {
+        return gameType;
+    }
+
     public void StartGame() {
         CurrentTurn = PlayerType.Player1;
         //Msg[0] = "Game has started! It's Player 1's turn.";

@@ -162,6 +162,6 @@ public class GameLobby
     }
 
     public void Update(UserEvent U) {
-    
+
     }
 }

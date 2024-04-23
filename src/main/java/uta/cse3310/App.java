@@ -198,12 +198,18 @@ public class App extends WebSocketServer {
         // Get our Game Object
         Game G = conn.getAttachment();
 
-        if(U.invoke == 1)
+        /*if(U.invoke == 1)
         {
+            P.setPlayerNick
+            P.setSavedPin
             G = GL.matchMaking(PlayerList, ActiveGames);
             U.invoke = -1;
-        }
 
+            if(G != null)
+            {
+
+            }
+        }*/
         G.Update(U);
 
         // send out the game state every time

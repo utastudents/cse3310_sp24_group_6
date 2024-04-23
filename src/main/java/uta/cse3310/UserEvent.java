@@ -7,7 +7,7 @@ public class UserEvent {
     PlayerType PlayerIdx;
     int Button; 
     String PlayerNick;
-    String Pin;
+    int Pin;
     GameType gameType;
     int StartCoordinate;
     int EndCoordinate;

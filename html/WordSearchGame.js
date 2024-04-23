@@ -6,7 +6,7 @@ var array2D;
 
 var Name = "unkown";
 var Pin = -1;
-var Players = "Player0";
+//var Players = "Player0";
 var Button = -1;
 var PlayerIdx = -1;
 var GameId = -1;
@@ -19,7 +19,7 @@ const squareGrid = new Array(2500);
 class UserEvent {
     Name = "unknown";
     Pin = "0000";
-    Players = 0;
+    //Players = 0;
     Button = -1;
     PlayerIdx = 0;
     GameId = 0;
@@ -158,7 +158,7 @@ function sendUpdate() {
         U.PlayerIdx = "player4";
     U.GameId = gameid;
     U.Name = nick;
-    U.Players = players;
+    //U.Players = players;
     U.Pin = pin;
     U.StartCoordinate = startCoordinate;
     U.EndCoordinate = endCoordinate;

@@ -518,6 +518,12 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
         U.Direction = direction;
-        connection.send(JSON.stringify(U));
-        console.log(JSON.stringify(U))
+
+        if (connection.readyState === WebSocket.OPEN) {
+          connection.send(JSON.stringify(U));
+          console.log(JSON.stringify(U))
+        }
+        else {
+          console.log("Connection not open. Unable to send update.");
+        }
     }

@@ -1,7 +1,7 @@
 var Button_ = -1;
 var PlayerNick_ = -1;
 var Pin_ = -1;
-var CallMatchMake_ = 0;
+var Invoke_ = -1;
 var Status_ = -1;
 
 class UserEvent {
@@ -41,6 +41,23 @@ function NewPlayer() {
     document.getElementById("page2").style.display="block";        
 }
 
-function catchLogin() {
+function ReturnPlayer()
+{
+    document.getElementById("page1").style.display="none"; 
+    document.getElementById("page2").style.display="none"; 
+    document.getElementById("page3").style.display="block";        
+}
 
+function FindGame() {
+    U = new UserEvent();
+
+    PlayerNick_=document.getElementById("name").value;
+    Pin_=document.getElementById("pin").value;
+    Invoke_= 1;
+
+    U.PlayerNick = PlayerNick_;
+    U.Pin = Pin_;
+
+    connection.send(JSON.stringify(U));
+    console.log(JSON.stringify(U));
 }

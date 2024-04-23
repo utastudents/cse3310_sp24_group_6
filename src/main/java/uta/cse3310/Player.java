@@ -15,6 +15,9 @@ public class Player {
     private int Coord2[];
     private PlayerType pt = PlayerType.Player0;
 
+    // Blank Constructor
+    public Player() {}
+
     // Constructor
     public Player(String PlayNick, int PlayerNum) {
         this.PlayNick = PlayNick;
@@ -27,11 +30,18 @@ public class Player {
         //this.Coord2 = new int[MAX_GRID_SIZE-1]; 
     }
 
-    public String getPlayerNick()
-    {
+    public String getPlayerNick() {
         return this.PlayNick;
     }
-    
+
+    public void setPlayerNick(String playerNick) {
+        PlayNick = playerNick;
+    }
+
+    public void setSavedPin(int savedPin) {
+        SavedPin = savedPin;
+    }
+
     public boolean checkUnique(Vector<Player> PlayerList) {
         for(int i = 0; i < PlayerList.size(); i++) {            //  While going through the entire vector
             if(this.PlayNick == PlayerList.get(i).PlayNick) {   //  If there is a copy of a name

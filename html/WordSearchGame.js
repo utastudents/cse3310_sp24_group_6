@@ -44,6 +44,7 @@ connection.onclose = function (evt) {
 }
 connection.onmessage = function (evt) {
     var msg;
+    var idx = 0;
     msg = evt.data;
 
     console.log("Message received: " + msg);
@@ -148,15 +149,15 @@ function sendUpdate() {
     U = new UserEvent();
     U.Button = -1;
     if(idx == 0)
-        U.PlayerIdx = "Player0";
+        U.PlayerIdx = "player0";
     else if(idx == 1)
-        U.PlayerIdx = "Player1";
+        U.PlayerIdx = "player1";
     else if(idx == 2)
-        U.PlayerIdx = "Player2";
+        U.PlayerIdx = "player2";
      else if(idx == 3)
-        U.PlayerIdx = "Player3";
+        U.PlayerIdx = "player3";
     else if(idx == 4)
-        U.PlayerIdx = "Player4";
+        U.PlayerIdx = "player4";
     U.GameId = gameid;
     U.Name = nick;
     U.Players = players;

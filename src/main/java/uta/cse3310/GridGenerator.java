@@ -184,6 +184,10 @@ public class GridGenerator {
         return this.genTime;
     }
 
+    public getArray() {
+        return this.grid;
+    }
+
     public double arrMax(double[] input) {
         //Simple findMax function, nothing special here
         double max = 0;

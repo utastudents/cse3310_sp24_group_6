@@ -237,6 +237,19 @@ public class GridGenerator {
         return result;
     }
 
+    public double getAverageOrient() {
+        double result;
+        result += result[0];
+        result += result[1];
+        result += result[2];
+        result += result[3];
+        result += result[4];
+        result += result[5];
+        result += result[6];
+        result += result[7];
+        return result / 8;
+    }
+
     private double getDensity() {
         //Counts letters not "-" out of 2500, doing it this way means letters used in multiple words are counted only once and the answer is accurate
         double letters = 0;

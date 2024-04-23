@@ -142,6 +142,8 @@ public class App extends WebSocketServer {
         }
 
         Game G = GL.matchMaking(PlayerList, ActiveGames); // Changing to this till better solution is found 
+        G.GameId = GameId;
+        GameId++;
         
         // create an event to go to only the new player
         E.YouAre = G.Players;
@@ -264,21 +266,6 @@ public class App extends WebSocketServer {
         A.setReuseAddr(true);
         A.start();
         System.out.println("websocket Server started on port: " + port);
-
-        /* 
-        // Set up the http server
-        int port = 9006;
-        HttpServer H = new HttpServer(port, "./html");
-        H.start();
-        System.out.println("http Server started on port: " + port);
-
-        // create and start the websocket server
-
-        port = 9106;
-        App A = new App(port);
-        A.setReuseAddr(true);
-        A.start();
-        System.out.println("websocket Server started on port: " + port); */
 
         A.version = System.getenv("VERSION");
         System.out.println("Current github hash : " + A.version); // Will work once it is connected to the web site

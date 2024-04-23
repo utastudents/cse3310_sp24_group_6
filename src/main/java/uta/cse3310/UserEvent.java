@@ -15,10 +15,11 @@ public class UserEvent {
     
     UserEvent() {}
     
-    UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button) {
+    UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button, String PlayerNick) {
         GameId = _GameId;
         PlayerIdx = _PlayerIdx;
         Button = _Button;
+        PlayerNick = PlayerNick;
     }
 }
 

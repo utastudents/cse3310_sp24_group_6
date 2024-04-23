@@ -184,7 +184,7 @@ public class GridGenerator {
         return this.genTime;
     }
 
-    public getArray() {
+    public String [][] getArray() {
         return this.grid;
     }
 
@@ -242,15 +242,15 @@ public class GridGenerator {
     }
 
     public double getAverageOrient() {
-        double result;
-        result += result[0];
-        result += result[1];
-        result += result[2];
-        result += result[3];
-        result += result[4];
-        result += result[5];
-        result += result[6];
-        result += result[7];
+        double result = 0;
+        result += this.gridOrient[0];
+        result += this.gridOrient[1];
+        result += this.gridOrient[2];
+        result += this.gridOrient[3];
+        result += this.gridOrient[4];
+        result += this.gridOrient[5];
+        result += this.gridOrient[6];
+        result += this.gridOrient[7];
         return result / 8;
     }
 

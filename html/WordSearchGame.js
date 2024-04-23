@@ -280,6 +280,7 @@ function FindGame(i)
     { 
       nick=document.getElementById("name").value;
       pin=document.getElementById("pin").value;
+      sendUpdate();
       if(nick != "" && pin != "") {
       document.getElementById("p4p").innerHTML="You are: "+nick;
       document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
@@ -298,7 +299,6 @@ function FindGame(i)
       else {
         document.getElementById("p2errMsg2").innerHTML="Please enter your name and create a new pin.";
       }       
-      sendUpdate();
     }
 
 function FindGame2(i)

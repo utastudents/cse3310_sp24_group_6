@@ -77,6 +77,10 @@ public class App extends WebSocketServer {
 
     private Statistics stats;
 
+    private String version = null;
+
+    GameLobby GL = new GameLobby();
+
     WordBank W = new WordBank();
 
     public WordBank getWordBankW() 
@@ -96,44 +100,12 @@ public class App extends WebSocketServer {
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
 
-    private static String getCurrHash()
-    {
-        try {
-            // Execute Git command to retrieve the latest commit hash
-            Process process = Runtime.getRuntime().exec("git rev-parse HEAD");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            // Read the output of the command and add it to a string, this should be the hash
-            String line; 
-            StringBuilder hash = new StringBuilder();
-            while ((line = reader.readLine()) != null) 
-            {
-                    hash.append(line); 
-            }
-
-            // Wait for the command to finish and get the exit code
-            int exitCode = process.waitFor();
-
-            // If the command was successful, return the commit hash
-            if (exitCode == 0) // Git returns 0 if everything went well
-            { 
-                System.out.println("Current git hash: "+ hash);
-                return hash.toString().trim(); // Success
-            } else {
-                System.err.println("Error: Git command failed with exit code " + exitCode);
-            }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return "unknown"; // Defaut if there is an issue getting the hash
-    }
-
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         connectionId++;
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
-        GameLobby GL = new GameLobby();
+
 
         Player player = null;
 
@@ -170,7 +142,7 @@ public class App extends WebSocketServer {
         {
             if(ActiveGames.size() < 5)
             {
-                G = GL.matchMaking(ActiveGames, PlayerList);
+                G = GL.matchMaking(PlayerList, ActiveGames);
             }
         }
         
@@ -181,7 +153,8 @@ public class App extends WebSocketServer {
         // allows the websocket to give us the Game when a message arrives..
         // it stores a pointer to G, and will give that pointer back to us
         // when we ask for it
-        conn.setAttachment(G);
+        conn.setAttachment(G); // Takes a pointer and stores it in the websocket object
+        // UPDATE HERE 
 
         Gson gson = new Gson();
 
@@ -224,11 +197,6 @@ public class App extends WebSocketServer {
         // Get our Game Object
         Game G = conn.getAttachment();
         G.Update(U);
-
-        
-
-
-        
 
         // send out the game state every time
         // to everyone
@@ -293,6 +261,7 @@ public class App extends WebSocketServer {
         A.start();
         System.out.println("websocket Server started on port: " + port);
 
-
+        A.version = System.getenv("VERSION");
+        System.out.println("Current github hash : " + A.version); // Will work once it is connected to the web site
     }
 }

@@ -16,7 +16,7 @@ public class Word {
         this.found = false;
     }
 
-    //Basic getters/setters, setters never really used, but it's not like they were hard to implement
+    //Basic getters/setters, setters are used for GameTest
     public int[] getCoord1() {
         return coord1;
     }

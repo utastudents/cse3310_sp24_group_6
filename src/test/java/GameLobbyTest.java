@@ -6,108 +6,199 @@ public class GameLobbyTest extends TestCase {
 
     private Vector<Game> ActiveGames = new Vector<Game>();
     private Vector<Player> PlayerList = new Vector<Player>();
-    private Vector<Player> LobbyList = new Vector<Player>();
 
     public void testGameLobby()
     {
-
-        // ------------ TEST 1 ------------
-        // Tests that you cannot create a new game if there are already 5 in progress
+        // TEST 1
         System.out.println("");
-        System.out.println("Max Games Test");
-        System.out.println("------------------");
+        System.out.println("Not Enough Players For New Game Test");
+        System.out.println("------------------------------------");
         System.out.println("");
 
-        String playerNick = "TEST";
-        int playerNum = 4; // Gametype the player is seeking
-        Player player = new Player(playerNick, playerNum);
+        String playerNick = "PLAYER1";
+        int playerNum = 2; // Gametype the player is seeking
+        Player player1 = new Player(playerNick, playerNum);
+        PlayerList.add(player1);
 
-        // Making 5 games to simulate 5 games currently in progress
-        Game A = new Game(GameType.Game2, PlayerType.Player1);
-        ActiveGames.add(A);
-        Game B = new Game(GameType.Game2, PlayerType.Player1);
-        ActiveGames.add(B);
-        Game C = new Game(GameType.Game2, PlayerType.Player1);
-        ActiveGames.add(C);
-        Game D = new Game(GameType.Game2, PlayerType.Player1);
-        ActiveGames.add(D);
-        Game E = new Game(GameType.Game2, PlayerType.Player1);
-        ActiveGames.add(E);
+        playerNick = "PLAYER2";
+        playerNum = 3;
+        Player player2 = new Player(playerNick, playerNum);
+        PlayerList.add(player2);
+
+        playerNick = "PLAYER3";
+        playerNum = 4;
+        Player player3 = new Player(playerNick, playerNum);
+        PlayerList.add(player3);
 
         GameLobby GL = new GameLobby();
-        Game G = GL.matchMaking(ActiveGames, player);
-        System.out.println("Count ActiveGames = "+ActiveGames.size());
-
-        if(G == null)
+        Game G = GL.matchMaking(PlayerList, ActiveGames);
+        System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be no games
+        if(ActiveGames.size() == 0)
         {
-            System.out.println("Max games test success\n");
+            System.out.println("Not enough players for a new game test success");
+        }
+        
+        PlayerList.clear(); // Clear out the player list
+
+        // TEST 2
+        System.out.println("");
+        System.out.println("Two Player Game Test");
+        System.out.println("--------------------");
+        System.out.println("");
+
+        // Create 2 players that want a 2 player game
+
+        playerNick = "PLAYER1";
+        playerNum = 4;
+        Player player4 = new Player(playerNick, playerNum); // Extra player that does not want a 2 player game
+        PlayerList.add(player4);
+
+        playerNick = "PLAYER2";
+        playerNum = 2;
+        Player player5 = new Player(playerNick, playerNum);
+        PlayerList.add(player5);
+
+        playerNick = "PLAYER3";
+        playerNum = 2;
+        Player player6 = new Player(playerNick, playerNum);
+        PlayerList.add(player6);
+
+        G = GL.matchMaking(PlayerList, ActiveGames);
+        System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be 1 game that is a 2 player game
+
+        if(ActiveGames.size() == 0)
+        {
+            System.out.println("Active Games is empty, two player game test failed");
         }
 
-        // Reset the ActiveGames vector
-        ActiveGames.clear();
-        System.out.println("Count ActiveGames = "+ActiveGames.size());
+        int gameNum = 0;
 
-
-        // ------------ TEST 2 ------------
-        // Tests that a player can join a brand new game if there are none that fit thier gametype request
-        System.out.println("");
-        System.out.println("Create & Join New Game Test");
-        System.out.println("---------------------------");
-        System.out.println("");
-
-        // Adding in games of the game types that don't match what the player wants
-    
-        ActiveGames.add(A);
-        ActiveGames.add(B);
-
-        int bCount = ActiveGames.size(); // Should be 2 right now
-        System.out.println("Num of Active Games before matching = "+bCount);
-
-        G = GL.matchMaking(ActiveGames, player);
-        int aCount = ActiveGames.size(); // Should be 3 right now
-        System.out.println("Num of Active Games after matching = "+aCount);
-
-        int gameNum = 2+(G.GameType.ordinal()); // Add 2 so GameNum will equal int value of Game type (Game2 = int 2)
-        int playersInGame = G.Players.ordinal();
-
-        if ((gameNum == 4) && (playersInGame == 1)) // If the newest game made is a 4 player game with 1 player waiting
+        if(ActiveGames.size() == 1)
         {
-            System.out.println("Joining lobby for newly created game test success\n");
+            gameNum = 2+(G.getGameType().ordinal()); // Gametype of G as an int
+            if(gameNum == 2)
+            {
+                System.out.println("Two player game test success");
+            }
         }
 
-        // Reset the ActiveGames vector
-        ActiveGames.clear();
-        System.out.println("Count ActiveGames = "+ActiveGames.size());
+        PlayerList.clear(); // Clear out the player list
+        ActiveGames.clear(); // Clear out the active games
 
-        // ------------ TEST 3 ------------ TODO
-        // Tests that a player can join a active game if it matches the game type they wanted and has space for them
-
+        // TEST 3
         System.out.println("");
-        System.out.println("Join Active Game Test");
-        System.out.println("---------------------------");
+        System.out.println("Three Player Game Test");
+        System.out.println("----------------------");
         System.out.println("");
 
-        // Initalize game of the same type that the player wants that has just enough space for the player to join it
-        Game F = new Game(GameType.Game4, PlayerType.Player3);
-        ActiveGames.add(F);
+        // Create 3 players that want a 3 player game
 
-        bCount = ActiveGames.size(); // Should be 1 right now
-        System.out.println("Num of Active Games before matching = "+bCount);
+        playerNick = "PLAYER1";
+        playerNum = 4;
+        Player player7 = new Player(playerNick, playerNum); // Extra player that does not want a 3 player game
+        PlayerList.add(player7);
 
-        G = GL.matchMaking(ActiveGames, player);
+        playerNick = "PLAYER2";
+        playerNum = 2;
+        Player player8 = new Player(playerNick, playerNum); // Extra player that does not want a 3 player game
+        PlayerList.add(player8);
 
-        aCount = ActiveGames.size(); // Should still be 1 right now
-        System.out.println("Num of Active Games after matching = "+aCount);
+        playerNick = "PLAYER3";
+        playerNum = 3;
+        Player player9 = new Player(playerNick, playerNum); 
+        PlayerList.add(player9);
 
-        // No new games should have been created and the player type of G should have changed to Player4 if the player 
-        // will be joining this game
-        // G should also not be null
+        playerNick = "PLAYER4";
+        playerNum = 3;
+        Player player10 = new Player(playerNick, playerNum);
+        PlayerList.add(player10);
 
-        playersInGame = G.Players.ordinal(); // Players currently in G
+        playerNick = "PLAYER5";
+        playerNum = 3;
+        Player player11 = new Player(playerNick, playerNum);
+        PlayerList.add(player11);
 
-        if(ActiveGames.size() == 1 && playersInGame == 4 && G != null)
+        G = GL.matchMaking(PlayerList, ActiveGames);
+        System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be 1 game that is a 3 player game
+
+        if(ActiveGames.size() == 0)
         {
-            System.out.println("Joining active game test success\n");
+            System.out.println("Active Games is empty, three player game test failed");
         }
+
+        gameNum = 0;
+
+        if(ActiveGames.size() == 1)
+        {
+            gameNum = 2+(G.getGameType().ordinal()); // Gametype of G as an int
+            if(gameNum == 3)
+            {
+                System.out.println("Three player game test success");
+            }
+        }
+
+        PlayerList.clear(); // Clear out the player list
+        ActiveGames.clear(); // Clear out the active games
+
+        // TEST 4
+        System.out.println("");
+        System.out.println("Four Player Game Test");
+        System.out.println("---------------------");
+        System.out.println("");
+
+        
+        // Create 4 players that want a 4 player game
+
+        playerNick = "PLAYER1";
+        playerNum = 2;
+        Player player12 = new Player(playerNick, playerNum); // Extra player that does not want a 4 player game
+        PlayerList.add(player12);
+
+        playerNick = "PLAYER2";
+        playerNum = 3;
+        Player player13 = new Player(playerNick, playerNum); // Extra player that does not want a 4 player game
+        PlayerList.add(player13);
+
+        playerNick = "PLAYER3";
+        playerNum = 4;
+        Player player14 = new Player(playerNick, playerNum); 
+        PlayerList.add(player14);
+
+        playerNick = "PLAYER4";
+        playerNum = 4;
+        Player player15 = new Player(playerNick, playerNum); 
+        PlayerList.add(player15);
+
+        playerNick = "PLAYER5";
+        playerNum = 4;
+        Player player16 = new Player(playerNick, playerNum);
+        PlayerList.add(player16);
+
+        playerNick = "PLAYER6";
+        playerNum = 4;
+        Player player17 = new Player(playerNick, playerNum);
+        PlayerList.add(player17);
+
+        G = GL.matchMaking(PlayerList, ActiveGames);
+        System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be 1 game that is a 3 player game
+
+        if(ActiveGames.size() == 0)
+        {
+            System.out.println("Active Games is empty, four player game test failed");
+        }
+
+        gameNum = 0;
+
+        if(ActiveGames.size() == 1)
+        {
+            gameNum = 2+(G.getGameType().ordinal()); // Gametype of G as an int
+            if(gameNum == 4)
+            {
+                System.out.println("Four player game test success");
+            }
+        }
+
+        PlayerList.clear(); // Clear out the player list
+        ActiveGames.clear(); // Clear out the active games
     }
 }

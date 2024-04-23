@@ -22,6 +22,7 @@ public class Game {
     private int time;
     public PlayerType CurrentTurn;
     
+    
     // Constructor for the different game types
     public Game(Player player1, Player player2) {
         this.player.add(player1);
@@ -60,6 +61,11 @@ public class Game {
         
     }
 
+    // Added to be used by GameLobbyTest
+    public GameType getGameType() {
+        return gameType;
+    }
+
     public void StartGame() {
         CurrentTurn = PlayerType.Player1;
         //Msg[0] = "Game has started! It's Player 1's turn.";
@@ -94,14 +100,13 @@ public class Game {
 
         return idx;
     }
-    /* 
+    
     public void Update(UserEvent U) {
         //reacts to user input
         //no turns, real time reaction for letter selections
         //points update when word is won
     }
-    */
-
+    
     public void tick() {
         //SREQ025
         Timer timer = new Timer();
@@ -142,8 +147,10 @@ public class Game {
         int elapsedMin = Math.abs(currentTime.getMinute() - start.getMinute());
         int elapsedSec = Math.abs(currentTime.getSecond() - start.getSecond());
         int time = (elapsedMin*60) + elapsedSec;
+
+        int points = (word.length())*time;
         System.out.println("POINTS: " + points);
-        return (word.length())*(time);
+        return points;
     }
 
     public void endGame(String reason) {

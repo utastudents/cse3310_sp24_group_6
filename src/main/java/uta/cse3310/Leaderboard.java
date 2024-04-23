@@ -6,7 +6,7 @@ import java.util.Vector;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Leaderboard implements Comparator<Player> {
+public class Leaderboard {
     //private Vector<Player> GamesWonPlace = new Vector<>();
     private Vector<Player> PointsEarnedPlace = new Vector<>();
 
@@ -14,11 +14,11 @@ public class Leaderboard implements Comparator<Player> {
 
     }
 
-    private void sortPlayer() {
+    public void sortPlayer() {
         Collections.sort(PointsEarnedPlace, new Comparator<Player>() {
         @Override
         public int compare(Player first, Player sec) {
-            return first.getPoints().compareTo(sec.getPoints());
+            return Integer.compare(first.getPoints(), sec.getPoints());
          }
       });
     }
@@ -34,7 +34,7 @@ public class Leaderboard implements Comparator<Player> {
     }
     
     public void setGamesWon(Player p) {
-       GamesWonPlace.add(p);    
+       //GamesWonPlace.add(p);    
     }
     
     public void setPointsEarned(Player p) {
@@ -42,6 +42,6 @@ public class Leaderboard implements Comparator<Player> {
     }
 
     public int calWinner() {    
-        return PointsEarnedPlace.get(0);
+        return PointsEarnedPlace.get(0).getPoints();
     }
 }

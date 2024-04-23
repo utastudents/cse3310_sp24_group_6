@@ -89,14 +89,14 @@ public class Player {
     }
     
     public int chooseCoord1() {     // THIS IS JSON
-        
+        return 0;
     }
 
     public int chooseCoord2() {     // THIS IS JSON
-        
+        return 0;
     }
 
-    public int setPlayerType(PlayerType _pt) {
+    public void setPlayerType(PlayerType _pt) {
         this.pt = _pt;
     }
 

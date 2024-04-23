@@ -474,7 +474,7 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
         wordType = 1;
     }
     var connection = null;
-    var serverUrl;
+//    var serverUrl;
     var gameid = -1;
 //    serverUrl = "ws://" + window.location.hostname +":"+ (parseInt(location.port) + 100);
     let serverUrl = "ws://" + window.location.hostname + `:${parseInt(window.location.port) + 100}`;

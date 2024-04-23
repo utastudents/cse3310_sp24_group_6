@@ -163,6 +163,7 @@ function sendUpdate() {
     U.EndCoordinate = endCoordinate;
     U.Direction = direction;
     U.version = version;
+    U.newPlayer = newPlayer;
     connection.send(JSON.stringify(U));
     console.log(JSON.stringify(U))
 }
@@ -280,6 +281,7 @@ function FindGame(i)
     { 
       nick=document.getElementById("name").value;
       pin=document.getElementById("pin").value;
+      newPlayer = true; 
       sendUpdate();
       if(nick != "" && pin != "") {
       document.getElementById("p4p").innerHTML="You are: "+nick;

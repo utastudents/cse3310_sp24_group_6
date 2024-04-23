@@ -12,6 +12,7 @@ public class UserEvent {
     int StartCoordinate;
     int EndCoordinate;
     WordType wordType;
+    boolean newPlayer;
     
     UserEvent() {}
     

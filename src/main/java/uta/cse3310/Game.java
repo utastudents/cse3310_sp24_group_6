@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.Arrays;
 import java.time.LocalTime;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Game {
 
     Vector<Player> player = new Vector<>();
@@ -21,7 +24,6 @@ public class Game {
     public int GameId;
     private int time;
     public PlayerType CurrentTurn;
-    
     
     // Constructor for the different game types
     public Game(Player player1, Player player2) {
@@ -59,6 +61,10 @@ public class Game {
         player3.setPlayerType(PlayerType.Player3);
         player4.setPlayerType(PlayerType.Player4);
         
+    }
+
+    public String [][] getArray() {
+        return g.getArray();
     }
 
     // Added to be used by GameLobbyTest

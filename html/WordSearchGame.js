@@ -4,14 +4,14 @@ var gameid = -1;
 var idx = -1;
 var array2D;
 
-var Name = "unkown";
+var Name = "";
 var Pin = -1;
 //var Players = "Player0";
 var Button = -1;
 var PlayerIdx = -1;
 var GameId = -1;
-var StartCoordinate = -1;
-var EndCoordinate = -1;
+var startCoordinate = -1;
+var endCoordinate = -1;
 var version = -1;
 
 const squareGrid = new Array(2500);
@@ -23,8 +23,8 @@ class UserEvent {
     Button = -1;
     PlayerIdx = 0;
     GameId = 0;
-    StartCoordinate = -1;
-    EndCoordinate = -1;
+    startCoordinate = -1;
+    endCoordinate = -1;
     Direction = 1;
     points = 0;
     version = "uknown";
@@ -160,8 +160,8 @@ function sendUpdate() {
     U.Name = nick;
     //U.Players = players;
     U.Pin = pin;
-    U.StartCoordinate = startCoordinate;
-    U.EndCoordinate = endCoordinate;
+    U.startCoordinate = startCoordinate;
+    U.endCoordinate = endCoordinate;
     U.Direction = direction;
     U.version = version;
     U.newPlayer = newPlayer;

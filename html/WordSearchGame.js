@@ -111,7 +111,6 @@ var jsonarray2d = JSON.parse(jsontringarray);
 var jsonstringgame = '$(jsongame)';
 var jsongame = JSON.parse(jsonstringgame)
 
-const squareGrid = new Array(2500);
 var count = 0;
 
 // Make conversion from 2D to 1D array

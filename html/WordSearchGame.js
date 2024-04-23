@@ -5,6 +5,7 @@ var idx = -1;
 var array2D;
 
 var Name = "";
+var nick = "";
 var Pin = -1;
 //var Players = "Player0";
 var Button = -1;

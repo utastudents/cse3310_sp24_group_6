@@ -53,7 +53,7 @@ function FindGame() {
 
     PlayerNick_=document.getElementById("name").value;
     Pin_=document.getElementById("pin").value;
-    Invoke_= 1;
+    U.Invoke= 1;
 
     U.Playernick = PlayerNick_;
     U.Pin = Pin_;

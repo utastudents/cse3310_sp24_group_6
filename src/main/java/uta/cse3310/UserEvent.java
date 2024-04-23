@@ -4,8 +4,8 @@ package uta.cse3310;
 
 public class UserEvent {
     int GameId; // the game ID on the server
-    PlayerType PlayerIdx;
-    int Button; // 
+    PlayerType PlayerIdx = PlayerType.Player0;
+    int Button; 
     String PlayerNick;
     String Pin;
     GameType gameType;

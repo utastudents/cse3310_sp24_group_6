@@ -20,7 +20,7 @@ const squareGrid = new Array(2500);
 class UserEvent {
     Name = "unknown";
     Pin = "0000";
-    //Players = 0;
+    Players = 0;
     Button = -1;
     PlayerIdx = 0;
     GameId = 0;
@@ -159,7 +159,7 @@ function sendUpdate() {
         U.PlayerIdx = "player4";
     U.GameId = gameid;
     U.Name = nick;
-    //U.Players = players;
+    U.Players = Players;
     U.Pin = pin;
     U.startCoordinate = startCoordinate;
     U.endCoordinate = endCoordinate;
@@ -206,73 +206,73 @@ function ReturnPlayer()
 function SelectPlayer(id)
     {
       if(id=="p2bt3") {
-        players = 2;
+        Players = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p2bt4").className="button button4"; 
         document.getElementById("p2bt5").className="button button4";
       }        
       else if(id=="p2bt4") {
-        players = 3;
+        Players = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p2bt3").className="button button4"; 
         document.getElementById("p2bt5").className="button button4";
       }        
       else if(id=="p2bt5") {
-        players = 4;
+        Players = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p2bt4").className="button button4"; 
         document.getElementById("p2bt3").className="button button4";
       }        
       else if(id=="p3bt3") {
-        players = 2;
+        Players = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p3bt4").className="button button4"; 
         document.getElementById("p3bt5").className="button button4";
       }        
       else if(id=="p3bt4") {
-        players = 3;
+        Players = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p3bt3").className="button button4"; 
         document.getElementById("p3bt5").className="button button4";
       }        
       else if(id=="p3bt5") {
-        players = 4;
+        Players = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p3bt4").className="button button4"; 
         document.getElementById("p3bt3").className="button button4";
       }  
       else if(id=="p6bt3") {
-        players = 2;
+        Players = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p6bt4").className="button button4"; 
         document.getElementById("p6bt5").className="button button4";
       }        
       else if(id=="p6bt4") {
-        players = 3;
+        Players = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p6bt3").className="button button4"; 
         document.getElementById("p6bt5").className="button button4";
       }        
       else if(id=="p6bt5") {
-        players = 4;
+        Players = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p6bt4").className="button button4"; 
         document.getElementById("p6bt3").className="button button4";
       }  
       else if(id=="p7bt3") {
-        players = 2;
+        Players = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p7bt4").className="button button4"; 
         document.getElementById("p7bt5").className="button button4";
       }        
       else if(id=="p7bt4") {
-        players = 3;
+        Players = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p7bt3").className="button button4"; 
         document.getElementById("p7bt5").className="button button4";
       }        
       else if(id=="p7bt5") {
-        players = 4;
+        Players = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p7bt4").className="button button4"; 
         document.getElementById("p7bt3").className="button button4";
@@ -287,17 +287,17 @@ function FindGame(i)
       sendUpdate();
       if(nick != "" && pin != "") {
       document.getElementById("p4h4").innerHTML="You are: "+nick;
-      document.getElementById("p4h4_2").innerHTML="Game Type: "+players+"-Player";
+      document.getElementById("p4h4_2").innerHTML="Game Type: "+Players+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";
       document.getElementById("page6").style.display="none";
       document.getElementById("page7").style.display="none";
       if(i==1) 
-        addRow("p4table",nick,players+"-Player")
+        addRow("p4table",nick,Players+"-Player")
       else {
         deleteRow("p4table")
-        addRow("p4table",nick,players+"-Player");
+        addRow("p4table",nick,Players+"-Player");
        }
       }
       else {
@@ -311,15 +311,15 @@ function FindGame2(i)
       pin=document.getElementById("pin2").value;
       if(nick != "" && pin != "") {
       document.getElementById("p4p").innerHTML="You are: "+nick;
-      document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
+      document.getElementById("p4p2").innerHTML="Game Type: "+Players+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";
       if(i==1) 
-        addRow("p4table",nick,players+"-Player")
+        addRow("p4table",nick,Players+"-Player")
       else {
         deleteRow("p4table")
-        addRow("p4table",nick,players+"-Player");
+        addRow("p4table",nick,Players+"-Player");
         }
       }
       else {

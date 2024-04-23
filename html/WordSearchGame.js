@@ -162,7 +162,7 @@ function sendUpdate() {
     U.Pin = pin;
     U.startCoordinate = startCoordinate;
     U.endCoordinate = endCoordinate;
-    U.Direction = direction;
+    //U.Direction = direction;
     U.version = version;
     U.newPlayer = newPlayer;
     connection.send(JSON.stringify(U));

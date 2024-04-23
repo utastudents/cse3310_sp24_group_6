@@ -103,6 +103,46 @@ connection.onmessage = function (evt) {
         Send info about player info and game status (UserEvent class) using json to the app server
         */
 
+
+//Get info for when the game starts (Get the 2D array & Game Class)
+var jsontringarray = '$(jsonArray2d)';
+var jsonarray2d = JSON.parse(jsontringarray);
+
+var jsonstringgame = '$(jsongame)';
+var jsongame = JSON.parse(jsonstringgame)
+
+const squareGrid = new Array(2500);
+var count = 0;
+
+// Make conversion from 2D to 1D array
+for (let i = 0; i < 50; i++) {
+    for (let j = 0; j < 50; j++) {
+        squareGrid[count] = array2D[i][j];
+        count++;
+    }
+}
+
+// Add words from list to the html wordbank
+let A = Array.from(listofwords);
+let l = A.length;
+for(let i = 0; i < l; i++)
+{
+    addWordBank("p5table4",A[i]);
+}
+
+// Add button functionality to the grid
+for (let index=0;index<squareGrid.length;index++) {
+    const button = document.createElement("button");
+    button.setAttribute("id",index);
+    button.setAttribute("onclick","change_color("+index+");");
+    button.innerHTML = squareGrid[index];
+    if(index % 50 == 0) {
+        linebreak = document.createElement("br");
+        board.appendChild(linebreak);
+    }
+    board.appendChild(button);
+}
+
 /* ========================================================================================================================== */
 
 function sendUpdate() {
@@ -313,16 +353,6 @@ function WordBank(tableID,item1) {
         var cell1 = row.insertCell(0);
         cell1.innerHTML = item1;
       }
-
-function addListtoBank(listofwords) {
-    let A = Array.from(listofwords);
-    let l = A.length;
-    
-    for(let i = 0; i < l; i++)
-    {
-        addWordBank("p5table4",A[i]);
-    }
-}
 
 function ResetBoard() {
         start = 0;

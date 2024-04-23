@@ -9,18 +9,19 @@ import java.time.LocalTime;
 
 public class Game {
 
-    Vector<Player> player = new Vector<>();
-    GameType gameType;                          //referenced from <<GameType>> enum
+    // All Information that will be sent to JSON
+    Vector<Player> player = new Vector<>();                       //referenced from <<GameType>> enum
     WordBank wbank = new WordBank();
     GridGenerator g = new GridGenerator(50,50);
     Vector<Word> totalwords = new Vector<>();
-    PlayerType Players;
     static LocalTime start = LocalTime.now();
+    PlayerType Players;
+    GameType gameType;  
+    public int GameId; 
+    public String[] Msg;
 
     static long startTime;
-    public int GameId;
     private int time;
-    public PlayerType CurrentTurn;
     
     // Constructor for the different game types
     public Game(Player player1, Player player2) {
@@ -61,10 +62,15 @@ public class Game {
     }
 
     public void StartGame() {
-        CurrentTurn = PlayerType.Player1;
+        //CurrentTurn = PlayerType.Player1;
         //Msg[0] = "Game has started! It's Player 1's turn.";
-        tick();  // Start the timer
+        //tick();  // Start the timer
         //chat starts
+
+        Msg[0] = "Good luck, game has been started";
+
+        // Send all players to the current game
+        // Somehow initiate the game when this gets called.
     }
 
     public int PlayerToIdx(PlayerType P) {

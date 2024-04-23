@@ -1,31 +1,25 @@
-/* 
+
 package uta.cse3310;
 // User events are sent from the webpage to the server
 
 public class UserEvent {
     int GameId; // the game ID on the server
-    PlayerType PlayerIdx; // either an XPLAYER or an OPLAYER
-    int Button; // button number from 0 to 8
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-=======
-    String Name;
+    PlayerType PlayerIdx; // 
+    int Button; // 
+    String PlayerNick;
     String Pin;
-    int Players;
+    GameType gameType;
     int StartCoordinate;
     int EndCoordinate;
-    int Direction;
->>>>>>> main
+    WordType wordType;
+    
     UserEvent() {}
     
     UserEvent(int _GameId, PlayerType _PlayerIdx, int _Button) {
-        /*GameId = _GameId;
+        GameId = _GameId;
         PlayerIdx = _PlayerIdx;
         Button = _Button;
     }
->>>>>>> main
 }
 
-*/
+

@@ -190,6 +190,8 @@ public class App extends WebSocketServer {
         Gson gson = builder.create();
         UserEvent U = gson.fromJson(message, UserEvent.class);
 
+        System.out.println("On message: "+ message);
+
         // Update the running time
         stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
 

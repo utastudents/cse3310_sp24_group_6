@@ -14,6 +14,7 @@ var GameId = -1;
 var startCoordinate = -1;
 var endCoordinate = -1;
 var version = -1;
+var callMatchMaking = -1;
 
 const squareGrid = new Array(2500);
 
@@ -171,6 +172,7 @@ function sendUpdate() {
     //U.Direction = direction;
     U.version = version;
     U.newPlayer = newPlayer;
+    U.callMatchMaking = callMatchMaking; // NEW
     connection.send(JSON.stringify(U));
     console.log(JSON.stringify(U))
 }
@@ -288,7 +290,8 @@ function FindGame(i)
     { 
       nick=document.getElementById("name").value;
       pin=document.getElementById("pin").value;
-      newPlayer = true; 
+      newPlayer = true;
+      callMatchMaking = 1; // Start up matchmaking function in java through json message 
       sendUpdate();
       if(nick != "" && pin != "") {
       document.getElementById("p4h4").innerHTML="You are: "+nick;

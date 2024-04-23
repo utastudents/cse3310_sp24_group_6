@@ -1,20 +1,18 @@
 var connection = null;
 var serverUrl;
 var gameid = -1;
-var idx = 0;
+var idx = -1;
 var array2D;
 
-var Name;
-var Pin;
-var Players;
-var Button;
-var PlayerIdx;
-var GameId;
-var StartCoordinate;
-var EndCoordinate;
-var Direction;
-var points;
-var version;
+var Name = "unkown";
+var Pin = -1;
+var Players = "Player0";
+var Button = -1;
+var PlayerIdx = -1;
+var GameId = -1;
+var StartCoordinate = -1;
+var EndCoordinate = -1;
+var version = -1;
 
 const squareGrid = new Array(2500);
 

@@ -22,7 +22,7 @@ class UserEvent {
     Pin = "0000";
     Players = 0;
     Button = -1;
-    PlayerIdx = -1;
+    PlayerIdx = 0;
     GameId = 0;
     StartCoordinate = -1;
     EndCoordinate = -1;

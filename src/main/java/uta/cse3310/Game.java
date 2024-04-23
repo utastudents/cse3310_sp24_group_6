@@ -134,14 +134,20 @@ public class Game {
         }, 0, 1000);
     }
 
-    public boolean verifyWord(String wordString, int coord1[], int coord2[], Word wordWord) {  
+    public boolean verifyWord(String coord1, String coord2) {  
         boolean result = false;
 
         for(Word w : totalwords) {
-            if(Arrays.equals(coord1, w.getCoord1()) && Arrays.equals(coord2, w.getCoord2())) {
+            /* 
+            System.out.println("\ncoord1 in param: " + coord1);
+            System.out.println("\ncoord1 in getter: " + Arrays.toString(w.getCoord1()));
+            */
+            
+            if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
                 result = true;
                 break;
-            }
+            } 
+            
         }
 
         return result;

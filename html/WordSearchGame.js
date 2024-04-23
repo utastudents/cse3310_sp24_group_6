@@ -1,24 +1,30 @@
 /*
     Variables for player and words
 */
-    var players = 2;
+    var gameType = 2;
     var nick = "unknown";
     var pin = "XXXX";
     var direction = 1;
-    var words = 0;
+    var wordCount = 0;
     var startCoordinate = -1;
     var endCoordinate = -1;
     var start = 0;
-    var idx = Math.round(1 + Math.random()*3);
+    var word = "";
+//    var idx = Math.round(1 + Math.random()*3);
+    var idx = 1;
     const PlayerToColor = new Map([[0,"royalblue"],[1,"blue"],[2,"red"],[3,"yellow"],[4,"green"],[5,"brown"]]);
+    const NumberToGameType = new Map([[0,"unknown"],[1,"Game1"],[2,"Game2"],[3,"Game3"],[4,"Game4"]]);
+    const DirToWordType = new Map([[1,"horizontal"],[2,"bHorizontal"],[3,"vertical"],[4,"bVertical"],
+                                   [5,"bottomLeftTopRight"],[6,"topRightBottomLeft"],[7,"bottomRightTopLeft"],[8,"topLeftBottomRight"]]);
 /*
     Create a one-dimensional array of 2500 elements for the grid 50 by 50.
     Random fill the array with 2500 characters     
 */
     const squareGrid = new Array(2500);
     for (let index=0;index<squareGrid.length;index++) {
-        let charCode = Math.round(65 + Math.random() * 25);
+        let charCode = Math.round(97 + Math.random() * 25);
         squareGrid[index]=String.fromCharCode(charCode);
+//        squareGrid[index] = '?';
         const button = document.createElement("button");
         button.setAttribute("id",index);
         button.setAttribute("onclick","change_color("+index+");");
@@ -32,17 +38,17 @@
 /*
    add a list of words to the grid.
 */
-      addWordToGrid("ARLINGTON",1,110);
-      addWordToGrid("TEXAS",2,975);
-      addWordToGrid("SPIRITUALITY",5,1000);
-      addWordToGrid("MISSISSIPPI",3,422);
-      addWordToGrid("ABILITIES",4,849);
-      addWordToGrid("ACCESSIBILITY",1,462);
-      addWordToGrid("ACCOUNTS",7,562);
-      addWordToGrid("ULTIMATE",6,340);
-      addWordToGrid("ACCORDING",8,462);
+      addWordToGrid("arlington",1,110);
+      addWordToGrid("texas",2,975);
+      addWordToGrid("spirituality",5,1000);
+      addWordToGrid("mississippi",3,422);
+      addWordToGrid("abilities",4,849);
+      addWordToGrid("accessibility",1,462);
+      addWordToGrid("accounts",7,562);
+      addWordToGrid("ultimate",6,340);
+      addWordToGrid("according",8,462);
 // Display how many words in Word Bank
-      document.getElementById("p5h4_7").innerHTML="Words Left: "+words
+      document.getElementById("p5h4_7").innerHTML="Words Left: "+wordCount
 /*
    Function to add a word to the table Word Bank
 */
@@ -53,7 +59,14 @@
         cell1.innerHTML = item1;
       }
 /*
-   Function to find the direction of a word based on the start coorrdinate and end coordinate.
+   When button Send Message is clicked, this function is executed. 
+*/
+      function postMessage() {}
+/*
+ 
+*/
+/*
+   Function to find the direction of a word based on the start coordinate and end coordinate.
    There are eight directions: 1=horizontal;2=left-horizontal;3=vertical;4=down vertical;5=northeast diagonal;
    6=southwest diagonal;7=northwest diagonal;8=southeast diagonal;
 */
@@ -150,73 +163,73 @@
     function SelectPlayer(id)
     {
       if(id=="p2bt3") {
-        players = 2;
+        gameType = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p2bt4").className="button button4"; 
         document.getElementById("p2bt5").className="button button4";
       }        
       else if(id=="p2bt4") {
-        players = 3;
+        gameType = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p2bt3").className="button button4"; 
         document.getElementById("p2bt5").className="button button4";
       }        
       else if(id=="p2bt5") {
-        players = 4;
+        gameType = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p2bt4").className="button button4"; 
         document.getElementById("p2bt3").className="button button4";
       }        
       else if(id=="p3bt3") {
-        players = 2;
+        gameType = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p3bt4").className="button button4"; 
         document.getElementById("p3bt5").className="button button4";
       }        
       else if(id=="p3bt4") {
-        players = 3;
+        gameType = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p3bt3").className="button button4"; 
         document.getElementById("p3bt5").className="button button4";
       }        
       else if(id=="p3bt5") {
-        players = 4;
+        gameType = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p3bt4").className="button button4"; 
         document.getElementById("p3bt3").className="button button4";
       }  
       else if(id=="p6bt3") {
-        players = 2;
+        gameType = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p6bt4").className="button button4"; 
         document.getElementById("p6bt5").className="button button4";
       }        
       else if(id=="p6bt4") {
-        players = 3;
+        gameType = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p6bt3").className="button button4"; 
         document.getElementById("p6bt5").className="button button4";
       }        
       else if(id=="p6bt5") {
-        players = 4;
+        gameType = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p6bt4").className="button button4"; 
         document.getElementById("p6bt3").className="button button4";
       }  
       else if(id=="p7bt3") {
-        players = 2;
+        gameType = 2;
         document.getElementById(id).className="button"; 
         document.getElementById("p7bt4").className="button button4"; 
         document.getElementById("p7bt5").className="button button4";
       }        
       else if(id=="p7bt4") {
-        players = 3;
+        gameType = 3;
         document.getElementById(id).className="button"; 
         document.getElementById("p7bt3").className="button button4"; 
         document.getElementById("p7bt5").className="button button4";
       }        
       else if(id=="p7bt5") {
-        players = 4;
+        gameType = 4;
         document.getElementById(id).className="button"; 
         document.getElementById("p7bt4").className="button button4"; 
         document.getElementById("p7bt3").className="button button4";
@@ -224,25 +237,25 @@
     }
  /*
    When the button Find Game is clicked, this function is executed. This function ensure that name and pin are filled; otherwise, 
-   it will display the page Game Lobby and add the palyer name to the table Players Waiting and send the player info to the app server.  
+   it will display the page Game Lobby and add the player name to the table Players Waiting and send the player info to the app server.  
 */
    function FindGame(i)
     { 
       nick=document.getElementById("name").value;
       pin=document.getElementById("pin").value;
       if(nick != "" && pin != "") {
-      document.getElementById("p4p").innerHTML="You are: "+nick;
-      document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
+      document.getElementById("p4h4").innerHTML="You are: "+nick;
+      document.getElementById("p4h4_2").innerHTML="Game Type: "+gameType+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";
       document.getElementById("page6").style.display="none";
       document.getElementById("page7").style.display="none";
       if(i==1) 
-        addRow("p4table",nick,players+"-Player")
+        addRow("p4table",nick,gameType+"-Player")
       else {
         deleteRow("p4table")
-        addRow("p4table",nick,players+"-Player");
+        addRow("p4table",nick,gameType+"-Player");
        }
       }
       else {
@@ -253,23 +266,23 @@
  /*
    Same as FindGame,but from page Return Player (page 3)
    When the button Find Game is clicked, this function is executed. This function ensure that name and pin are filled; otherwise, 
-   it will display the page Game Lobby and add the palyer name to the table Players Waiting and send the player info to the app server.  
+   it will display the page Game Lobby and add the player name to the table Players Waiting and send the player info to the app server.  
 */
     function FindGame2(i)
     { 
       nick=document.getElementById("name2").value;
       pin=document.getElementById("pin2").value;
       if(nick != "" && pin != "") {
-      document.getElementById("p4p").innerHTML="You are: "+nick;
-      document.getElementById("p4p2").innerHTML="Game Type: "+players+"-Player";
+      document.getElementById("p4h4").innerHTML="You are: "+nick;
+      document.getElementById("p4h4_2").innerHTML="Game Type: "+gameType+"-Player";
       document.getElementById("page2").style.display="none"; 
       document.getElementById("page3").style.display="none"; 
       document.getElementById("page4").style.display="block";
       if(i==1) 
-        addRow("p4table",nick,players+"-Player")
+        addRow("p4table",nick,gameType+"-Player")
       else {
         deleteRow("p4table")
-        addRow("p4table",nick,players+"-Player");
+        addRow("p4table",nick,gameType+"-Player");
         }
       }
       else {
@@ -309,33 +322,67 @@
 */
     function highlightWord() {
        direction = getDirection(startCoordinate,endCoordinate);
-       if(direction==1) 
-         for(let i=startCoordinate;i<endCoordinate;i++)
+       if(direction==1) {
+         for(let i=startCoordinate;i<=endCoordinate;i++) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
-       else if(direction==2)      
-         for(let i=startCoordinate;i>endCoordinate;i--)
+           word += document.getElementById(i).innerHTML;
+         }
+       }    
+       else if(direction==2) {      
+         for(let i=startCoordinate;i>=endCoordinate;i--) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
-       else if(direction==3)      
-         for(let i=startCoordinate-50;i>=endCoordinate;i -=50)
+           word += document.getElementById(i).innerHTML;
+           }
+       }
+       else if(direction==3) {    
+         for(let i=startCoordinate;i>=endCoordinate;i -=50) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
-       else if(direction==4)      
-         for(let i=startCoordinate+50;i<=endCoordinate;i +=50)
+           word += document.getElementById(i).innerHTML;
+           }
+       }
+       else if(direction==4) {     
+         for(let i=startCoordinate;i<=endCoordinate;i +=50) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
-       else if(direction==5)      
-         for(let i=startCoordinate-50+1;i>=endCoordinate;i -=49)
+           word += document.getElementById(i).innerHTML;
+           }
+       }
+       else if(direction==5) {     
+         for(let i=startCoordinate;i>=endCoordinate;i -=49) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
-       else if(direction==6)      
-         for(let i=startCoordinate-50-1;i>=endCoordinate;i -=51)
+           word += document.getElementById(i).innerHTML;
+           }
+       }
+       else if(direction==6) {     
+         for(let i=startCoordinate;i>=endCoordinate;i -=51) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
-       else if(direction==7)      
-         for(let i=startCoordinate+50+1;i<=endCoordinate;i +=51)
+           word += document.getElementById(i).innerHTML;
+           }
+       }
+       else if(direction==7) {     
+         for(let i=startCoordinate;i<=endCoordinate;i +=51) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
-       else if(direction==8)      
-         for(let i=startCoordinate+50-1;i<=endCoordinate;i +=49)
+           word += document.getElementById(i).innerHTML;
+           }
+       }
+       else if(direction==8) {     
+         for(let i=startCoordinate;i<=endCoordinate;i +=49) {
            document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx);
+           word += document.getElementById(i).innerHTML;
+           }
+       }
+       StrikethroughWord(word);
+       word="";
+    }
+    function StrikethroughWord(word) {
+        var table = document.getElementById("p5table4");
+        for(let i = 0; i < table.rows.length;i++) {
+          let cell0 = table.rows[i].cells[0];
+          if (cell0.innerHTML == word) cell0.innerHTML = "<del>"+word+"</del>";
+        }
+    
     }
 /*
-   When the button Reset Board is clicked, this function is executed. It will reset the bacground color of all the selected buttons. 
+   When the button Reset Board is clicked, this function is executed. It will reset the background color of all the selected buttons. 
 */
     function ResetBoard() {
       start = 0;
@@ -350,7 +397,7 @@
        let A = Array.from(Word);
        let l = A.length;
        addWordBank("p5table4",Word);
-       words++;
+       wordCount++;
        if(dir==1)
          for(let i=startPosition;i<startPosition+l;i++)
            document.getElementById(i).innerHTML=A[i-startPosition];
@@ -414,19 +461,17 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
 /*
     This section setup websocket connection and receives data objects from the app server using json.
     Based on the TicTacToe codes. 
-    
-
 */
     class UserEvent {
-        Name = "unknown";
-        Pin = "0000";
-        Players = 0;
+        PlayerNick = "unknown";
+        Pin = "xxxx";
+        gameType = 0;
         Button = -1;
         PlayerIdx = -1;
         GameId = 0;
         StartCoordinate = -1;
         EndCoordinate = -1;
-        Direction = 1;
+        wordType = 1;
     }
     var connection = null;
     var serverUrl;
@@ -449,19 +494,19 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
         const obj = JSON.parse(msg);
 
         if ('YouAre' in obj) {
-            if (obj.YouAre == "player0") {
+            if (obj.YouAre == "Player0") {
                 idx = 0;
             }
-            else if(obj.YouAre == "player1"){
+            else if(obj.YouAre == "Player1"){
                 idx = 1;
             }
-            else if(obj.YouAre == "player2"){
+            else if(obj.YouAre == "Player2"){
                 idx = 2;
             }
-            else if(obj.YouAre == "player3"){
+            else if(obj.YouAre == "Player3"){
                 idx = 3;
             }
-            else if(obj.YouAre == "player4"){
+            else if(obj.YouAre == "Player4"){
                 idx = 4;
             }
             gameid = obj.GameId;
@@ -471,10 +516,11 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
             var t = obj.Stats;
             if (t) {
 /*
-                document.getElementById("timeMsg").innerHTML = "elapsed time " + t.RunningTime;
-                document.getElementById("statMsg").innerHTML =
+//                document.getElementById("timeMsg").innerHTML = "elapsed time " + t.RunningTime;
+//                document.getElementById("statMsg").innerHTML =
                     " in progress " + t.GamesInProgress + " XWin " + t.XWins + " OWin " + t.OWins +
                     " Draw " + t.Draws + " Total " + t.TotalGames;
+                  document.getElementById("p4h4_3").innerHTML = "Active Games : "+t.GamesInProgress;
 */
             }
 
@@ -503,21 +549,28 @@ var countDownDate = new Date("May 1, 2024 22:00:00").getTime();
     function sendUpdate() {
         U = new UserEvent();
         U.Button = -1;
-        if(idx == 1)
+        if(idx == 0)
+            U.PlayerIdx = "Player0";
+        else if(idx == 1)
             U.PlayerIdx = "Player1";
         else if(idx == 2)
             U.PlayerIdx = "Player2";
-         else if(idx == 3)
+        else if(idx == 3)
             U.PlayerIdx = "Player3";
         else if(idx == 4)
             U.PlayerIdx = "Player4";
         U.GameId = gameid;
-        U.Name = nick;
-        U.Players = players;
+        U.PlayerNick = nick;
+        U.gameType = NumberToGameType.get(gameType);
         U.Pin = pin;
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
-        U.Direction = direction;
-        connection.send(JSON.stringify(U));
-        console.log(JSON.stringify(U))
+        U.wordType = DirToWordType.get(direction);
+        if (connection.readyState === WebSocket.OPEN) {
+          connection.send(JSON.stringify(U));
+          console.log(JSON.stringify(U))
+        }
+        else {
+          console.log("Connection not open. Unable to send update.");
+        }
     }

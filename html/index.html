@@ -53,9 +53,9 @@
   <center><h1 style="color:Navy;background-color:GreenYellow;display:block;">GAME LOBBY</h1>
   <h3 id="p4Msg" style="">Waiting for 1 player(s) to join your game.</h3><br/>
   <div class="row">
-      <p class="block" id="p4p">You Are:</p>
-      <p class="block" id="p4p2">Game Type:</p>
-      <p class="block" id="p4p3">Active games: 1/5</p>
+      <h4 class="block" id="p4h4">You Are:</h4>
+      <h4 class="block" id="p4h4_2">Game Type:</h4>
+      <h4 class="block" id="p4h4_3">Active games: 1/5</h4>
   </div>
   <br><br>
   <table id="p4table">
@@ -225,8 +225,7 @@
       </div>
       <input type="text" id="mb-messageInput" placeholder="Type your message here..." style="width: 100%; box-sizing: border-box; padding: 8px;">
       <button id="mb-sendButton" onclick="postMessage()">Send Message</button>
-  </div>
-
+    </div>
     <div class="btn-group" style="width:74%;float:left;" id="board"></div>
     <div style="width:12%;float:right;" id="wordbank">
       <center>
@@ -235,6 +234,9 @@
          <table id="p5table4" class="center">
             <tr>
               <th>WORD BANK</th>
+            </tr>
+            <tr>
+              <th>-------------</th>
             </tr>
          </table>
          <button class="button button3" onclick="ResetBoard()">Reset Board</button><br><br><br><br>

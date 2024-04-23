@@ -79,6 +79,8 @@ public class App extends WebSocketServer {
 
     private String version = null;
 
+    GameLobby GL = new GameLobby();
+
     WordBank W = new WordBank();
 
     public WordBank getWordBankW() 
@@ -103,7 +105,7 @@ public class App extends WebSocketServer {
         connectionId++;
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
-        GameLobby GL = new GameLobby();
+
 
         Player player = null;
 

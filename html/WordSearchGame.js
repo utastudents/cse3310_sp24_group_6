@@ -43,7 +43,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9880";
+serverUrl = "ws://" + window.location.hostname +":9106";
 // Create the connection with the server
 connection = new WebSocket(serverUrl);
 

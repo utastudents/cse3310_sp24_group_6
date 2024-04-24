@@ -5,10 +5,11 @@ var Invoke_ = -1;
 var Status_ = -1;
 var Type_ = 2;
 var GameState_ = -1;
-var idx = -1;
+var idx = 1;
 var playID = -1;
 var start = 0;
 var word = "";
+var wordCount = 0;
 
 var startCoordinate = -1;
 var endCoordinate = -1;
@@ -43,7 +44,9 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9106";
+serverUrl = "ws://" + window.location.hostname +":9101";
+//9880 for locoal
+//9101 for website
 // Create the connection with the server
 connection = new WebSocket(serverUrl);
 
@@ -53,7 +56,7 @@ connection.onopen = function (evt) {
 
 connection.onclose = function (evt) {
     console.log("close");
-    document.getElementById("topMessage").innerHTML = "Server Offline"
+    document.getElementById("topMessage").innerHTML = "Server Offline";
 }
 
 connection.onmessage = function (evt) {
@@ -64,7 +67,7 @@ connection.onmessage = function (evt) {
     const obj = JSON.parse(msg);
 
     if ('state' in obj) {
-        if (obj.state == 1) {   // Game Start
+        if (obj.state == 1) {   // Setup Game and Start
             if(obj.pt == "Player1")
             {
                 idx = 1;
@@ -101,6 +104,15 @@ connection.onmessage = function (evt) {
                 linebreak = document.createElement("br");
                 board.appendChild(linebreak);
             }
+            obj.g.placedWords.forEach(wordObj => {
+              addWordBank("p5table4",wordObj.word);
+              wordCount++;
+            })
+
+              
+            
+
+
             GameRoom();
         }
         if (obj.state == 2)    // Different Function
@@ -108,7 +120,6 @@ connection.onmessage = function (evt) {
         }    
     }
 }
-
 
 function NewPlayer(){
     document.getElementById("page1").style.display="none"; 
@@ -385,6 +396,20 @@ function SelectPlayer(id)
         else
           return -1;
      }
+
+     function addWordBank(tableID,item1) {
+      var table = document.getElementById(tableID);
+      var row = table.insertRow(table.rows.length);
+      var cell1 = row.insertCell(0);
+      cell1.innerHTML = item1;
+    }
+
+    function ResetBoard() {
+      start = 0;
+      startCoordinate=endCoordinate=-1;
+      for (let i=0;i<squareGrid.length;i++)
+        document.getElementById(i).style.backgroundColor = "PaleTurquoise";
+    }
 
      function sendUpdate() {
         /*U = new UserEvent();

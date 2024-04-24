@@ -44,9 +44,9 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9101";
+serverUrl = "ws://" + window.location.hostname +":9106";
 //9880 for locoal
-//9101 for website
+//9106 for website
 // Create the connection with the server
 connection = new WebSocket(serverUrl);
 
@@ -65,6 +65,8 @@ connection.onmessage = function (evt) {
     
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
+
+    Invoke_ = -1;
 
     if ('state' in obj) {
         if (obj.state == 1) {   // Setup Game and Start
@@ -108,12 +110,8 @@ connection.onmessage = function (evt) {
               addWordBank("p5table4",wordObj.word);
               wordCount++;
             })
-
-              
-            
-
-
             GameRoom();
+            sendUpdate();
         }
         if (obj.state == 2)    // Different Function
         {
@@ -412,9 +410,10 @@ function SelectPlayer(id)
     }
 
      function sendUpdate() {
-        /*U = new UserEvent();
+        U = new UserEvent();
         U.Button = -1;
-        
+        U.Invoke = Invoke_;
+        /*
         if(idx == 0)
             U.PlayerIdx = "Player0";
         else if(idx == 1)
@@ -432,6 +431,7 @@ function SelectPlayer(id)
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
         U.wordType = DirToWordType.get(direction);
+        */
         console.log(U);
         if (connection.readyState === WebSocket.OPEN) {
           connection.send(JSON.stringify(U));
@@ -440,5 +440,4 @@ function SelectPlayer(id)
         else {
           console.log("Connection not open. Unable to send update.");
         }
-        */
     }

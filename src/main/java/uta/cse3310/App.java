@@ -151,8 +151,6 @@ public class App extends WebSocketServer {
         // Get our Game Object
         //Game G = conn.getAttachment();
         Player P = null;
-        
-        
 
         if(U.Invoke == 1)   // FindGame() and New Player
         {
@@ -163,16 +161,17 @@ public class App extends WebSocketServer {
             
             if(U.Type == 2)
             {
-                P.setPlayerType(PlayerType.Player2);
+                P.PlayerNum = 2;
             }
             else if(U.Type == 3)
             {
-                P.setPlayerType(PlayerType.Player3);
+                P.PlayerNum = 3;
             }
             else if(U.Type == 4)
             {
-                P.setPlayerType(PlayerType.Player4);
+                P.PlayerNum = 4;
             }
+
             System.out.println("\n\nTest\n\n");
 
             System.out.println("\n\nPlayerType " + P.getPlayerType());
@@ -185,6 +184,9 @@ public class App extends WebSocketServer {
             if(G != null)
             {
                 G.state = 1;
+                G.GameId = GameId;
+                GameId++;
+
                 ActiveGames.add(G);
                 G.Update(U);
                 System.out.println("\n\nGame Has Been Created\n\n");
@@ -192,6 +194,18 @@ public class App extends WebSocketServer {
                 // Call all clients to switch to the game screen
                 //conn.send(G);
             }
+
+            /*
+            E.YouAre = G.Players;
+            E.GameId = G.GameId;
+            // allows the websocket to give us the Game when a message arrives
+            conn.setAttachment(G);
+
+            Gson gson = new Gson();
+            // Note only send to the single connection
+            conn.send(gson.toJson(E));
+            System.out.println(gson.toJson(E));
+            */
 
             // send out the game state every time
             // to everyone

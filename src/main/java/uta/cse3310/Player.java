@@ -108,19 +108,6 @@ public class Player {
 
     public void setPlayerType(PlayerType _pt) {
         this.pt = _pt;
-        
-        if(_pt == PlayerType.Player2)
-        {
-            this.PlayerNum = 2;
-        }
-        else if(_pt == PlayerType.Player3)
-        {
-            this.PlayerNum = 3;
-        }
-        else if(_pt == PlayerType.Player4)
-        {
-            this.PlayerNum = 4;
-        }
     }
 
     public PlayerType getPlayerType() {

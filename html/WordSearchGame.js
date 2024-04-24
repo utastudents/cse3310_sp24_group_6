@@ -32,7 +32,13 @@ class UserEvent {
     Pin = -1;
     Invoke = 0;
     Status = -1;
-    Type = -1   
+    Type = -1  
+    
+    GameState_ = -1;
+    idx = -1;
+    playID = -1;
+    start = 0;
+    word = "";
 }
 
 var connection = null;
@@ -58,26 +64,24 @@ connection.onmessage = function (evt) {
     const obj = JSON.parse(msg);
 
     if ('state' in obj) {
-        if(obj.pt == "Player1")
-        {
-            idx = 1;
-        }
-        else if(obj.pt == "Player2")
-        {
-            idx = 2;
-        }
-        else if(obj.pt == "Player3")
-        {
-            idx = 3;
-        }
-        else if(obj.pt == "Player4")
-        {
-            idx = 4;
-        }
-
         if (obj.state == 1) {   // Game Start
+            if(obj.pt == "Player1")
+            {
+                idx = 1;
+            }
+            else if(obj.pt == "Player2")
+            {
+                idx = 2;
+            }
+            else if(obj.pt == "Player3")
+            {
+                idx = 3;
+            }
+            else if(obj.pt == "Player4")
+            {
+                idx = 4;
+            }
             var count = 0;
-
             for (let i = 0; i < 50; i++)
             {
                 for (let j = 0; j < 50; j++)
@@ -99,8 +103,12 @@ connection.onmessage = function (evt) {
             }
             GameRoom();
         }
+        if (obj.state == 2)    // Different Function
+        {
+        }    
     }
 }
+
 
 function NewPlayer(){
     document.getElementById("page1").style.display="none"; 
@@ -122,7 +130,7 @@ function GameRoom()
     document.getElementById("p5p").innerHTML="You are: "+PlayerNick_;
 }
 
-function FindGame() {
+function FindGame() {   // Button Function
     U = new UserEvent();
 
     PlayerNick_=document.getElementById("name").value;

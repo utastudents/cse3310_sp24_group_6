@@ -140,7 +140,7 @@ public class App extends WebSocketServer {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
-        ServerEvent SE = gson.fromJson(message, ServerEvent.class);
+        ServerEvent E = gson.fromJson(message, ServerEvent.class);
         UserEvent U = gson.fromJson(message, UserEvent.class);
 
         System.out.println("On message: " + message);
@@ -148,9 +148,8 @@ public class App extends WebSocketServer {
         // Update the running time
         stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
 
-        // Get our Game Object
-        //Game G = conn.getAttachment();
         Player P = null;
+        Game G = null;
 
         if(U.Invoke == 1)   // FindGame() and New Player
         {
@@ -178,7 +177,7 @@ public class App extends WebSocketServer {
 
             PlayerList.add(P);
 
-            Game G = GL.matchMaking(PlayerList, ActiveGames);
+            G = GL.matchMaking(PlayerList, ActiveGames);
             U.Invoke = -1;
 
             if(G != null)
@@ -195,17 +194,19 @@ public class App extends WebSocketServer {
                 //conn.send(G);
             }
 
-            /*
-            E.YouAre = G.Players;
-            E.GameId = G.GameId;
+            if(G != null)
+            {
+                E.YouAre = G.Players;
+                E.GameId = G.GameId;
+            }
+
             // allows the websocket to give us the Game when a message arrives
             conn.setAttachment(G);
 
-            Gson gson = new Gson();
+            gson = new Gson();
             // Note only send to the single connection
             conn.send(gson.toJson(E));
             System.out.println(gson.toJson(E));
-            */
 
             // send out the game state every time
             // to everyone

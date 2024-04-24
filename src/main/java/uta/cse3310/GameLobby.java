@@ -78,7 +78,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2);
-            ActiveGames.add(G);
+            //ActiveGames.add(G);
             return G;
         }
         else if (pForThree >= 3)
@@ -115,7 +115,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3);
-            ActiveGames.add(G);
+            //ActiveGames.add(G);
             return G;
         }
         else if (pForFour >= 4)
@@ -155,7 +155,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3, player4);
-            ActiveGames.add(G);
+            //ActiveGames.add(G);
             return G;
         }
         return G; // Returns null if not enough players for any game

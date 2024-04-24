@@ -113,7 +113,7 @@ public class App extends WebSocketServer {
         conn.send(jsonString);
         System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + connectionId + " " + escape(jsonString));
 
-        // Update the running time and github hash
+        // Update the running time
         stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
 
         // The state of the game has changed, so lets send it to everyone
@@ -177,6 +177,12 @@ public class App extends WebSocketServer {
 
             PlayerList.add(P);
 
+            // Test message to see all current players and the games they want
+            for (Player p : PlayerList)
+            {
+                System.out.println("Player:"+P.PlayerNum+" "+P.getPlayerNick()+"\n");
+            }
+
             G = GL.matchMaking(PlayerList, ActiveGames);
             U.Invoke = -1;
 
@@ -186,7 +192,7 @@ public class App extends WebSocketServer {
                 G.GameId = GameId;
                 GameId++;
 
-                ActiveGames.add(G);
+                ActiveGames.add(G); // Since this is here it will be taken out of GameLobby to prevent a game from being added twice
                 G.Update(U);
                 System.out.println("\n\nGame Has Been Created\n\n");
 

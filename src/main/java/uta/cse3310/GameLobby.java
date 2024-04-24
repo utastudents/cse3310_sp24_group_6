@@ -85,8 +85,8 @@ public class GameLobby
             // Make new game
             G = new Game(player1, player2);
             // Remove players in new game from playerlist
-            PlayerList.remove(player2idx);
-            PlayerList.remove(player1idx);
+            /*PlayerList.remove(player2idx);
+            PlayerList.remove(player1idx);*/
             return G;
         }
         else if (pForThree >= 3)
@@ -127,9 +127,9 @@ public class GameLobby
             // Make new game
             G = new Game(player1, player2, player3);
             // Remove players in new game from playerlist
-            PlayerList.remove(player3idx);
+            /*PlayerList.remove(player3idx);
             PlayerList.remove(player2idx);
-            PlayerList.remove(player1idx);
+            PlayerList.remove(player1idx);*/
             return G;
         }
         else if (pForFour >= 4)
@@ -174,13 +174,36 @@ public class GameLobby
             // Make new game
             G = new Game(player1, player2, player3, player4);
             //Remove players in new game from playerlist
-            PlayerList.remove(player4idx);
+            /*PlayerList.remove(player4idx);
             PlayerList.remove(player3idx);
             PlayerList.remove(player2idx);
-            PlayerList.remove(player1idx);
+            PlayerList.remove(player1idx);*/
             return G;
         }
         return G; // Returns null if not enough players for any game
+    }
+
+    public Vector<Player> RemovePlayers (Game G, Vector<Player> PlayerList)
+    {
+        Vector<Player> playersInGame = G.getplayerVector();
+
+        Player C = null;
+
+        for (Player P : playersInGame)
+        {
+            System.out.println("C.getPlayerNick = "+C.getPlayerNick()+"\n");
+            System.out.println("P.getPlayerNick = "+P.getPlayerNick()+"\n");
+            for (int i = 0; i < PlayerList.size(); i++)
+            {
+                C = PlayerList.get(i);
+
+                if(C.getPlayerNick().equals(P.getPlayerNick())) {
+                    PlayerList.remove(i);
+                }
+            }
+        }
+
+        return PlayerList;
     }
 
     public void Update(UserEvent U) {

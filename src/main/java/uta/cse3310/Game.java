@@ -65,6 +65,10 @@ public class Game {
         
     }
 
+    public Vector<Player> getplayerVector(){
+        return player;
+    }
+
     public String [][] getArray() {
         return g.getArray();
     }

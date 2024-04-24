@@ -186,6 +186,7 @@ public class App extends WebSocketServer {
             }
 
             G = GL.matchMaking(PlayerList, ActiveGames);
+            //PlayerList = GL.RemovePlayers(G, PlayerList); // Null pointer exception
             U.Invoke = -1;
 
             if(G != null)

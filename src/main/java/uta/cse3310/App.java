@@ -79,6 +79,8 @@ public class App extends WebSocketServer {
 
     private String version = null;
 
+    private int pnum = 0;
+
     WordBank W = new WordBank();
     
     GameLobby GL = new GameLobby();
@@ -133,13 +135,14 @@ public class App extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message) + "\n");
+        System.out.println("\nincoming < " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message) + "\n");
 
         // Bring in the data from the webpage
         // A UserEvent is all that is allowed at this point
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
+        ServerEvent E = gson.fromJson(message, ServerEvent.class);
         UserEvent U = gson.fromJson(message, UserEvent.class);
 
         System.out.println("On message: " + message);
@@ -153,9 +156,11 @@ public class App extends WebSocketServer {
         if(U.Invoke == 1)   // FindGame() and New Player
         {
             // Create a new default blank Player object
-            P = new Player();
-            P.setPlayerNick(U.PlayerNick);
+
+            P = new Player(U.PlayerNick, pnum);
             P.setSavedPin(U.Pin);
+
+            System.out.println("\n\nPlayer:" + P.getPlayerNick() + U.PlayerNick + "Sent to Lobby");
             
             if(U.Type == 2)
             {
@@ -170,16 +175,14 @@ public class App extends WebSocketServer {
                 P.PlayerNum = 4;
             }
 
-            System.out.println("\n\nTest\n\n");
-
-            System.out.println("\n\nPlayerType " + P.getPlayerType());
+            System.out.println("\n\nPlayerType: " + P.getPlayerType());
 
             PlayerList.add(P);
 
             // Test message to see all current players and the games they want
             for (Player p : PlayerList)
             {
-                System.out.println("Player:"+P.PlayerNum+" "+P.getPlayerNick()+"\n");
+                System.out.println("Player: "+P.PlayerNum+" "+P.getPlayerNick()+"\n");
             }
 
             G = GL.matchMaking(PlayerList, ActiveGames);
@@ -193,7 +196,7 @@ public class App extends WebSocketServer {
 
                 ActiveGames.add(G); // Since this is here it will be taken out of GameLobby to prevent a game from being added twice
                 G.Update(U);
-                System.out.println("\n\nGame Has Been Created\n\n");
+                System.out.println("\n\n/// Game Has Been Created ///\n\n");
 
                 // Call all clients to switch to the game screen
                 //conn.send(G);
@@ -206,7 +209,7 @@ public class App extends WebSocketServer {
             }
 
             // allows the websocket to give us the Game when a message arrives
-            conn.setAttachment(G);
+            //conn.setAttachment(G);
 
             gson = new Gson();
             // Note only send to the single connection

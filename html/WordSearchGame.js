@@ -1,5 +1,5 @@
 var Button_ = -1;
-var PlayerNick_ = -1;
+var PlayerNick_ = "";
 var Pin_ = -1;
 var Invoke_ = -1;
 var Status_ = -1;
@@ -31,12 +31,13 @@ class ServerEvent {
 class UserEvent {
     Invoke = 0;
     Button = -1;
-    State
+    State = -1;
 
-    Playernick = "";
+    PlayerNick = "";
     Pin = -1;
     Status = -1;
     Type = -1  
+    GameId = -1;
     
     idx = -1;
     playID = -1;
@@ -151,7 +152,7 @@ function FindGame() {   // Button Function
     
     U.Invoke= 1;
 
-    U.Playernick = PlayerNick_;
+    U.PlayerNick = PlayerNick_;
     U.Pin = Pin_;
     U.Type = Type_;
 
@@ -419,8 +420,8 @@ function SelectPlayer(id)
         U.Invoke = Invoke_;
         U.GameId = GameId;
         U.State = State;
-        U.PlayerNick- = PlayerNick_;
-        U.Pin = pin;
+        U.PlayerNick = PlayerNick_;
+        U.Pin = Pin_;
         /*
         if(idx == 0)
             U.PlayerIdx = "Player0";

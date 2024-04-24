@@ -139,6 +139,8 @@ public class App extends WebSocketServer {
         // A UserEvent is all that is allowed at this point
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
+
+        ServerEvent SE = gson.fromJson(message, ServerEvent.class);
         UserEvent U = gson.fromJson(message, UserEvent.class);
 
         System.out.println("On message: " + message);
@@ -182,11 +184,13 @@ public class App extends WebSocketServer {
 
             if(G != null)
             {
+                G.state = 1;
                 ActiveGames.add(G);
                 G.Update(U);
                 System.out.println("\n\nGame Has Been Created\n\n");
 
                 // Call all clients to switch to the game screen
+                //conn.send(G);
             }
 
             // send out the game state every time

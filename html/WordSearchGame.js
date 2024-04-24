@@ -5,6 +5,7 @@ var Invoke_ = -1;
 var Status_ = -1;
 var Type_ = 2;
 var GameState_ = -1;
+const squareGrid = new Array(2500);
 
 class ServerEvent {
     GameState = -1
@@ -37,9 +38,16 @@ connection.onclose = function (evt) {
 connection.onmessage = function (evt) {
     var msg;
     msg = evt.data;
-
+    
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
+
+    if ('state' in obj) {
+        if (obj.state == 1) {
+            idx = 0;
+            GameRoom();
+        }
+    }
 }
 
 function NewPlayer(){
@@ -82,6 +90,45 @@ function FindGame() {
     document.getElementById("page4").style.display="block";
     document.getElementById("page6").style.display="none";
     document.getElementById("page7").style.display="none";
+}
+
+function StartGame() {
+    // SETUP THE WORD GRID
+
+    var coujnt = 0;
+    for (let i = 0; i < 50; i++)
+    {
+        for (let j = 0; j < 50; j++)
+        {
+            squareGrid[count] = grid[i][j];
+
+            const button = document.createElement("button");
+
+            button.setAttribute("id",index);
+            button.setAttribute("onclick","change_color("+index+");");
+
+            button.innerHTML = squareGrid[index];
+
+            if(index % 50 == 0) {
+                linebreak = document.createElement("br");
+                board.appendChild(linebreak);
+            }
+
+            board.appendChild(button);
+            count++;
+        }
+    }
+
+    /*
+    for (let i = 0; i < sizeofwordarray; i++)
+    {
+        addWordBank("p5table4",wordarry[i]);
+    }
+    */
+    //some how start timer
+
+    //set up leaderboard
+    
 }
 
 function SelectPlayer(id)

@@ -12,18 +12,20 @@ import com.google.gson.GsonBuilder;
 
 public class Game {
 
-    Vector<Player> player = new Vector<>();
-    GameType gameType;                          //referenced from <<GameType>> enum
-    WordBank wbank = new WordBank();
     GridGenerator g = new GridGenerator(50,50);
-    Vector<Word> totalwords = new Vector<>();
-    PlayerType Players;
-    static LocalTime start = LocalTime.now();
+    WordBank wbank = new WordBank();
 
+    static LocalTime start = LocalTime.now();
     static long startTime;
     public int GameId;
     private int time;
     public PlayerType CurrentTurn;
+
+    Vector<Word> totalwords = new Vector<>();
+    Vector<Player> player = new Vector<>();
+    GameType gameType;                          //referenced from <<GameType>> enum
+    PlayerType Players;
+    public int state;
     
     // Constructor for the different game types
     public Game(Player player1, Player player2) {

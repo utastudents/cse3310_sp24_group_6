@@ -48,6 +48,10 @@ public class GameLobby
         Player player4 = null;
         Player currPlayer = null;
         int playersNeeded = 0;
+        int player1idx = 0; // Position the player is in in the PlayerList vector
+        int player2idx = 0;
+        int player3idx = 0;
+        int player4idx = 0;
 
         // If there are enough players create and start the game 
         if (pForTwo >= 2)
@@ -65,12 +69,14 @@ public class GameLobby
                     if (gtWanted == 2 && playersNeeded == 0)
                     {
                         player1 = currPlayer;
+                        player1idx = i;
                         ++playersNeeded;
 
                     }
                     else if (gtWanted == 2 && playersNeeded == 1)
                     {
                         player2 = currPlayer;
+                        player2idx = i;
                         ++playersNeeded;
                     }
                 }
@@ -78,7 +84,9 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2);
-            //ActiveGames.add(G);
+            // Remove players in new game from playerlist
+            PlayerList.remove(player2idx);
+            PlayerList.remove(player1idx);
             return G;
         }
         else if (pForThree >= 3)
@@ -96,17 +104,20 @@ public class GameLobby
                     if (gtWanted == 3 && playersNeeded == 0)
                     {
                         player1 = currPlayer;
+                        player1idx = i;
                         ++playersNeeded;
 
                     }
                     else if (gtWanted == 3 && playersNeeded == 1)
                     {
                         player2 = currPlayer;
+                        player2idx = i;
                         ++playersNeeded;
                     }
                     else if (gtWanted == 3 && playersNeeded == 2)
                     {
                         player3 = currPlayer;
+                        player3idx = i;
                         ++playersNeeded;
                     }
 
@@ -115,7 +126,10 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3);
-            //ActiveGames.add(G);
+            // Remove players in new game from playerlist
+            PlayerList.remove(player3idx);
+            PlayerList.remove(player2idx);
+            PlayerList.remove(player1idx);
             return G;
         }
         else if (pForFour >= 4)
@@ -133,21 +147,25 @@ public class GameLobby
                     if (gtWanted == 3 && playersNeeded == 0)
                     {
                         player1 = currPlayer;
+                        player1idx = i;
                         ++playersNeeded;
                     }
                     else if (gtWanted == 3 && playersNeeded == 1)
                     {
                         player2 = currPlayer;
+                        player2idx = i;
                         ++playersNeeded;
                     }
                     else if (gtWanted == 3 && playersNeeded == 2)
                     {
                         player3 = currPlayer;
+                        player3idx = i;
                         ++playersNeeded;
                     }
                     else if (gtWanted == 3 && playersNeeded == 3)
                     {
                         player4 = currPlayer;
+                        player4idx = i;
                         ++playersNeeded;
                     }
                 }
@@ -155,7 +173,11 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3, player4);
-            //ActiveGames.add(G);
+            //Remove players in new game from playerlist
+            PlayerList.remove(player4idx);
+            PlayerList.remove(player3idx);
+            PlayerList.remove(player2idx);
+            PlayerList.remove(player1idx);
             return G;
         }
         return G; // Returns null if not enough players for any game

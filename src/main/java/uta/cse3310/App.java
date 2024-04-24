@@ -106,55 +106,6 @@ public class App extends WebSocketServer {
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
         ServerEvent E = new ServerEvent();
 
-
-        Player player = null;
-
-        //TODO - Retrieve playernick and num from ui 
-
-        String playerNick = "TEST";
-        int playerNum = 2; // Gametype the player is seeking
-        System.out.println("Player nick name is: "+playerNick+"\n");
-        System.out.println("Player requested game type is: "+playerNum+"\n");
-
-        // If PlayerList is not empty,
-        // look through player list to check if this player is a returning player
-        int foundPlayer = 0;
-
-        if(PlayerList.size() != 0)
-        {
-            for(int i = 0; i < PlayerList.size(); i++)
-            {
-                Player P = PlayerList.get(i);
-                if(playerNick == P.getPlayerNick())
-                {
-                    // This is a returning player, don't make a new player obj
-                    player = P;
-                    // TO DO : CHANGE PLAYER num to the requested player num 
-                    foundPlayer = 1;
-                }
-            }
-        }
-        if (foundPlayer == 0)
-        {
-            // Not found in PlayerList or PlayerList was empty, this is a new player
-            player = new Player(playerNick, playerNum);
-            PlayerList.add(player);
-        }
-
-        Game G = GL.matchMaking(PlayerList, ActiveGames); // Changing to this till better solution is found 
-        G.GameId = GameId;
-        GameId++;
-        
-        // create an event to go to only the new player
-        E.YouAre = G.Players;
-        E.GameId = G.GameId;
-
-        // allows the websocket to give us the Game when a message arrives..
-        // it stores a pointer to G, and will give that pointer back to us
-        // when we ask for it
-        conn.setAttachment(G); // Takes a pointer and stores it in the websocket object
-        // UPDATE HERE 
-
         Gson gson = new Gson();
 
         // Note only send to the single connection
@@ -166,7 +117,7 @@ public class App extends WebSocketServer {
         stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
 
         // The state of the game has changed, so lets send it to everyone
-        jsonString = gson.toJson(G);
+        //jsonString = gson.toJson(G);
         System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
         broadcast(jsonString);
     }
@@ -196,29 +147,57 @@ public class App extends WebSocketServer {
         stats.setRunningTime(Duration.between(startTime, Instant.now()).toSeconds());
 
         // Get our Game Object
-        Game G = conn.getAttachment();
+        //Game G = conn.getAttachment();
+        Player P = null;
+        
+        
 
-        /*if(U.invoke == 1)
+        if(U.Invoke == 1)   // FindGame() and New Player
         {
-            P.setPlayerNick
-            P.setSavedPin
-            G = GL.matchMaking(PlayerList, ActiveGames);
-            U.invoke = -1;
+            // Create a new default blank Player object
+            P = new Player();
+            P.setPlayerNick(U.PlayerNick);
+            P.setSavedPin(U.Pin);
+            
+            if(U.Type == 2)
+            {
+                P.setPlayerType(PlayerType.Player2);
+            }
+            else if(U.Type == 3)
+            {
+                P.setPlayerType(PlayerType.Player3);
+            }
+            else if(U.Type == 4)
+            {
+                P.setPlayerType(PlayerType.Player4);
+            }
+            System.out.println("\n\nTest\n\n");
+
+            System.out.println("\n\nPlayerType " + P.getPlayerType());
+
+            PlayerList.add(P);
+
+            Game G = GL.matchMaking(PlayerList, ActiveGames);
+            U.Invoke = -1;
 
             if(G != null)
             {
+                ActiveGames.add(G);
+                G.Update(U);
+                System.out.println("\n\nGame Has Been Created\n\n");
 
+                // Call all clients to switch to the game screen
             }
-        }*/
-        G.Update(U);
 
-        // send out the game state every time
-        // to everyone
-        String jsonString;
-        jsonString = gson.toJson(G);
-
-        System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
-        broadcast(jsonString);
+            // send out the game state every time
+            // to everyone
+            String jsonString;
+            jsonString = gson.toJson(G);
+            System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
+            broadcast(jsonString);
+        }
+        
+        
     }
 
     @Override
@@ -258,11 +237,10 @@ public class App extends WebSocketServer {
     }
 
 
-
     public static void main(String[] args) {
 
         String HttpPort = System.getenv("HTTP_PORT");
-        int port = 9006;
+        int port = 9080;
         if (HttpPort!=null) {
             port = Integer.valueOf(HttpPort);
         }
@@ -271,7 +249,7 @@ public class App extends WebSocketServer {
         H.start();
         System.out.println("http Server started on port: " + port);
 
-        port = 9106;
+        port = 9880;
         String WSPort = System.getenv("WEBSOCKET_PORT");
         if (WSPort!=null) {
             port = Integer.valueOf(WSPort);

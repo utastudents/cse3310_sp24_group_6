@@ -13,7 +13,8 @@ public class UserEvent {
     int EndCoordinate;
     WordType wordType;
     boolean newPlayer;
-    int invoke; // To tell the java side of things to call the matchmaking method
+    int Type;
+    int Invoke; // To tell the java side of things to call the matchmaking method
     
     UserEvent() {
         

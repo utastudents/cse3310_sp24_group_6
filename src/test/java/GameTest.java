@@ -1,4 +1,5 @@
-/*package uta.cse3310;
+/*
+package uta.cse3310;
 //import uta.cse3310.*;
 
 import junit.framework.TestCase;
@@ -12,7 +13,7 @@ public class GameTest extends TestCase {
     Player P2 = new Player("user2", 2);
     Game G = new Game(P1, P2);
     Random R = new Random();
-    //Word W = new Word("test");
+    Word W = new Word("test");
     WordBank wbank = new WordBank();
     GridGenerator GG = new GridGenerator(50, 50);
     Vector<Word> totalwords = new Vector<>();

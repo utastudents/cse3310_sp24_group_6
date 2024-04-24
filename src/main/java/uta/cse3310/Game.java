@@ -22,6 +22,7 @@ public class Game {
     public PlayerType CurrentTurn;
 
     Vector<Word> totalwords = new Vector<>();
+    Vector<Word> testTotalWords = new Vector<>();
     Vector<Player> player = new Vector<>();
     GameType gameType;                          //referenced from <<GameType>> enum
     PlayerType Players;
@@ -146,25 +147,21 @@ public class Game {
         boolean result = false;
 
         if (testTotalWords.isEmpty()) {
-
            for(Word w : totalwords) {
-            
-            if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
-                result = true;
-                break;
+                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
+                    result = true;
+                    break;
+                } 
             } 
-        } 
         }
         else {
-
             for(Word w : testTotalWords) { 
                 if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
                     result = true;
                     break;
                 } 
+            }
         }
-
-    }
 
         return result;
     }

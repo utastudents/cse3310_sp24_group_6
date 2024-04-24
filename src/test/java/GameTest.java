@@ -1,4 +1,4 @@
-/*
+
 package uta.cse3310;
 //import uta.cse3310.*;
 
@@ -28,35 +28,22 @@ public class GameTest extends TestCase {
         System.out.println("--------------");
         System.out.println("");
 
-        //pick a random word from word vector
-        //check if verifyWord can identify correct placement
+        //generates a grid
         totalwords = GG.generateGrid(wbank.getTotalList(), -1);
-
-        ///////////////////// FAILED ATTEMPT
-        int rand_row1 = R.nextInt(51);          
-        int rand_column1 = R.nextInt(51);
-        System.out.println("random int row: " + rand_row1 + "\nrandom int column1: " + rand_column1);
-        int row2 = rand_row1;
-        int column2 = rand_column1 + (W.length() - 1);
-        System.out.println("\nrow2: (should be equal to row1)" + row2 + "\ncolumn2: (should be column1 + 3)" + column2);
         
-        W.setCoord1(rand_row1, rand_column1);
-        W.setCoord2(row2, column2);
-        System.out.println("\nCoord1: " + Coord1 + "\nCoord2: " + Coord2);
-        ////////////////////////
-
+        //select a random word from the grid
         int index = R.nextInt(totalwords.size());
         Word element = totalwords.get(index);
-        System.out.println("\nelement = " + element);
-        //System.out.println("\nword list: " + totalwords);
+        System.out.println("\nrandom word selected: " + element);
+
+        //get the coordinates from that word
         Coord1 = element.getCoord1();
         Coord2 = element.getCoord2();
         System.out.println("\nCoord1: " + Arrays.toString(Coord1) + "\nCoord2: " + Arrays.toString(Coord2));
 
-        boolean b = G.verifyWord(Arrays.toString(Coord1), Arrays.toString(Coord2));
+        //see if verifyWord can identify the random word and by its coords
+        boolean b = G.verifyWord(Arrays.toString(Coord1), Arrays.toString(Coord2), totalwords);
         System.out.println("Result of verifyWord: " + b);
-        //test verifyWord method for correctness
-        assertTrue(G.verifyWord(Arrays.toString(Coord1), Arrays.toString(Coord2)));
+        assertTrue(b);
     }
 }
-*/

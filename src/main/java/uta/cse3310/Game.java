@@ -138,21 +138,29 @@ public class Game {
         }, 0, 1000);
     }
 
-    public boolean verifyWord(String coord1, String coord2) {  
+    public boolean verifyWord(String coord1, String coord2, Vector<Word> testTotalWords) {  
         boolean result = false;
 
-        for(Word w : totalwords) {
-            /* 
-            System.out.println("\ncoord1 in param: " + coord1);
-            System.out.println("\ncoord1 in getter: " + Arrays.toString(w.getCoord1()));
-            */
+        if (testTotalWords.isEmpty()) {
+
+           for(Word w : totalwords) {
             
             if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
                 result = true;
                 break;
             } 
-            
+        } 
         }
+        else {
+
+            for(Word w : testTotalWords) { 
+                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
+                    result = true;
+                    break;
+                } 
+        }
+
+    }
 
         return result;
     }

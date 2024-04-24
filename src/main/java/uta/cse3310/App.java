@@ -133,14 +133,13 @@ public class App extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message));
+        System.out.println("< " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message) + "\n");
 
         // Bring in the data from the webpage
         // A UserEvent is all that is allowed at this point
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
-        ServerEvent E = gson.fromJson(message, ServerEvent.class);
         UserEvent U = gson.fromJson(message, UserEvent.class);
 
         System.out.println("On message: " + message);
@@ -202,8 +201,8 @@ public class App extends WebSocketServer {
 
             if(G != null)
             {
-                E.YouAre = G.Players;
-                E.GameId = G.GameId;
+                //E.YouAre = G.Players;
+                //E.GameId = G.GameId;
             }
 
             // allows the websocket to give us the Game when a message arrives
@@ -211,8 +210,8 @@ public class App extends WebSocketServer {
 
             gson = new Gson();
             // Note only send to the single connection
-            conn.send(gson.toJson(E));
-            System.out.println(gson.toJson(E));
+            //conn.send(gson.toJson(E));
+            //System.out.println(gson.toJson(E));
 
             // send out the game state every time
             // to everyone
@@ -267,7 +266,7 @@ public class App extends WebSocketServer {
         //9880 or 9106 for Websocket
 
         String HttpPort = System.getenv("HTTP_PORT");
-        int port = 9006;
+        int port = 9080;
         if (HttpPort!=null) {
             port = Integer.valueOf(HttpPort);
         }
@@ -276,7 +275,7 @@ public class App extends WebSocketServer {
         H.start();
         System.out.println("http Server started on port: " + port);
 
-        port = 9106;
+        port = 9880;
         String WSPort = System.getenv("WEBSOCKET_PORT");
         if (WSPort!=null) {
             port = Integer.valueOf(WSPort);

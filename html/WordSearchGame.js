@@ -4,12 +4,13 @@ var Pin_ = -1;
 var Invoke_ = -1;
 var Status_ = -1;
 var Type_ = 2;
-var GameState_ = -1;
+var State_ = -1;
 var idx = 1;
 var playID = -1;
 var start = 0;
 var word = "";
 var wordCount = 0;
+var GameId = -1;
 
 var startCoordinate = -1;
 var endCoordinate = -1;
@@ -24,18 +25,19 @@ const DirToWordType = new Map([[1,"horizontal"],[2,"bHorizontal"],[3,"vertical"]
                                    [5,"bottomLeftTopRight"],[6,"topRightBottomLeft"],[7,"bottomRightTopLeft"],[8,"topLeftBottomRight"]]);
 
 class ServerEvent {
-    GameState = -1
+    State = -1
 }
 
 class UserEvent {
-    Button = -1;
-    Playernick = -1;
-    Pin = -1;
     Invoke = 0;
+    Button = -1;
+    State
+
+    Playernick = "";
+    Pin = -1;
     Status = -1;
     Type = -1  
     
-    GameState_ = -1;
     idx = -1;
     playID = -1;
     start = 0;
@@ -44,7 +46,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9106";
+serverUrl = "ws://" + window.location.hostname +":9880";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server
@@ -110,10 +112,12 @@ connection.onmessage = function (evt) {
               addWordBank("p5table4",wordObj.word);
               wordCount++;
             })
+            State = 0;
+            GameId = obj.GameId;
             GameRoom();
             sendUpdate();
         }
-        if (obj.state == 2)    // Different Function
+        if (obj.state == 2 && obj.GameId == GameId) // Update the current website
         {
         }    
     }
@@ -413,6 +417,10 @@ function SelectPlayer(id)
         U = new UserEvent();
         U.Button = -1;
         U.Invoke = Invoke_;
+        U.GameId = GameId;
+        U.State = State;
+        U.PlayerNick- = PlayerNick_;
+        U.Pin = pin;
         /*
         if(idx == 0)
             U.PlayerIdx = "Player0";
@@ -424,10 +432,10 @@ function SelectPlayer(id)
             U.PlayerIdx = "Player3";
         else if(idx == 4)
             U.PlayerIdx = "Player4";
-        U.GameId = gameid;
-        U.PlayerNick = nick;
+        
+        
         U.gameType = NumberToGameType.get(gameType);
-        U.Pin = pin;
+        
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
         U.wordType = DirToWordType.get(direction);

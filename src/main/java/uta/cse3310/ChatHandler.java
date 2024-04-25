@@ -35,16 +35,17 @@ public class ChatHandler {
         this.messageBoard = new MessageBoard();
     }
 
-    public void handleMessage(WebSocket conn, String text, String playerNick) {
+    public void handleMessage(WebSocket conn, String text, String playerNick, String GameId) {
         // Correctly using playerNick instead of hardcoded "playerNick"
         messageBoard.addMessage(playerNick, text);
-        broadcastToAllChatParticipants(text, playerNick);
+        broadcastToAllChatParticipants(text, playerNick, GameId);
     }
 
-    private void broadcastToAllChatParticipants(String message, String playerNick) {
+    private void broadcastToAllChatParticipants(String message, String playerNick, String GameId) {
         JsonObject jsonMessage = new JsonObject();
         jsonMessage.addProperty("type", "chat");
         jsonMessage.addProperty("text", formatChatMessage(message, playerNick));
+        jsonMessage.addProperty("GameId", GameId);
     
         String jsonStr = jsonMessage.toString();
         for (WebSocket conn : server.getConnections()) {

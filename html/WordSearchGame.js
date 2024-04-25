@@ -73,8 +73,8 @@ connection.onmessage = function (evt) {
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
 
-    if (obj.type == 'chat') {
-      console.log("obj.state: " + obj.PlayerNick);    
+    if (obj.type == 'chat' && obj.GameId == GameId) {
+      console.log("Messenger: " + obj.PlayerNick);    
       displayChatMessage(obj.text);
      
     } else {
@@ -530,7 +530,7 @@ function SelectPlayer(id)
       const chatInput = document.getElementById('mb-messageInput');
       const message = chatInput.value.trim();
       if (message) {
-          const chatMessage = { type: 'chat', text: message, playerNick: PlayerNick_};
+          const chatMessage = { type: 'chat', text: message, playerNick: PlayerNick_, GameId: GameId};
           if (connection.readyState === WebSocket.OPEN) {
               connection.send(JSON.stringify(chatMessage));
               chatInput.value = '';  // Clear the chat input after sending

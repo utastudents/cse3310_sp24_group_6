@@ -152,7 +152,8 @@ public class App extends WebSocketServer {
             if ("chat".equals(jsonMessage.get("type").getAsString())) {
                 String chatMessage = jsonMessage.get("text").getAsString();
                 String playerNick = jsonMessage.has("playerNick") ? jsonMessage.get("playerNick").getAsString() : "Anonymous"; // Handle anonymous or default nicknames
-                chatHandler.handleMessage(conn, chatMessage, playerNick);
+                String GameId = jsonMessage.get("GameId").getAsString();
+                chatHandler.handleMessage(conn, chatMessage, playerNick, GameId);
             } // No need for else if chat is the only type you're handling here
         } catch (Exception e) {
             System.err.println("Error processing message: " + e.getMessage());

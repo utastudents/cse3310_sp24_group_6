@@ -120,6 +120,12 @@ button#mb-sendButton:hover {
 button#mb-sendButton:hover {
   background-color: #45a049;
 }
+.chat-message {
+  padding: 5px 10px;
+  margin-bottom: 2px;
+  background-color: #f4f4f8;
+  border-radius: 8px;
+}
 
 
 

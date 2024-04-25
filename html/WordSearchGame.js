@@ -1,19 +1,25 @@
 var Button_ = -1;
-var PlayerNick_ = -1;
+var PlayerNick_ = "";
 var Pin_ = -1;
 var Invoke_ = -1;
 var Status_ = -1;
 var Type_ = 2;
-var GameState_ = -1;
-var idx = -1;
+var State_ = -1;
+var idx_ = 1;
 var playID = -1;
 var start = 0;
 var word = "";
+var wordCount = 0;
+var GameId = -1;
+var button;
+//var gameNew_ = 0;
 
 var startCoordinate = -1;
 var endCoordinate = -1;
 
 var direction = -1;
+
+var gameNew_ = 1;
 
 const squareGrid = new Array(2500);
 
@@ -23,21 +29,31 @@ const DirToWordType = new Map([[1,"horizontal"],[2,"bHorizontal"],[3,"vertical"]
                                    [5,"bottomLeftTopRight"],[6,"topRightBottomLeft"],[7,"bottomRightTopLeft"],[8,"topLeftBottomRight"]]);
 
 class ServerEvent {
-    GameState = -1
+    State = -1
 }
 
 class UserEvent {
-    Button = -1;
-    Playernick = -1;
-    Pin = -1;
     Invoke = 0;
+    Button = -1;
+    State = -1;
+
+    PlayerNick = "";
+    Pin = -1;
     Status = -1;
-    Type = -1   
+    Type = -1  
+    GameId = -1;
+    
+    idx = -1;
+    playID = -1;
+    start = 0;
+    word = "";
 }
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9880";
+serverUrl = "ws://" + window.location.hostname +":9106";
+//9880 for locoal
+//9106 for website
 // Create the connection with the server
 connection = new WebSocket(serverUrl);
 
@@ -47,7 +63,7 @@ connection.onopen = function (evt) {
 
 connection.onclose = function (evt) {
     console.log("close");
-    document.getElementById("topMessage").innerHTML = "Server Offline"
+    document.getElementById("topMessage").innerHTML = "Server Offline";
 }
 
 connection.onmessage = function (evt) {
@@ -57,50 +73,108 @@ connection.onmessage = function (evt) {
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
 
-    if ('state' in obj) {
-        if(obj.pt == "Player1")
+    console.log("obj.state: " + obj.PlayerNick);
+    console.log("obj.state: " + obj.state);
+    console.log("obj.GameId: " + obj.GameId);
+    console.log("Client GameId: " + GameId);
+    console.log("obj.pt: " + obj.pt);
+    Invoke_ = -1;
+
+    if (obj.state == 1 && obj.gameNew == 1) {   // Setup Game and Start
+
+      obj.player.forEach(playObj => {
+        if(PlayerNick_ == playObj.PlayerNick)
         {
+          if(playObj.pt == "Player1")
+          {
             idx = 1;
-        }
-        else if(obj.pt == "Player2")
-        {
+          }
+          else if(playObj.pt == "Player2")
+          {
             idx = 2;
-        }
-        else if(obj.pt == "Player3")
-        {
+          }
+          else if(playObj.pt == "Player3")
+          {
             idx = 3;
-        }
-        else if(obj.pt == "Player4")
-        {
+          }
+          else if(playObj.pt == "Player4")
+          {
             idx = 4;
+          }
         }
+      })
 
-        if (obj.state == 1) {   // Game Start
-            var count = 0;
+      gameNew_ = 0;
 
-            for (let i = 0; i < 50; i++)
+      var count = 0;
+      for (let i = 0; i < 50; i++)
+      {
+        for (let j = 0; j < 50; j++)
+        {
+          squareGrid[count] = obj.g.grid[i][j];
+
+          const button = document.createElement("button");
+
+          button.setAttribute("id",count);
+          button.setAttribute("onclick","change_color("+count+");");
+
+          button.innerHTML = squareGrid[count];
+
+          board.appendChild(button);
+          count++;
+        }
+        linebreak = document.createElement("br");
+        board.appendChild(linebreak);
+      }
+
+      obj.g.placedWords.forEach(wordObj => {
+          addWordBank("p5table4",wordObj.word);
+          wordCount++;
+        })
+
+        obj.player.forEach(playObj => {
+            if(playObj.pt == "Player1")
             {
-                for (let j = 0; j < 50; j++)
-                {
-                    squareGrid[count] = obj.g.grid[i][j];
-
-                    const button = document.createElement("button");
-
-                    button.setAttribute("id",count);
-                    button.setAttribute("onclick","change_color("+count+");");
-
-                    button.innerHTML = squareGrid[count];
-
-                    board.appendChild(button);
-                    count++;
-                }
-                linebreak = document.createElement("br");
-                board.appendChild(linebreak);
+              document.getElementById("p5pone").innerHTML=""+playObj.PlayerNick;
             }
-            GameRoom();
-        }
+            else if(playObj.pt == "Player2")
+            {
+              document.getElementById("p5ptwo").innerHTML=""+playObj.PlayerNick;
+            }
+            else if(playObj.pt == "Player3")
+            {
+              document.getElementById("p5pthre").innerHTML=""+playObj.PlayerNick;
+            }
+            else if(playObj.pt == "Player4")
+            {
+              document.getElementById("p5pfour").innerHTML=""+playObj.PlayerNick;
+            }
+        })
+  
+
+      State = 0;
+
+      if(GameId == -1)
+      {
+        GameId = obj.GameId;
+      }
+      
+      GameRoom();
+      sendUpdate();
     }
+    if (obj.state == 2 && obj.GameId == GameId) // Update the current website and 
+    {
+      startCoordinate = obj.startCoordinate;
+      endCoordinate = obj.endCoordinate;
+
+      console.log("Tried to change color " + msg);
+      State = 0;
+      sendUpdate();
+      document.getElementById(Button).style.change
+      
+    }    
 }
+
 
 function NewPlayer(){
     document.getElementById("page1").style.display="none"; 
@@ -122,7 +196,7 @@ function GameRoom()
     document.getElementById("p5p").innerHTML="You are: "+PlayerNick_;
 }
 
-function FindGame() {
+function FindGame() {   // Button Function
     U = new UserEvent();
 
     PlayerNick_=document.getElementById("name").value;
@@ -130,7 +204,7 @@ function FindGame() {
     
     U.Invoke= 1;
 
-    U.Playernick = PlayerNick_;
+    U.PlayerNick = PlayerNick_;
     U.Pin = Pin_;
     U.Type = Type_;
 
@@ -265,6 +339,7 @@ function SelectPlayer(id)
         const letter = document.getElementById(id).innerHTML;
         let bcolor = document.getElementById(id).style.backgroundColor;
         document.getElementById(id).style.backgroundColor = PlayerToColor.get(idx);
+        Button_ = id;
        if(start==0) {
           startCoordinate = id;
           start = 1;
@@ -274,11 +349,13 @@ function SelectPlayer(id)
          start = 0;
        }         
        if(startCoordinate >= 0 && endCoordinate >= 0) {
-     highlightWord();
+        highlightWord();
+        Invoke_ = 2;
          sendUpdate();
          startCoordinate=endCoordinate=-1;
          start=0;
        }
+
      }
 
      function highlightWord() {
@@ -378,10 +455,33 @@ function SelectPlayer(id)
           return -1;
      }
 
+     function addWordBank(tableID,item1) {
+      var table = document.getElementById(tableID);
+      var row = table.insertRow(table.rows.length);
+      var cell1 = row.insertCell(0);
+      cell1.innerHTML = item1;
+    }
+
+    function ResetBoard() {
+      start = 0;
+      startCoordinate=endCoordinate=-1;
+      for (let i=0;i<squareGrid.length;i++)
+        document.getElementById(i).style.backgroundColor = "PaleTurquoise";
+    }
+
      function sendUpdate() {
-        /*U = new UserEvent();
-        U.Button = -1;
-        
+        U = new UserEvent();
+        U.Button = Button_;
+        U.Invoke = Invoke_;
+        U.GameId = GameId;
+        U.State = State;
+        U.PlayerNick = PlayerNick_;
+        U.Pin = Pin_;
+        U.StartCoordinate = endCoordinate;
+        U.EndCoordinate = startCoordinate;
+        U.gameNew = gameNew_;
+        U.idx = idx_;
+        /*
         if(idx == 0)
             U.PlayerIdx = "Player0";
         else if(idx == 1)
@@ -392,13 +492,14 @@ function SelectPlayer(id)
             U.PlayerIdx = "Player3";
         else if(idx == 4)
             U.PlayerIdx = "Player4";
-        U.GameId = gameid;
-        U.PlayerNick = nick;
+        
+        
         U.gameType = NumberToGameType.get(gameType);
-        U.Pin = pin;
+        
         U.StartCoordinate = startCoordinate;
         U.EndCoordinate = endCoordinate;
         U.wordType = DirToWordType.get(direction);
+        */
         console.log(U);
         if (connection.readyState === WebSocket.OPEN) {
           connection.send(JSON.stringify(U));
@@ -407,5 +508,4 @@ function SelectPlayer(id)
         else {
           console.log("Connection not open. Unable to send update.");
         }
-        */
     }

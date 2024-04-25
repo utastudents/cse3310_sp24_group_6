@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Player {
     // Attributes
-    private String PlayNick;
+    public String PlayerNick;
     public int PlayerNum;
     private int Wins;
     private int Loss;
@@ -13,14 +13,14 @@ public class Player {
     private int HighScore;
     private int Coord1[];
     private int Coord2[];
-    private PlayerType pt = PlayerType.Player0;
+    public PlayerType pt = PlayerType.Player0;
 
     // Blank Constructor
     public Player() {}
 
     // Constructor
-    public Player(String PlayNick, int PlayerNum) {
-        this.PlayNick = PlayNick;
+    public Player(String PlayerNick, int PlayerNum) {
+        this.PlayerNick = PlayerNick;
         this.PlayerNum = PlayerNum;
         this.Wins = 0;
         this.Points = 0;
@@ -31,11 +31,11 @@ public class Player {
     }
 
     public String getPlayerNick() {
-        return this.PlayNick;
+        return PlayerNick;
     }
 
     public void setPlayerNick(String playerNick) {
-        PlayNick = playerNick;
+        PlayerNick = playerNick;
     }
 
     public void setSavedPin(int savedPin) {
@@ -44,7 +44,7 @@ public class Player {
 
     public boolean checkUnique(Vector<Player> PlayerList) {
         for(int i = 0; i < PlayerList.size(); i++) {            //  While going through the entire vector
-            if(this.PlayNick == PlayerList.get(i).PlayNick) {   //  If there is a copy of a name
+            if(this.PlayerNick == PlayerList.get(i).PlayerNick) {   //  If there is a copy of a name
                 return false;   
             }
         }

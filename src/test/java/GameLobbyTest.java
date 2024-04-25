@@ -33,6 +33,10 @@ public class GameLobbyTest extends TestCase {
 
         GameLobby GL = new GameLobby();
         Game G = GL.matchMaking(PlayerList, ActiveGames);
+        if(G != null)
+        {
+            ActiveGames.add(G);
+        }
         System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be no games
         if(ActiveGames.size() == 0)
         {
@@ -65,6 +69,7 @@ public class GameLobbyTest extends TestCase {
         PlayerList.add(player6);
 
         G = GL.matchMaking(PlayerList, ActiveGames);
+        ActiveGames.add(G);
         System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be 1 game that is a 2 player game
 
         if(ActiveGames.size() == 0)
@@ -120,6 +125,7 @@ public class GameLobbyTest extends TestCase {
         PlayerList.add(player11);
 
         G = GL.matchMaking(PlayerList, ActiveGames);
+        ActiveGames.add(G);
         System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be 1 game that is a 3 player game
 
         if(ActiveGames.size() == 0)
@@ -181,6 +187,7 @@ public class GameLobbyTest extends TestCase {
         PlayerList.add(player17);
 
         G = GL.matchMaking(PlayerList, ActiveGames);
+        ActiveGames.add(G);
         System.out.println("Count ActiveGames = "+ActiveGames.size()); // There should be 1 game that is a 3 player game
 
         if(ActiveGames.size() == 0)
@@ -199,7 +206,16 @@ public class GameLobbyTest extends TestCase {
             }
         }
 
-        PlayerList.clear(); // Clear out the player list
-        ActiveGames.clear(); // Clear out the active games
+        // Manually remove players that are participating in the previous game from
+        // PlayerList just like in App
+
+        // Don't clear out Active games to show that the 4 player game from before is still going on
+
+        // TEST 5
+        System.out.println("");
+        System.out.println("Create New Game After Creating A New GameTest");
+        System.out.println("---------------------------------------------");
+        System.out.println("");
+
     }
 }

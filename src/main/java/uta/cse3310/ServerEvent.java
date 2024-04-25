@@ -2,6 +2,7 @@
 package uta.cse3310;
 
 public class ServerEvent {
-    int GameState;
+    PlayerType YouAre;
+    int GameId;
 }
 

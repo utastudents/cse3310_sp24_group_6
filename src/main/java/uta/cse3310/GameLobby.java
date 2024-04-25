@@ -86,6 +86,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2);
+            pForTwo = 0;
 
             return G;
         }
@@ -126,6 +127,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3);
+            pForThree = 0;
 
             return G;
         }
@@ -170,6 +172,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3, player4);
+            pForFour = 0;
 
             return G;
         }

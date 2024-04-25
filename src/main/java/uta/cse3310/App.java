@@ -158,10 +158,18 @@ public class App extends WebSocketServer {
         
         System.out.println("\n\nInvoke Call: " + U.Invoke);
 
+        // Reset any new game flags before invoke
+        for(Game gam : ActiveGames)
+        {
+            if(gam.gameNew == 1)
+            {
+                gam.gameNew = 0;
+            }
+        }
+
         if(U.Invoke == 1)   // FindGame() and New Player
         {
-            // Create a new default blank Player object
-
+            // Create a new default blank Player and save the nickname and pin
             P = new Player(U.PlayerNick, pnum);
             P.setSavedPin(U.Pin);
 
@@ -183,6 +191,7 @@ public class App extends WebSocketServer {
             System.out.println("\n\nPlayerType: " + P.getPlayerType());
 
             PlayerList.add(P);
+            SavedPlayerList.add(P);
 
             // Test message to see all current players and the games they want
             for (Player p : PlayerList)
@@ -198,6 +207,7 @@ public class App extends WebSocketServer {
             { // This is so they won't be chosen to create a new game
                 G.state = 1;
                 G.GameId = GameId;
+                G.gameNew = 1;
                 GameId++;
 
                 String inGamePNick = "";
@@ -222,17 +232,11 @@ public class App extends WebSocketServer {
                 }
                 
                 ActiveGames.add(G); // Since this is here it will be taken out of GameLobby to prevent a game from being added twice
-                G.Update(U);
+                //G.Update(U);
                 System.out.println("\n\n/// Game Has Been Created ///\n\n");
 
                 // Call all clients to switch to the game screen
                 //conn.send(G);
-            }
-
-            if(G != null)
-            {
-                //E.YouAre = G.Players;
-                //E.GameId = G.GameId;
             }
 
             // allows the websocket to give us the Game when a message arrives
@@ -260,6 +264,7 @@ public class App extends WebSocketServer {
                     G = ActiveGames.get(i);
                 }
             }
+
             JsonObject jsObj = new JsonObject();
             jsObj.addProperty("state", 2);
             jsObj.addProperty("startCoordinate", U.StartCoordinate);
@@ -277,9 +282,6 @@ public class App extends WebSocketServer {
             System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
             broadcast(jsonString);
         }
-
-        
-        
     }
 
     @Override
@@ -324,7 +326,7 @@ public class App extends WebSocketServer {
         //9880 or 9106 for Websocket
 
         String HttpPort = System.getenv("HTTP_PORT");
-        int port = 9080;
+        int port = 9006;
         if (HttpPort!=null) {
             port = Integer.valueOf(HttpPort);
         }
@@ -333,7 +335,7 @@ public class App extends WebSocketServer {
         H.start();
         System.out.println("http Server started on port: " + port);
 
-        port = 9880;
+        port = 9106;
         String WSPort = System.getenv("WEBSOCKET_PORT");
         if (WSPort!=null) {
             port = Integer.valueOf(WSPort);

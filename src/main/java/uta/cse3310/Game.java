@@ -30,6 +30,7 @@ public class Game {
     int endCoordinate;
     public int state;
     public int Button;
+    public int gameNew;
     
     // Constructor for the different game types
     public Game(Player player1, Player player2) {
@@ -121,8 +122,7 @@ public class Game {
         //reacts to user input
         //no turns, real time reaction for letter selections
         //points update when word is won
-
-        
+        this.gameNew = U.gameNew;
     }
     
     public void tick() {

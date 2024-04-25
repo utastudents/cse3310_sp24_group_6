@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Player {
     // Attributes
-    private String PlayerNick;
+    public String PlayerNick;
     public int PlayerNum;
     private int Wins;
     private int Loss;
@@ -13,7 +13,7 @@ public class Player {
     private int HighScore;
     private int Coord1[];
     private int Coord2[];
-    private PlayerType pt = PlayerType.Player0;
+    public PlayerType pt = PlayerType.Player0;
 
     // Blank Constructor
     public Player() {}

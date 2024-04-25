@@ -18,6 +18,8 @@ public class GameLobby
         int pForThree = 0; // 3 player game
         int pForFour = 0; // 4 player game
 
+        G = null;
+
         // Count up how many players currently want each type of game
         for (Player p : PlayerList) 
         {
@@ -139,25 +141,25 @@ public class GameLobby
                     currPlayer = PlayerList.get(i);
                     gtWanted = currPlayer.PlayerNum;
 
-                    if (gtWanted == 3 && playersNeeded == 0)
+                    if (gtWanted == 4 && playersNeeded == 0)
                     {
                         player1 = currPlayer;
                         player1idx = i;
                         ++playersNeeded;
                     }
-                    else if (gtWanted == 3 && playersNeeded == 1)
+                    else if (gtWanted == 4 && playersNeeded == 1)
                     {
                         player2 = currPlayer;
                         player2idx = i;
                         ++playersNeeded;
                     }
-                    else if (gtWanted == 3 && playersNeeded == 2)
+                    else if (gtWanted == 4 && playersNeeded == 2)
                     {
                         player3 = currPlayer;
                         player3idx = i;
                         ++playersNeeded;
                     }
-                    else if (gtWanted == 3 && playersNeeded == 3)
+                    else if (gtWanted == 4 && playersNeeded == 3)
                     {
                         player4 = currPlayer;
                         player4idx = i;

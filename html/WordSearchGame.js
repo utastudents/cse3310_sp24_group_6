@@ -5,18 +5,21 @@ var Invoke_ = -1;
 var Status_ = -1;
 var Type_ = 2;
 var State_ = -1;
-var idx = 1;
+var idx_ = 1;
 var playID = -1;
 var start = 0;
 var word = "";
 var wordCount = 0;
 var GameId = -1;
 var button;
+//var gameNew_ = 0;
 
 var startCoordinate = -1;
 var endCoordinate = -1;
 
 var direction = -1;
+
+var gameNew_ = 1;
 
 const squareGrid = new Array(2500);
 
@@ -48,7 +51,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9880";
+serverUrl = "ws://" + window.location.hostname +":9106";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server
@@ -70,30 +73,39 @@ connection.onmessage = function (evt) {
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
 
-
+    console.log("obj.state: " + obj.PlayerNick);
     console.log("obj.state: " + obj.state);
     console.log("obj.GameId: " + obj.GameId);
     console.log("Client GameId: " + GameId);
     console.log("obj.pt: " + obj.pt);
     Invoke_ = -1;
 
-    if (obj.state == 1) {   // Setup Game and Start
-      if(obj.pt == "Player1")
-      {
-        idx = 1;
-      }
-      else if(obj.pt == "Player2")
-      {
-        idx = 2;
-      }
-      else if(obj.pt == "Player3")
-      {
-        idx = 3;
-      }
-      else if(obj.pt == "Player4")
-      {
-        idx = 4;
-      }
+    if (obj.state == 1 && obj.gameNew == 1) {   // Setup Game and Start
+
+      obj.player.forEach(playObj => {
+        if(PlayerNick_ == playObj.PlayerNick)
+        {
+          if(playObj.pt == "Player1")
+          {
+            idx = 1;
+          }
+          else if(playObj.pt == "Player2")
+          {
+            idx = 2;
+          }
+          else if(playObj.pt == "Player3")
+          {
+            idx = 3;
+          }
+          else if(playObj.pt == "Player4")
+          {
+            idx = 4;
+          }
+        }
+      })
+
+      gameNew_ = 0;
+
       var count = 0;
       for (let i = 0; i < 50; i++)
       {
@@ -114,12 +126,19 @@ connection.onmessage = function (evt) {
         linebreak = document.createElement("br");
         board.appendChild(linebreak);
       }
+
       obj.g.placedWords.forEach(wordObj => {
-        addWordBank("p5table4",wordObj.word);
-        wordCount++;
+          addWordBank("p5table4",wordObj.word);
+          wordCount++;
         })
+
       State = 0;
-      GameId = obj.GameId;
+
+      if(GameId == -1)
+      {
+        GameId = obj.GameId;
+      }
+      
       GameRoom();
       sendUpdate();
     }
@@ -131,7 +150,7 @@ connection.onmessage = function (evt) {
       console.log("Tried to change color " + msg);
       State = 0;
       sendUpdate();
-      button.setAttribute("id", "change_color("+obj.Button+");"); 
+      document.getElementById(Button).style.change
       
     }    
 }
@@ -440,6 +459,8 @@ function SelectPlayer(id)
         U.Pin = Pin_;
         U.StartCoordinate = endCoordinate;
         U.EndCoordinate = startCoordinate;
+        U.gameNew = gameNew_;
+        U.idx = idx_;
         /*
         if(idx == 0)
             U.PlayerIdx = "Player0";

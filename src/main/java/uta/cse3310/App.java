@@ -194,12 +194,33 @@ public class App extends WebSocketServer {
             //PlayerList = GL.RemovePlayers(G, PlayerList); // Null pointer exception
             U.Invoke = -1;
 
-            if(G != null)
-            {
+            if(G != null) // If game is not null remove the players that are now in game from the playerlist
+            { // This is so they won't be chosen to create a new game
                 G.state = 1;
                 G.GameId = GameId;
                 GameId++;
 
+                String inGamePNick = "";
+                String inListPNick = "";
+
+                Vector<Player> tempPlayerList = G.getplayerVector();
+
+                for(Player Q : tempPlayerList)
+                {
+                    inGamePNick = Q.getPlayerNick();
+
+                    for(int i = 0; i < PlayerList.size(); i++)
+                    {
+                        Player R = PlayerList.get(i);
+                        inListPNick = R.getPlayerNick();
+
+                        if(inListPNick.equals(inGamePNick))
+                        {
+                            PlayerList.remove(i);
+                        }
+                    }
+                }
+                
                 ActiveGames.add(G); // Since this is here it will be taken out of GameLobby to prevent a game from being added twice
                 G.Update(U);
                 System.out.println("\n\n/// Game Has Been Created ///\n\n");

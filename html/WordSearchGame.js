@@ -17,6 +17,9 @@ var button;
 var startCoordinate = -1;
 var endCoordinate = -1;
 
+var foreignStartCoordinate = -1;
+var foreignEndCoordinate = -1;
+
 var direction = -1;
 
 var gameNew_ = 1;
@@ -51,7 +54,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9106";
+serverUrl = "ws://" + window.location.hostname +":9880";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server
@@ -169,8 +172,8 @@ connection.onmessage = function (evt) {
     }
     if (obj.state == 2 && obj.GameId == GameId) // Update the current website and 
     {
-      startCoordinate = obj.startCoordinate;
-      endCoordinate = obj.endCoordinate;
+      foreignStartCoordinate = obj.startCoordinate;
+      foreignEndCoordinate = obj.endCoordinate;
 
       console.log("Tried to change color " + msg);
       State = 0;
@@ -544,5 +547,26 @@ function SelectPlayer(id)
   
   
 
+    /*
     
+    Coord1: [0,32]
+    Coord2: [12,44]
+    Button = 593
     
+    min = 0, max = 49
+    
+    [Y+1,X+1]
+    
+    startCoordinate = 593
+    endCoordinate = 32
+    
+    [idx/50, idx % 50]
+    
+    startCoord = [11,43]
+    endCoord = [0,32]
+    
+    startCoordinate = 67
+    endCoordinate = 51
+    startCoord = [1,17+1]
+    endCoord = [1,1]
+    */

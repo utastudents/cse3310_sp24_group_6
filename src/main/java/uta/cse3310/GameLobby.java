@@ -18,6 +18,8 @@ public class GameLobby
         int pForThree = 0; // 3 player game
         int pForFour = 0; // 4 player game
 
+        G = null;
+
         // Count up how many players currently want each type of game
         for (Player p : PlayerList) 
         {
@@ -84,6 +86,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2);
+            pForTwo = 0;
 
             return G;
         }
@@ -124,6 +127,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3);
+            pForThree = 0;
 
             return G;
         }
@@ -168,6 +172,7 @@ public class GameLobby
 
             // Make new game
             G = new Game(player1, player2, player3, player4);
+            pForFour = 0;
 
             return G;
         }

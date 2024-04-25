@@ -206,7 +206,16 @@ public class GameLobbyTest extends TestCase {
             }
         }
 
-        PlayerList.clear(); // Clear out the player list
-        ActiveGames.clear(); // Clear out the active games
+        // Manually remove players that are participating in the previous game from
+        // PlayerList just like in App
+
+        // Don't clear out Active games to show that the 4 player game from before is still going on
+
+        // TEST 5
+        System.out.println("");
+        System.out.println("Create New Game After Creating A New GameTest");
+        System.out.println("---------------------------------------------");
+        System.out.println("");
+
     }
 }

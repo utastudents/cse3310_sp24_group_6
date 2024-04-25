@@ -22,6 +22,7 @@ public class Game {
     public PlayerType CurrentTurn;
 
     Vector<Word> totalwords = new Vector<>();
+    Vector<Word> testTotalWords = new Vector<>();
     Vector<Player> player = new Vector<>();
     GameType gameType;                          //referenced from <<GameType>> enum
     PlayerType Players;
@@ -66,6 +67,10 @@ public class Game {
         player3.setPlayerType(PlayerType.Player3);
         player4.setPlayerType(PlayerType.Player4);
         
+    }
+
+    public Vector<Player> getplayerVector(){
+        return player;
     }
 
     public String [][] getArray() {
@@ -141,20 +146,24 @@ public class Game {
         }, 0, 1000);
     }
 
-    public boolean verifyWord(String coord1, String coord2) {  
+    public boolean verifyWord(String coord1, String coord2, Vector<Word> testTotalWords) {  
         boolean result = false;
 
-        for(Word w : totalwords) {
-            /* 
-            System.out.println("\ncoord1 in param: " + coord1);
-            System.out.println("\ncoord1 in getter: " + Arrays.toString(w.getCoord1()));
-            */
-            
-            if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
-                result = true;
-                break;
+        if (testTotalWords.isEmpty()) {
+           for(Word w : totalwords) {
+                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
+                    result = true;
+                    break;
+                } 
             } 
-            
+        }
+        else {
+            for(Word w : testTotalWords) { 
+                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
+                    result = true;
+                    break;
+                } 
+            }
         }
 
         return result;

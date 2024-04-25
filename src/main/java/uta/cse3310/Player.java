@@ -31,7 +31,7 @@ public class Player {
     }
 
     public String getPlayerNick() {
-        return this.PlayNick;
+        return PlayNick;
     }
 
     public void setPlayerNick(String playerNick) {

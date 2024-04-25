@@ -73,13 +73,18 @@ connection.onmessage = function (evt) {
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
 
-    console.log("obj.state: " + obj.PlayerNick);
-    console.log("obj.state: " + obj.state);
-    console.log("obj.GameId: " + obj.GameId);
-    console.log("Client GameId: " + GameId);
-    console.log("obj.pt: " + obj.pt);
-    Invoke_ = -1;
-
+    if (obj.type == 'chat') {
+      console.log("obj.state: " + obj.PlayerNick);    
+      displayChatMessage(obj.text);
+     
+    } else {
+      console.log("obj.state: " + obj.state);
+      console.log("obj.GameId: " + obj.GameId);
+      console.log("Client GameId: " + GameId);
+      console.log("obj.pt: " + obj.pt);
+      Invoke_ = -1;
+    }
+    
     if (obj.state == 1 && obj.gameNew == 1) {   // Setup Game and Start
 
       obj.player.forEach(playObj => {
@@ -174,7 +179,6 @@ connection.onmessage = function (evt) {
       
     }    
 }
-
 
 function NewPlayer(){
     document.getElementById("page1").style.display="none"; 
@@ -509,3 +513,36 @@ function SelectPlayer(id)
           console.log("Connection not open. Unable to send update.");
         }
     }
+  
+    function displayChatMessage(message) {
+      const messagesContainer = document.getElementById('mb-messages');
+      if (messagesContainer) {
+          const messageElement = document.createElement('div');
+          messageElement.textContent = message;
+          messagesContainer.appendChild(messageElement);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll to the bottom
+      } else {
+          console.error('Failed to find the messages container.');
+      }
+    }
+    
+    function sendChatMessage() {
+      const chatInput = document.getElementById('mb-messageInput');
+      const message = chatInput.value.trim();
+      if (message) {
+          const chatMessage = { type: 'chat', text: message };
+          if (connection.readyState === WebSocket.OPEN) {
+              connection.send(JSON.stringify(chatMessage));
+              chatInput.value = '';  // Clear the chat input after sending
+          } else {
+              console.error("WebSocket is not open. Try again later.");
+              alert("Cannot send message. Connection is closed.");
+          }
+      }
+    }
+
+  
+  
+
+    
+    

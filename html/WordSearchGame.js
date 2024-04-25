@@ -530,7 +530,7 @@ function SelectPlayer(id)
       const chatInput = document.getElementById('mb-messageInput');
       const message = chatInput.value.trim();
       if (message) {
-          const chatMessage = { type: 'chat', text: message };
+          const chatMessage = { type: 'chat', text: message, playerNick: PlayerNick_};
           if (connection.readyState === WebSocket.OPEN) {
               connection.send(JSON.stringify(chatMessage));
               chatInput.value = '';  // Clear the chat input after sending

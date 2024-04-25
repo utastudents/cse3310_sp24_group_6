@@ -132,6 +132,26 @@ connection.onmessage = function (evt) {
           wordCount++;
         })
 
+        obj.player.forEach(playObj => {
+            if(playObj.pt == "Player1")
+            {
+              document.getElementById("p5pone").innerHTML=""+playObj.PlayerNick;
+            }
+            else if(playObj.pt == "Player2")
+            {
+              document.getElementById("p5ptwo").innerHTML=""+playObj.PlayerNick;
+            }
+            else if(playObj.pt == "Player3")
+            {
+              document.getElementById("p5pthre").innerHTML=""+playObj.PlayerNick;
+            }
+            else if(playObj.pt == "Player4")
+            {
+              document.getElementById("p5pfour").innerHTML=""+playObj.PlayerNick;
+            }
+        })
+  
+
       State = 0;
 
       if(GameId == -1)

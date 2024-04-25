@@ -12,11 +12,11 @@ import com.google.gson.GsonBuilder;
 
 public class Game {
 
-    GridGenerator g = new GridGenerator(50,50);
-    WordBank wbank = new WordBank();
+    public GridGenerator g = new GridGenerator(50,50);
+    private WordBank wbank = new WordBank();
 
-    static LocalTime start = LocalTime.now();
-    static long startTime;
+    private static LocalTime start = LocalTime.now();
+    private static long startTime;
     public int GameId;
     private int time;
     public PlayerType CurrentTurn;
@@ -25,7 +25,10 @@ public class Game {
     Vector<Player> player = new Vector<>();
     GameType gameType;                          //referenced from <<GameType>> enum
     PlayerType Players;
+    int startCoordinate;
+    int endCoordinate;
     public int state;
+    public int Button;
     
     // Constructor for the different game types
     public Game(Player player1, Player player2) {

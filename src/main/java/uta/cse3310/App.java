@@ -57,6 +57,7 @@ import java.time.Duration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class App extends WebSocketServer {
 
@@ -64,6 +65,8 @@ public class App extends WebSocketServer {
     // the vector ActiveGames
 
     private Vector<Player> PlayerList = new Vector<Player>();
+
+    private Vector<Player> SavedPlayerList = new Vector<Player>();
 
     private Vector<Word> WordList = new Vector<Word>();
 
@@ -152,6 +155,8 @@ public class App extends WebSocketServer {
 
         Player P = null;
         Game G = null;
+        
+        System.out.println("\n\nInvoke Call: " + U.Invoke);
 
         if(U.Invoke == 1)   // FindGame() and New Player
         {
@@ -209,7 +214,7 @@ public class App extends WebSocketServer {
             }
 
             // allows the websocket to give us the Game when a message arrives
-            //conn.setAttachment(G);
+            conn.setAttachment(G);
 
             gson = new Gson();
             // Note only send to the single connection
@@ -223,6 +228,34 @@ public class App extends WebSocketServer {
             System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
             broadcast(jsonString);
         }
+        if(U.Invoke == 2)   // Check Word and Update Board
+        {
+            // Get the game that the player is in
+            for(int i = 0; i < ActiveGames.size(); i++)
+            {
+                if(U.GameId == ActiveGames.get(i).GameId)
+                {
+                    G = ActiveGames.get(i);
+                }
+            }
+            JsonObject jsObj = new JsonObject();
+            jsObj.addProperty("state", 2);
+            jsObj.addProperty("startCoordinate", U.StartCoordinate);
+            jsObj.addProperty("endCoordinate", U.EndCoordinate);
+            jsObj.addProperty("GameId", G.GameId);
+
+            //conn.setAttachment(G);
+            G.state = 2;
+            G.startCoordinate = U.StartCoordinate;
+            G.endCoordinate = U.EndCoordinate;
+            G.Button = U.Button;
+
+            String jsonString;
+            jsonString = gson.toJson(jsObj);
+            System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
+            broadcast(jsonString);
+        }
+
         
         
     }

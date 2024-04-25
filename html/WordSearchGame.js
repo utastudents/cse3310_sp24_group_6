@@ -11,6 +11,7 @@ var start = 0;
 var word = "";
 var wordCount = 0;
 var GameId = -1;
+var button;
 
 var startCoordinate = -1;
 var endCoordinate = -1;
@@ -69,60 +70,72 @@ connection.onmessage = function (evt) {
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
 
+
+    console.log("obj.state: " + obj.state);
+    console.log("obj.GameId: " + obj.GameId);
+    console.log("Client GameId: " + GameId);
+    console.log("obj.pt: " + obj.pt);
     Invoke_ = -1;
 
-    if ('state' in obj) {
-        if (obj.state == 1) {   // Setup Game and Start
-            if(obj.pt == "Player1")
-            {
-                idx = 1;
-            }
-            else if(obj.pt == "Player2")
-            {
-                idx = 2;
-            }
-            else if(obj.pt == "Player3")
-            {
-                idx = 3;
-            }
-            else if(obj.pt == "Player4")
-            {
-                idx = 4;
-            }
-            var count = 0;
-            for (let i = 0; i < 50; i++)
-            {
-                for (let j = 0; j < 50; j++)
-                {
-                    squareGrid[count] = obj.g.grid[i][j];
-
-                    const button = document.createElement("button");
-
-                    button.setAttribute("id",count);
-                    button.setAttribute("onclick","change_color("+count+");");
-
-                    button.innerHTML = squareGrid[count];
-
-                    board.appendChild(button);
-                    count++;
-                }
-                linebreak = document.createElement("br");
-                board.appendChild(linebreak);
-            }
-            obj.g.placedWords.forEach(wordObj => {
-              addWordBank("p5table4",wordObj.word);
-              wordCount++;
-            })
-            State = 0;
-            GameId = obj.GameId;
-            GameRoom();
-            sendUpdate();
-        }
-        if (obj.state == 2 && obj.GameId == GameId) // Update the current website
+    if (obj.state == 1) {   // Setup Game and Start
+      if(obj.pt == "Player1")
+      {
+        idx = 1;
+      }
+      else if(obj.pt == "Player2")
+      {
+        idx = 2;
+      }
+      else if(obj.pt == "Player3")
+      {
+        idx = 3;
+      }
+      else if(obj.pt == "Player4")
+      {
+        idx = 4;
+      }
+      var count = 0;
+      for (let i = 0; i < 50; i++)
+      {
+        for (let j = 0; j < 50; j++)
         {
-        }    
+          squareGrid[count] = obj.g.grid[i][j];
+
+          const button = document.createElement("button");
+
+          button.setAttribute("id",count);
+          button.setAttribute("onclick","change_color("+count+");");
+
+          button.innerHTML = squareGrid[count];
+
+          board.appendChild(button);
+          count++;
+        }
+        linebreak = document.createElement("br");
+        board.appendChild(linebreak);
+      }
+      obj.g.placedWords.forEach(wordObj => {
+        addWordBank("p5table4",wordObj.word);
+        wordCount++;
+        })
+      State = 0;
+      GameId = obj.GameId;
+      GameRoom();
+      sendUpdate();
     }
+    if (obj.state == 2 && obj.GameId == GameId) // Update the current website and 
+    {
+      startCoordinate = obj.startCoordinate;
+      endCoordinate = obj.endCoordinate;
+
+      console.log("Tried to change color " + msg);
+      State = 0;
+      sendUpdate();
+      button.setAttribute("id", "change_color("+obj.Button+");"); 
+      
+    }    
 }
+
 
 function NewPlayer(){
     document.getElementById("page1").style.display="none"; 
@@ -287,6 +300,7 @@ function SelectPlayer(id)
         const letter = document.getElementById(id).innerHTML;
         let bcolor = document.getElementById(id).style.backgroundColor;
         document.getElementById(id).style.backgroundColor = PlayerToColor.get(idx);
+        Button_ = id;
        if(start==0) {
           startCoordinate = id;
           start = 1;
@@ -296,11 +310,13 @@ function SelectPlayer(id)
          start = 0;
        }         
        if(startCoordinate >= 0 && endCoordinate >= 0) {
-     highlightWord();
+        highlightWord();
+        Invoke_ = 2;
          sendUpdate();
          startCoordinate=endCoordinate=-1;
          start=0;
        }
+
      }
 
      function highlightWord() {
@@ -416,12 +432,14 @@ function SelectPlayer(id)
 
      function sendUpdate() {
         U = new UserEvent();
-        U.Button = -1;
+        U.Button = Button_;
         U.Invoke = Invoke_;
         U.GameId = GameId;
         U.State = State;
         U.PlayerNick = PlayerNick_;
         U.Pin = Pin_;
+        U.StartCoordinate = endCoordinate;
+        U.EndCoordinate = startCoordinate;
         /*
         if(idx == 0)
             U.PlayerIdx = "Player0";

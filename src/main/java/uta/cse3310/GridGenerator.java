@@ -36,7 +36,7 @@ public class GridGenerator {
         Random r = new Random();
         if(seed != -1) {
             r.setSeed(seed);
-        } 
+        }
         double timeStart = System.nanoTime();
         int result;
         int orientation = 0;
@@ -126,6 +126,15 @@ public class GridGenerator {
         //genTime stored for test purposes
         this.genTime = (timeEnd - timeStart) / 1000000000;
         //Returns words used in grid for storing in WordBank
+        System.out.println("");
+        this.printGrid();
+        System.out.println("");
+        System.out.println("Cheat Sheet");
+        System.out.println("-----------");
+        System.out.println("");
+        for(int i = 0; i < this.placedWords.size(); i++) {
+            System.out.println(placedWords.elementAt(i));
+        }
         return this.placedWords;
     }
 
@@ -449,7 +458,7 @@ public class GridGenerator {
             this.grid[row][column + i] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row, column + word.length());
+        word.setCoord2(row, column + word.length() - 1);
         word.setWordType(WordType.horizontal);
         return 1;
     }
@@ -515,7 +524,7 @@ public class GridGenerator {
             this.grid[row][column - i] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row, column - word.length());
+        word.setCoord2(row, column - word.length() + 1);
         word.setWordType(WordType.bHorizontal);
         return 1;
     }
@@ -579,7 +588,7 @@ public class GridGenerator {
             this.grid[row + i][column] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row + word.length(), column);
+        word.setCoord2(row + word.length() - 1, column);
         word.setWordType(WordType.vertical);
         return 1;
     }
@@ -714,7 +723,7 @@ public class GridGenerator {
             this.grid[row + i][column + i] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row + word.length(), column + word.length());
+        word.setCoord2(row + word.length() - 1, column + word.length() - 1);
         word.setWordType(WordType.topLeftBottomRight);
         return 1;
     }
@@ -784,7 +793,7 @@ public class GridGenerator {
             this.grid[row + i][column - i] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row + word.length(), column - word.length());
+        word.setCoord2(row + word.length() - 1, column - word.length() + 1);
         word.setWordType(WordType.topRightBottomLeft);
         return 1;
     }
@@ -856,7 +865,7 @@ public class GridGenerator {
             this.grid[row - i][column + i] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row - word.length(), column + word.length());
+        word.setCoord2(row - word.length() + 1, column + word.length() - 1);
         word.setWordType(WordType.bottomLeftTopRight);
         return 1;
     }
@@ -926,7 +935,7 @@ public class GridGenerator {
             this.grid[row - i][column - i] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row - word.length(), column - word.length());
+        word.setCoord2(row - word.length() + 1, column - word.length() + 1);
         word.setWordType(WordType.bottomRightTopLeft);
         return 1;
     }

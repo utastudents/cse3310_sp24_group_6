@@ -55,6 +55,7 @@ import java.util.TimerTask;
 import java.util.Vector;
 import java.time.Instant;
 import java.time.Duration;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -285,7 +286,29 @@ public class App extends WebSocketServer {
                 }
             }
 
+            //Get 2D start Coordinates
+            int[] startCoord = new int[2];
+            startCoord[0] = ((U.StartCoordinate + 1) / 50) - 1;
+            startCoord[1] = ((U.StartCoordinate + 1) % 50) - 1;
+            String sCstr = Arrays.toString(startCoord);
+
+            //Get 2D end Coordinates
+            int[] endCoord = new int[2];
+            endCoord[0] = ((U.EndCoordinate + 1) / 50) - 1;
+            endCoord[1] = ((U.EndCoordinate + 1) % 50) - 1;
+            String eCstr = Arrays.toString(endCoord);
+            
             JsonObject jsObj = new JsonObject();
+            if(G.verifyWord(sCstr, eCstr, G.totalwords))
+            {
+                jsObj.addProperty("wordchosen", 1);
+            }
+            else
+            {
+                jsObj.addProperty("wordchosen", 0);
+            }
+            
+
             jsObj.addProperty("state", 2);
             jsObj.addProperty("startCoordinate", U.StartCoordinate);
             jsObj.addProperty("endCoordinate", U.EndCoordinate);

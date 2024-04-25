@@ -176,6 +176,72 @@ public class GridGenerator {
         return s.toString();
     }
 
+    public int read2(Word word, int index) {
+            int[] result = new int[4];
+            int size = word.getWord().length();
+            int i = 0;
+            int[] coord1 = new int[2];
+            coord1 = word.getCoord1();
+            int row = coord1[0];
+            int column = coord1[1];
+            result[0] = row;
+            result[1] = column;
+            StringBuilder s = new StringBuilder(size);
+
+            //Simple function that steps through coordinates and checks against the string stored in a word object, used in unit test
+
+            if(word.getWordType() == WordType.horizontal) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row][column + i]);
+                }
+                result[2] = row;
+                result[3] = column + i;
+            } else if(word.getWordType() == WordType.bHorizontal) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row][column - i]);
+                }
+                result[2] = row;
+                result[3] = column - i;
+            } else if(word.getWordType() == WordType.vertical) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row + i][column]);
+                }
+                result[2] = row + i;
+                result[3] = column;
+            } else if(word.getWordType() == WordType.bVertical) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row - i][column]);
+                }
+                result[2] = row - i;
+                result[3] = column;
+            } else if(word.getWordType() == WordType.topLeftBottomRight) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row + i][column + i]);
+                }
+                result[2] = row + i;
+                result[3] = column + i;
+            } else if(word.getWordType() == WordType.topRightBottomLeft) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row + i][column - i]);
+                }
+                result[2] = row + i;
+                result[3] = column - i;
+            } else if(word.getWordType() == WordType.bottomLeftTopRight) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row - i][column + i]);
+                }
+                result[2] = row - i;
+                result[3] = column + i;
+            } else if(word.getWordType() == WordType.bottomRightTopLeft) {
+                for(i = 0; i < size; i++) {
+                    s.append(this.grid[row - i][column - i]);
+                }
+                result[2] = row - i;
+                result[3] = column - i;
+            }
+        return result[index];
+    }
+
     public double getGridDensity() {
         return this.gridDensity;
     }

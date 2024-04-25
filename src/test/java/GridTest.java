@@ -95,11 +95,19 @@ public class GridTest extends TestCase {
         
         //Reads the grid coordinate by coordinate to make sure the letters there match the word that's supposed to be at those coordinates
         bool = true;
+        System.out.println("");
+        System.out.println("Word Placement verification test");
+        System.out.println("--------------------------------");
         for(Word w: W.getWordList()) {
             if(!(w.getWord().equals(G.read(w)))) {
                 bool = false;
             }
+            else {
+                System.out.println(w.getWord() + " " + Arrays.toString(w.getCoord1()) + " " + Arrays.toString(w.getCoord2()) + " " + 
+                                   G.read(w) + " [" + G.read2(w, 0) + ", " + G.read2(w, 1) + "] [" + G.read2(w, 2) + ", " + G.read2(w,3) + "]");
+            }
         }
+        System.out.println("");
         assertTrue(bool);
         if(bool) {
             System.out.println("All words placed properly, no errors");

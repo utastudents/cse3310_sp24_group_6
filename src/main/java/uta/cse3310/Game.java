@@ -149,6 +149,8 @@ public class Game {
     public boolean verifyWord(String coord1, String coord2, Vector<Word> testTotalWords) {  
         boolean result = false;
 
+        System.out.println("[Coord1: " + coord1 + "] [Coord2: " + coord2 + "]");
+
         if (testTotalWords.isEmpty()) {
            for(Word w : totalwords) {
                 if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {

@@ -178,7 +178,6 @@ connection.onmessage = function (evt) {
       console.log("Tried to change color " + msg);
       State = 0;
       sendUpdate();
-      document.getElementById(Button).style.change
       
     }    
 }

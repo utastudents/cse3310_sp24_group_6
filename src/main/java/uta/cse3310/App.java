@@ -1,4 +1,3 @@
-
 // This is example code provided to CSE3310 Fall 2022
 // You are free to use as is, or changed, any of the code provided
 
@@ -42,7 +41,9 @@ import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.drafts.Draft;
@@ -58,6 +59,7 @@ import java.time.Duration;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class App extends WebSocketServer {
 
@@ -80,6 +82,8 @@ public class App extends WebSocketServer {
 
     private Statistics stats;
 
+    private ChatHandler chatHandler;
+
     private String version = null;
 
     private int pnum = 0;
@@ -95,6 +99,7 @@ public class App extends WebSocketServer {
 
     public App(int port) {
         super(new InetSocketAddress(port));
+        this.chatHandler = new ChatHandler(this);
     }
 
     public App(InetSocketAddress address) {
@@ -135,10 +140,24 @@ public class App extends WebSocketServer {
         Game G = conn.getAttachment();
         G = null;
     }
-
+    
     @Override
     public void onMessage(WebSocket conn, String message) {
+        
         System.out.println("\nincoming < " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message) + "\n");
+
+        try {
+            JsonObject jsonMessage = JsonParser.parseString(message).getAsJsonObject();
+            // Check if the message is a chat message
+            if ("chat".equals(jsonMessage.get("type").getAsString())) {
+                String chatMessage = jsonMessage.get("text").getAsString();
+                String playerNick = jsonMessage.has("playerNick") ? jsonMessage.get("playerNick").getAsString() : "Anonymous"; // Handle anonymous or default nicknames
+                chatHandler.handleMessage(conn, chatMessage, playerNick);
+            } // No need for else if chat is the only type you're handling here
+        } catch (Exception e) {
+            System.err.println("Error processing message: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         // Bring in the data from the webpage
         // A UserEvent is all that is allowed at this point

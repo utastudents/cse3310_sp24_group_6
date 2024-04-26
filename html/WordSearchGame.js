@@ -54,7 +54,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9880";
+serverUrl = "ws://" + window.location.hostname +":9106";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server
@@ -177,8 +177,32 @@ connection.onmessage = function (evt) {
 
       console.log("Tried to change color " + msg);
       State = 0;
-      sendUpdate();
       
+      
+      if(obj.wordchosen == 1)
+      {
+        if(obj.idx == 1)
+        {
+          let intElement = document.getElementById("p5poneP");
+          intElement.textContent = obj.points;
+        }
+        else if(obj.idx == 2)
+        {
+          let intElement = document.getElementById("p5ptwoP");
+          intElement.textContent = obj.points;
+        }
+        else if(obj.idx == 3)
+        {
+          let intElement = document.getElementById("p5pthreP");
+          intElement.textContent = obj.points;
+        }
+        else if(obj.idx == 4)
+        {
+          let intElement = document.getElementById("p5pfourP");
+          intElement.textContent = obj.points;
+        }
+      }
+      sendUpdate();
     }    
 }
 
@@ -486,7 +510,7 @@ function SelectPlayer(id)
         U.StartCoordinate = endCoordinate;
         U.EndCoordinate = startCoordinate;
         U.gameNew = gameNew_;
-        U.idx = idx_;
+        U.idx = idx;
         /*
         if(idx == 0)
             U.PlayerIdx = "Player0";

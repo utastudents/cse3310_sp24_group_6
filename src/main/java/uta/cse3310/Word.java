@@ -29,8 +29,16 @@ public class Word {
         return type;
     }
 
+    public boolean foundorNot() {
+        return found;
+    }
+
     public String getWord() {
         return word;
+    }
+
+    public void setTrue() {
+        this.found = true;
     }
 
     public void setCoord1(int row, int column) {

@@ -146,14 +146,21 @@ public class Game {
         }, 0, 1000);
     }
 
-    public boolean verifyWord(String coord1, String coord2, Vector<Word> testTotalWords) {  
+    public boolean verifyWord(int[] coord1, int[] coord2, Vector<Word> testTotalWords) {  
         boolean result = false;
 
-        System.out.println("[Coord1: " + coord1 + "] [Coord2: " + coord2 + "]");
+        System.out.println("[Coord1: " + Arrays.toString(coord1) + "] [Coord2: " + Arrays.toString(coord2) + "]");
 
         if (testTotalWords.isEmpty()) {
            for(Word w : totalwords) {
-                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
+                int[] c1 = w.getCoord1();
+                int[] c2 = w.getCoord2();
+                System.out.println(w.getWord() + " " + Arrays.toString(c2) + Arrays.toString(c1));
+
+                if( ((coord1[0] >= c2[0] - 2) && (coord1[0] >= c2[0] + 2)) &&
+                    ((coord1[1] >= c2[1] - 2) && (coord1[1] >= c2[1] + 2)) &&
+                    ((coord2[0] >= c1[0] - 2) && (coord2[0] >= c1[0] + 2)) &&
+                    ((coord2[0] >= c1[1] - 2) && (coord2[0] >= c1[1] + 2))) {
                     result = true;
                     break;
                 } 
@@ -161,9 +168,18 @@ public class Game {
         }
         else {
             for(Word w : testTotalWords) { 
-                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
-                    result = true;
-                    break;
+                int[] c1 = w.getCoord1();
+                int[] c2 = w.getCoord2();
+                System.out.println(w.getWord() + " " + Arrays.toString(c2) + Arrays.toString(c1));
+
+                if(((coord1[0] >= c2[0] - 0) && (coord1[0] <= c2[0] + 0) && (coord1[1] >= c2[1] - 0) && (coord1[1] <= c2[1] + 0)) &&
+                   ((coord2[0] >= c1[0] - 0) && (coord2[0] <= c1[0] + 0) && (coord2[1] >= c1[1] - 0) && (coord2[1] <= c1[1] + 0))) {
+                    System.out.println("Found Word");
+                    if(w.foundorNot() == false)
+                    {
+                        result = true;
+                        w.setTrue();
+                    }      
                 } 
             }
         }
@@ -196,3 +212,30 @@ public class Game {
 
     }
 }
+
+/*
+public boolean verifyWord(int[] coord1, int[] coord2, Vector<Word> testTotalWords) {  
+        boolean result = false;
+
+        System.out.println("[Coord1: " + coord1 + "] [Coord2: " + coord2 + "]");
+
+        if (testTotalWords.isEmpty()) {
+           for(Word w : totalwords) {
+                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
+                    result = true;
+                    break;
+                } 
+            } 
+        }
+        else {
+            for(Word w : testTotalWords) { 
+                if(coord1.equals(Arrays.toString(w.getCoord1())) && coord2.equals(Arrays.toString(w.getCoord2()))) {
+                    result = true;
+                    break;
+                } 
+            }
+        }
+
+        return result;
+    }
+    */

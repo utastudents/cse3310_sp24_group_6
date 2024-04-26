@@ -56,11 +56,13 @@ import java.util.Vector;
 import java.time.Instant;
 import java.time.Duration;
 import java.util.Arrays;
+import java.lang.String;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonArray;
 
 public class App extends WebSocketServer {
 
@@ -158,7 +160,7 @@ public class App extends WebSocketServer {
             } // No need for else if chat is the only type you're handling here
         } catch (Exception e) {
             System.err.println("Error processing message: " + e.getMessage());
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         // Bring in the data from the webpage
@@ -288,20 +290,34 @@ public class App extends WebSocketServer {
 
             //Get 2D start Coordinates
             int[] startCoord = new int[2];
-            startCoord[0] = ((U.StartCoordinate + 1) / 50) - 1;
+            startCoord[0] = ((U.StartCoordinate + 1) / 50);
             startCoord[1] = ((U.StartCoordinate + 1) % 50) - 1;
             String sCstr = Arrays.toString(startCoord);
 
             //Get 2D end Coordinates
             int[] endCoord = new int[2];
-            endCoord[0] = ((U.EndCoordinate + 1) / 50) - 1;
+            endCoord[0] = ((U.EndCoordinate + 1) / 50);
             endCoord[1] = ((U.EndCoordinate + 1) % 50) - 1;
             String eCstr = Arrays.toString(endCoord);
             
             JsonObject jsObj = new JsonObject();
-            if(G.verifyWord(sCstr, eCstr, G.totalwords))
-            {
+            String jsonStringPlayer = null;
+            if(G.verifyWord(startCoord, endCoord, G.totalwords))
+            {   
+                System.out.println("\n\n/// Word has been found by " + U.PlayerNick + "///\n\n" + "");
                 jsObj.addProperty("wordchosen", 1);
+
+                
+                for(Player p : G.player)
+                {   
+                    System.out.println(p.PlayerNick + " " + U.PlayerNick + " " + p.getPoints());
+                    if(p.PlayerNick.equals(U.PlayerNick))
+                    {
+                        System.out.println("Applying Points");
+                        p.updateScore();
+                        jsObj.addProperty("points", p.getPoints());
+                    }
+                }
             }
             else
             {
@@ -313,6 +329,9 @@ public class App extends WebSocketServer {
             jsObj.addProperty("startCoordinate", U.StartCoordinate);
             jsObj.addProperty("endCoordinate", U.EndCoordinate);
             jsObj.addProperty("GameId", G.GameId);
+            jsObj.addProperty("PlayerNick", U.PlayerNick);
+            jsObj.addProperty("idx", U.idx);
+            
 
             //conn.setAttachment(G);
             G.state = 2;
@@ -320,8 +339,8 @@ public class App extends WebSocketServer {
             G.endCoordinate = U.EndCoordinate;
             G.Button = U.Button;
 
-            String jsonString;
-            jsonString = gson.toJson(jsObj);
+            String jsonString = gson.toJson(jsObj);
+            
             System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
             broadcast(jsonString);
         }
@@ -369,7 +388,7 @@ public class App extends WebSocketServer {
         //9880 or 9106 for Websocket
 
         String HttpPort = System.getenv("HTTP_PORT");
-        int port = 9080;
+        int port = 9006;
         if (HttpPort!=null) {
             port = Integer.valueOf(HttpPort);
         }
@@ -378,7 +397,7 @@ public class App extends WebSocketServer {
         H.start();
         System.out.println("http Server started on port: " + port);
 
-        port = 9880;
+        port = 9106;
         String WSPort = System.getenv("WEBSOCKET_PORT");
         if (WSPort!=null) {
             port = Integer.valueOf(WSPort);

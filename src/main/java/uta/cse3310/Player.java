@@ -76,9 +76,9 @@ public class Player {
         }
     }
 
-    public int updateScore() {
+    public void updateScore() {
         // Question: Update Highschore or score in game? 
-        return this.Points;
+        this.Points++;
     }
 
     // Add Win, Add Loss, Getters 

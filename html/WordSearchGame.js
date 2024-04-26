@@ -169,6 +169,7 @@ connection.onmessage = function (evt) {
       }
       
       GameRoom();
+      startTimer();
       sendUpdate();
     }
     if (obj.state == 2 && obj.GameId == GameId) // Update the current website and 
@@ -647,7 +648,21 @@ function SelectPlayer(id)
       }
     }
 
-  
+    function startTimer() {
+      var countDownDate = new Date().getTime() + 5 * 60 * 1000; 
+      // Update the count down every 1 second
+      var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("p5h1").innerHTML = minutes + ":" + seconds;
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("p5h1").innerHTML = "GAME OVER";
+        }
+      }, 1000);
+    }
   
 
     /*

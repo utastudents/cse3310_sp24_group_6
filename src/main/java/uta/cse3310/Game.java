@@ -157,12 +157,15 @@ public class Game {
                 int[] c2 = w.getCoord2();
                 System.out.println(w.getWord() + " " + Arrays.toString(c2) + Arrays.toString(c1));
 
-                if( ((coord1[0] >= c2[0] - 2) && (coord1[0] >= c2[0] + 2)) &&
-                    ((coord1[1] >= c2[1] - 2) && (coord1[1] >= c2[1] + 2)) &&
-                    ((coord2[0] >= c1[0] - 2) && (coord2[0] >= c1[0] + 2)) &&
-                    ((coord2[0] >= c1[1] - 2) && (coord2[0] >= c1[1] + 2))) {
-                    result = true;
-                    break;
+                if(((coord1[0] >= c2[0] - 0) && (coord1[0] <= c2[0] + 0) && (coord1[1] >= c2[1] - 0) && (coord1[1] <= c2[1] + 0)) &&
+                   ((coord2[0] >= c1[0] - 0) && (coord2[0] <= c1[0] + 0) && (coord2[1] >= c1[1] - 0) && (coord2[1] <= c1[1] + 0))) {
+                    System.out.println("Found Word");
+                    if(w.foundorNot() == false)
+                    {
+                        result = true;
+                        w.setTrue();
+                        break;
+                    }      
                 } 
             } 
         }
@@ -179,6 +182,7 @@ public class Game {
                     {
                         result = true;
                         w.setTrue();
+                        break;
                     }      
                 } 
             }

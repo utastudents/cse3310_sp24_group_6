@@ -8,6 +8,7 @@ var State_ = -1;
 var idx_ = 1;
 var playID = -1;
 var start = 0;
+var startx = 0;
 var word = "";
 var wordCount = 0;
 var GameId = -1;
@@ -54,7 +55,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9106";
+serverUrl = "ws://" + window.location.hostname +":9880";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server
@@ -172,8 +173,8 @@ connection.onmessage = function (evt) {
     }
     if (obj.state == 2 && obj.GameId == GameId) // Update the current website and 
     {
-      foreignStartCoordinate = obj.startCoordinate;
-      foreignEndCoordinate = obj.endCoordinate;
+      foreignstartCoordinate = obj.startCoordinate;
+      foreignendCoordinate = obj.endCoordinate;
 
       console.log("Tried to change color " + msg);
       State = 0;
@@ -202,6 +203,8 @@ connection.onmessage = function (evt) {
           intElement.textContent = obj.points;
         }
       }
+
+      change_color2(obj.Button, obj.idx);
       sendUpdate();
     }    
 }
@@ -366,8 +369,8 @@ function SelectPlayer(id)
     function change_color(id) {
         let x = id % 50;
         let y = Math.floor(id / 50);   
-        const letter = document.getElementById(id).innerHTML;
-        let bcolor = document.getElementById(id).style.backgroundColor;
+        //const letter = document.getElementById(id).innerHTML;
+        //let bcolor = document.getElementById(id).style.backgroundColor;
         document.getElementById(id).style.backgroundColor = PlayerToColor.get(idx);
         Button_ = id;
        if(start==0) {
@@ -385,8 +388,31 @@ function SelectPlayer(id)
          startCoordinate=endCoordinate=-1;
          start=0;
        }
-
      }
+
+     function change_color2(id, idx2) {
+      let x = id % 50;
+      let y = Math.floor(id / 50);   
+      //const letter = document.getElementById(id).innerHTML;
+      //let bcolor = document.getElementById(id).style.backgroundColor;
+      let b = document.getElementById(id);
+      b.style.backgroundColor = PlayerToColor.get(idx2);
+
+      Button_ = id;
+     if(startx==0) {
+        foreignstartCoordinate = id;
+        startx = 1;
+     }
+     else {
+       foreignendCoordinate = id;
+       startx = 0;
+     }         
+     if(foreignstartCoordinate >= 0 && foreignendCoordinate >= 0) {
+        highlightWord2(idx2);
+       foreignstartCoordinate=foreignendCoordinate=-1;
+       startx=0;
+     }
+   }
 
      function highlightWord() {
         direction = getDirection(startCoordinate,endCoordinate);
@@ -449,6 +475,60 @@ function SelectPlayer(id)
          }
      
      }
+
+     function highlightWord2(idx2) {
+      direction = getDirection(foreignstartCoordinate,foreignendCoordinate);
+      if(direction==1) {
+        for(let i=foreignstartCoordinate;i<=foreignendCoordinate;i++) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+        }
+      }    
+      else if(direction==2) {      
+        for(let i=foreignstartCoordinate;i>=foreignendCoordinate;i--) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+          }
+      }
+      else if(direction==3) {    
+        for(let i=foreignstartCoordinate;i>=foreignendCoordinate;i -=50) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+          }
+      }
+      else if(direction==4) {     
+        for(let i=foreignstartCoordinate;i<=foreignendCoordinate;i +=50) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+          }
+      }
+      else if(direction==5) {     
+        for(let i=foreignstartCoordinate;i>=foreignendCoordinate;i -=49) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+          }
+      }
+      else if(direction==6) {     
+        for(let i=foreignstartCoordinate;i>=foreignendCoordinate;i -=51) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+          }
+      }
+      else if(direction==7) {     
+        for(let i=foreignstartCoordinate;i<=foreignendCoordinate;i +=51) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+          }
+      }
+      else if(direction==8) {     
+        for(let i=foreignstartCoordinate;i<=foreignendCoordinate;i +=49) {
+          document.getElementById(i).style.backgroundColor = PlayerToColor.get(idx2);
+          word += document.getElementById(i).innerHTML;
+          }
+      }
+      StrikethroughWord(word);
+      word="";
+   }
 
      function getDirection(v1, v2) {
         let x = v1 % 50;

@@ -92,6 +92,26 @@ public class GridTest extends TestCase {
             W.addList(test.elementAt(i));
         }
         W.generateWords();
+
+        //Word Coordinate Verification Test
+        bool = true;
+        for(Word w: W.getWordList()) {
+            int[] coord1 = new int[2];
+            int[] coord2 = new int[2];
+            coord1 = w.getCoord1();
+            coord2 = w.getCoord2();
+            if(!(w.getLetter(0).equals(G.at(coord1[0], coord1[1])))) {
+                if(!(w.getLetter(w.length() - 1).equals(G.at(coord2[0], coord2[1])))) {
+                    bool = false;
+                }
+            }
+            System.out.println(w.getWord() + " " + Arrays.toString(w.getCoord1()) + " " + w.getLetter(0) + " " + G.at(coord1[0], coord1[1]) + 
+                               Arrays.toString(w.getCoord2()) + " " + w.getLetter(w.length() - 1) + " " + G.at(coord2[0], coord2[1]));
+        }
+        assertTrue(bool);
+        if(bool) {
+            System.out.println("Coordinates set correctly");
+        }
         
         //Reads the grid coordinate by coordinate to make sure the letters there match the word that's supposed to be at those coordinates
         bool = true;

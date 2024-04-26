@@ -138,6 +138,10 @@ public class GridGenerator {
         return this.placedWords;
     }
 
+    public String at(int coord1, int coord2) {
+        return this.grid[coord1][coord2];
+    }
+
     public String read(Word word) {
             ArrayList<String> result;
             int size = word.getWord().length();
@@ -654,7 +658,7 @@ public class GridGenerator {
             this.grid[row - i][column] = word.getLetter(i);
         }
         word.setCoord1(row, column);
-        word.setCoord2(row - word.length(), column);
+        word.setCoord2(row - word.length() + 1, column);
         word.setWordType(WordType.bVertical);
         return 1;
     }

@@ -89,7 +89,7 @@ connection.onmessage = function (evt) {
       Invoke_ = -1;
     }
     
-    if (obj.state == 1 && obj.gameNew == 1) {   // Setup Game and Start
+    if (obj.state == 1 && obj.gameNew == 1 && obj.GameId != -1) {   // Setup Game and Start
 
       obj.player.forEach(playObj => {
         if(PlayerNick_ == playObj.PlayerNick)

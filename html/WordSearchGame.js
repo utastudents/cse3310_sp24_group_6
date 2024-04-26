@@ -183,6 +183,9 @@ connection.onmessage = function (evt) {
       
       if(obj.wordchosen == 1)
       {
+        var x = document.getElementById("myAudio"); 
+        x.play();
+
         if(obj.idx == 1)
         {
           let intElement = document.getElementById("p5poneP");

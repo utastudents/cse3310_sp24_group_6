@@ -57,7 +57,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9106";
+serverUrl = "ws://" + window.location.hostname +":9880";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server
@@ -240,6 +240,34 @@ connection.onmessage = function (evt) {
       {
         Loser();
       }
+
+      var count = 0;
+      for (let i = 0; i < 50; i++)
+      {
+        for (let j = 0; j < 50; j++)
+        {
+          const button = document.getElementById(count);
+          button.remove();
+          count++;
+        }
+      }
+
+      const board = document.getElementById('board');
+      const linebreaks = board.querySelectorAll('br');
+      linebreaks.forEach(linebreak => {board.removeChild(linebreak);});
+
+      document.getElementById("p5pone").innerHTML="";
+      document.getElementById("p5pone").innerHTML="";
+      document.getElementById("p5pone").innerHTML="";
+      document.getElementById("p5pone").innerHTML="";
+      let intDel = document.getElementById("p5poneP");
+      intDel.textContent = 0;
+      intDel = document.getElementById("p5ptwoP");
+      intDel.textContent = 0;
+      intDel = document.getElementById("p5pthreP");
+      intDel.textContent = 0;
+      intDel = document.getElementById("p5pfourP");
+      intDel.textContent = 0;
     }    
 }
 
@@ -686,7 +714,7 @@ function SelectPlayer(id)
     }
 
     function startTimer() {
-      var countDownDate = new Date().getTime() + 5 * 60 * 1000; 
+      var countDownDate = new Date().getTime() + 5 * 60 * 70; 
       // Update the count down every 1 second
       var x = setInterval(function() {
         var now = new Date().getTime();

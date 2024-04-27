@@ -57,7 +57,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9106";
+serverUrl = "ws://" + window.location.hostname +":9880";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server

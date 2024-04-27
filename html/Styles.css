@@ -33,7 +33,7 @@
 /* Add a background color on hover */
 .btn-group button:hover {
   background-color: Magenta;
-//  background-color: #3e8e41;
+  background-color: #3e8e41;
 }
 .button {
   background-color: #04AA6D; /* Green */
@@ -48,21 +48,45 @@
   margin: 4px 2px;
   cursor: pointer;
 }
-.button2 {background-color: #008CBA;} /* Blue */
+.button2 {background-color: #008CBA; display: inline-block;  } /* Blue */
 .button3 {background-color: #f44336;} /* Red */ 
 .button4 {background-color: #e7e7e7; color: black;} /* Gray */ 
 .button5 {background-color: #555555;} /* Black */
 
-textarea {resize:none;background-color:#e7e7e7;width:10;height:15;}
-iframe {background-color:powderblue;frameBorder:0;scrolling:auto;width:140px;height:200px;}
-table {
-  border: 1px solid black;
-  border-collapse: collapse;
-  margin: 25px;
+textarea {
+  resize: none;
+  background-color:#e7e7e7;
+  width:10;height:15;
 }
+
+iframe {
+  background-color:powderblue;
+  frameBorder: 0;
+  scrolling: auto;
+  width: 140px;
+  height: 200px;  
+  margin: 50px;
+}
+
+.iframe-container {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  height: 100%; /* Make sure the container has a height */
+}
+
+.scrollable-table {
+  width: fit-content;
+  height: 600px;
+  overflow-y: auto;
+  border: 1px solid rgba(253, 252, 252, 0.917);
+  border-collapse: collapse;
+  margin-right: px;
+}
+
 table.center {
-  margin-left: auto; 
-  margin-right: auto;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 th {
@@ -106,20 +130,16 @@ input[type="text"]#mb-messageInput {
 button#mb-sendButton {
   width: 100%;
   padding: 10px;
-  background-color: #4CAF50; /* Green */
+  background-color: #254e26; /* Green */
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button#mb-sendButton:hover {
-  background-color: #45a049;
+  background-color: #011e03;
 }
 
-
-button#mb-sendButton:hover {
-  background-color: #45a049;
-}
 .chat-message {
   padding: 5px 10px;
   margin-bottom: 2px;

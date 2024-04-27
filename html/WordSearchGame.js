@@ -630,12 +630,20 @@ function SelectPlayer(id)
           return -1;
      }
 
-     function addWordBank(tableID,item1) {
-      var table = document.getElementById(tableID);
-      var row = table.insertRow(table.rows.length);
-      var cell1 = row.insertCell(0);
-      cell1.innerHTML = item1;
+     function addWordBank(tableID, item1) {
+      var table = document.getElementById(tableID).getElementsByTagName('tbody')[0];
+      var lastRow = table.lastElementChild;
+      var cellCount = lastRow ? lastRow.cells.length : 0;
+  
+      // Check if the last row is full
+      if (!lastRow || cellCount === 2) {
+          lastRow = table.insertRow(-1); // Create a new row
+      }
+      
+      var cell = lastRow.insertCell(-1);
+      cell.innerHTML = item1; // Add the word to the cell
     }
+  
 
     function ResetBoard() {
       start = 0;

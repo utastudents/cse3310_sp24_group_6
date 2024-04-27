@@ -241,22 +241,26 @@
       <input type="text" id="mb-messageInput" aria-label="Type your message here" placeholder="Type your message here..." style="width: 100%; box-sizing: border-box; padding: 8px;">
       <button id="mb-sendButton" onclick="sendChatMessage()">Send Message</button>
     </div>
-    <div class="btn-group" style="width:74%;float:left;" id="board"></div>
-    <div style="width:12%;float:right;" id="wordbank">
+    <div class="btn-group" style="width:75%;float:left; margin: 50px" id="board"></div>
+    <div style="width:20%;float:center;" id="wordbank">
       <center>
 <!--         <p>WORD BANK</p>  -->
-<!--         <br/><iframe id="p5iframe" title="Word Bank"></iframe><br><br>  -->
-         <button class="button button3" onclick="ResetBoard()">Reset Board</button><br><br><br><br>
-         <table id="p5table4" class="center">
-            <tr>
-              <th colspan="3">WORD BANK</th>
-            </tr>
-            <tr>
-              <th colspan="3">-------------</th>
-            </tr>
-         </table>
-         <button class="button button2" onclick="Winner()">Winners</button><br><br>
-         <button class="button button2" onclick="Loser()">Losers</button>
+<!--         <br/><iframe id="p5iframe" title="Word Bank" allowfullscreen="true"></iframe><br><br>  -->       
+         <button class="button button2" onclick="Winner()">Winners</button>
+         <button class="button button2" onclick="Loser()">Losers</button><br><br>
+         <button class="button button3" onclick="ResetBoard()">Reset Board</button><br><br>
+         <div class="scrollable-table">
+          <table id="p5table4" class="center">
+              <thead>
+                  <tr>
+                      <th colspan="2">WORD BANK</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- Word rows will be added here -->
+              </tbody>
+          </table>
+         </div>
       </center>
    </div>
   </div>

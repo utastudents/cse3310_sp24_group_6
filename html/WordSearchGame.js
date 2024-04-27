@@ -714,7 +714,7 @@ function SelectPlayer(id)
     }
 
     function startTimer() {
-      var countDownDate = new Date().getTime() + 5 * 60 * 70; 
+      var countDownDate = new Date().getTime() + 5 * 60 * 1000; 
       // Update the count down every 1 second
       var x = setInterval(function() {
         var now = new Date().getTime();

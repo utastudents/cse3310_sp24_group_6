@@ -440,7 +440,7 @@ public class App extends WebSocketServer {
         //9880 or 9106 for Websocket
 
         String HttpPort = System.getenv("HTTP_PORT");
-        int port = 9080;
+        int port = 9006;
         if (HttpPort!=null) {
             port = Integer.valueOf(HttpPort);
         }
@@ -449,7 +449,7 @@ public class App extends WebSocketServer {
         H.start();
         System.out.println("http Server started on port: " + port);
 
-        port = 9880;
+        port = 9106;
         String WSPort = System.getenv("WEBSOCKET_PORT");
         if (WSPort!=null) {
             port = Integer.valueOf(WSPort);

@@ -17,6 +17,7 @@ public class UserEvent {
     int Invoke; // To tell the java side of things to call the matchmaking method
     int gameNew;
     int idx;
+    int Status;
     
     UserEvent() {
         

@@ -10,8 +10,8 @@ public class Leaderboard {
     //private Vector<Player> GamesWonPlace = new Vector<>();
     private Vector<Player> PointsEarnedPlace = new Vector<>();
 
-    public Leaderboard () {
-
+    public Leaderboard (Vector<Player> PointsEarnedPlace) {
+        this.PointsEarnedPlace = PointsEarnedPlace;
     }
 
     public void sortPlayer() {
@@ -22,8 +22,6 @@ public class Leaderboard {
          }
       });
     }
-
-    
 
     /*public Vector<Player> getGamesWon() {
         return GamesWonPlace;

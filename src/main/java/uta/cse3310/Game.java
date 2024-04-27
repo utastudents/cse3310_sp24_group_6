@@ -31,6 +31,7 @@ public class Game {
     public int state;
     public int Button;
     public int gameNew;
+    public int Status;
     
     // Constructor for the different game types
     public Game(Player player1, Player player2) {

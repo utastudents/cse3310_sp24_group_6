@@ -15,6 +15,8 @@ var GameId = -1;
 var button;
 //var gameNew_ = 0;
 
+var ptendgame = "";
+
 var startCoordinate = -1;
 var endCoordinate = -1;
 
@@ -91,86 +93,90 @@ connection.onmessage = function (evt) {
     
     if (obj.state == 1 && obj.gameNew == 1) {   // Setup Game and Start
 
-      obj.player.forEach(playObj => {
-        if(PlayerNick_ == playObj.PlayerNick)
-        {
-          if(playObj.pt == "Player1")
-          {
-            idx = 1;
-          }
-          else if(playObj.pt == "Player2")
-          {
-            idx = 2;
-          }
-          else if(playObj.pt == "Player3")
-          {
-            idx = 3;
-          }
-          else if(playObj.pt == "Player4")
-          {
-            idx = 4;
-          }
-        }
-      })
-
-      gameNew_ = 0;
-
-      var count = 0;
-      for (let i = 0; i < 50; i++)
       {
-        for (let j = 0; j < 50; j++)
-        {
-          squareGrid[count] = obj.g.grid[i][j];
-
-          const button = document.createElement("button");
-
-          button.setAttribute("id",count);
-          button.setAttribute("onclick","change_color("+count+");");
-
-          button.innerHTML = squareGrid[count];
-
-          board.appendChild(button);
-          count++;
-        }
-        linebreak = document.createElement("br");
-        board.appendChild(linebreak);
-      }
-
-      obj.g.placedWords.forEach(wordObj => {
-          addWordBank("p5table4",wordObj.word);
-          wordCount++;
-        })
+        Status_ = 0;
 
         obj.player.forEach(playObj => {
+          if(PlayerNick_ == playObj.PlayerNick)
+          {
             if(playObj.pt == "Player1")
             {
-              document.getElementById("p5pone").innerHTML=""+playObj.PlayerNick;
+              idx = 1;
             }
             else if(playObj.pt == "Player2")
             {
-              document.getElementById("p5ptwo").innerHTML=""+playObj.PlayerNick;
+              idx = 2;
             }
             else if(playObj.pt == "Player3")
             {
-              document.getElementById("p5pthre").innerHTML=""+playObj.PlayerNick;
+              idx = 3;
             }
             else if(playObj.pt == "Player4")
             {
-              document.getElementById("p5pfour").innerHTML=""+playObj.PlayerNick;
+              idx = 4;
             }
+          }
         })
-  
 
-      State = 0;
+        gameNew_ = 0;
 
-      if(GameId == -1)
-      {
-        GameId = obj.GameId;
+        var count = 0;
+        for (let i = 0; i < 50; i++)
+        {
+          for (let j = 0; j < 50; j++)
+          {
+            squareGrid[count] = obj.g.grid[i][j];
+
+            const button = document.createElement("button");
+
+            button.setAttribute("id",count);
+            button.setAttribute("onclick","change_color("+count+");");
+
+            button.innerHTML = squareGrid[count];
+
+            board.appendChild(button);
+            count++;
+          }
+          linebreak = document.createElement("br");
+          board.appendChild(linebreak);
+        }
+
+        obj.g.placedWords.forEach(wordObj => {
+            addWordBank("p5table4",wordObj.word);
+            wordCount++;
+          })
+
+          obj.player.forEach(playObj => {
+              if(playObj.pt == "Player1")
+              {
+                document.getElementById("p5pone").innerHTML=""+playObj.PlayerNick;
+              }
+              else if(playObj.pt == "Player2")
+              {
+                document.getElementById("p5ptwo").innerHTML=""+playObj.PlayerNick;
+              }
+              else if(playObj.pt == "Player3")
+              {
+                document.getElementById("p5pthre").innerHTML=""+playObj.PlayerNick;
+              }
+              else if(playObj.pt == "Player4")
+              {
+                document.getElementById("p5pfour").innerHTML=""+playObj.PlayerNick;
+              }
+          })
+    
+
+        State = 0;
+
+        if(GameId == -1)
+        {
+          GameId = obj.GameId;
+        }
+        
+        GameRoom();
+        startTimer();
+        sendUpdate();
       }
-      
-      GameRoom();
-      startTimer();
-      sendUpdate();
     }
     if (obj.state == 2 && obj.GameId == GameId) // Update the current website and 
     {
@@ -210,6 +216,30 @@ connection.onmessage = function (evt) {
 
       change_color2(obj.Button, obj.idx);
       sendUpdate();
+    }
+    if (obj.state == 3 && obj.GameId == GameId)
+    {
+      console.log("Game Ended " + msg);
+
+      var mostPoints = 0;
+      var winner = "";
+
+      obj.LeadB.PointsEarnedPlace.forEach(playObj => {
+        if(playObj.Points > mostPoints)
+        {
+          mostPoints = playObj.Points;
+          winner = playObj.PlayerNick;
+        }
+      });
+
+      if(PlayerNick_ == winner)
+      {
+        Winner();
+      }
+      else
+      {
+        Loser();
+      }
     }    
 }
 
@@ -244,6 +274,9 @@ function FindGame() {   // Button Function
     U.PlayerNick = PlayerNick_;
     U.Pin = Pin_;
     U.Type = Type_;
+
+    GameId = -1;
+    Status_ = 1;
 
     connection.send(JSON.stringify(U));
     console.log(JSON.stringify(U));
@@ -595,6 +628,7 @@ function SelectPlayer(id)
         U.EndCoordinate = startCoordinate;
         U.gameNew = gameNew_;
         U.idx = idx;
+        U.Status = Status_;
         /*
         if(idx == 0)
             U.PlayerIdx = "Player0";
@@ -652,7 +686,7 @@ function SelectPlayer(id)
     }
 
     function startTimer() {
-      var countDownDate = new Date().getTime() + 5 * 60 * 1000; 
+      var countDownDate = new Date().getTime() + 5 * 60 * 30; 
       // Update the count down every 1 second
       var x = setInterval(function() {
         var now = new Date().getTime();
@@ -663,6 +697,10 @@ function SelectPlayer(id)
         if (distance < 0) {
           clearInterval(x);
           document.getElementById("p5h1").innerHTML = "GAME OVER";
+
+          Invoke_ = 3;
+
+          sendUpdate();
         }
       }, 1000);
     }
@@ -691,3 +729,15 @@ function SelectPlayer(id)
     startCoord = [1,17+1]
     endCoord = [1,1]
     */
+
+    function Winner()
+    {
+      document.getElementById("page5").style.display="none"; 
+      document.getElementById("page6").style.display="block";
+    }
+
+        function Loser()
+    {
+      document.getElementById("page5").style.display="none"; 
+      document.getElementById("page7").style.display="block";
+    }

@@ -63,6 +63,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonArray;
+import com.google.gson.annotations.SerializedName;
 
 public class App extends WebSocketServer {
 
@@ -344,6 +345,32 @@ public class App extends WebSocketServer {
             
             System.out.println("> " + Duration.between(startTime, Instant.now()).toMillis() + " " + "*" + " " + escape(jsonString));
             broadcast(jsonString);
+        }
+        if(U.Invoke == 3) // Game Ended
+        {   
+            // Get the game that the player is currently in
+            for(int i = 0; i < ActiveGames.size(); i++)
+            {
+                if(U.GameId == ActiveGames.get(i).GameId)
+                {
+                    G = ActiveGames.get(i);
+                }
+            }
+
+            Leaderboard LeadB = new Leaderboard(G.player);
+            LeadB.sortPlayer();
+
+            LBJS lbjs = new LBJS();
+
+            lbjs.LeadB = LeadB;
+            lbjs.GameId = U.GameId;
+            lbjs.state = 3;
+            
+            String jsonString = gson.toJson(lbjs);
+
+            broadcast(jsonString);
+
+            System.out.println("\n\n /// ENDING GAME /// ");
         }
     }
 

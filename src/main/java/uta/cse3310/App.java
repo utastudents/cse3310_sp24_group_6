@@ -38,6 +38,7 @@ package uta.cse3310;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -88,7 +89,7 @@ public class App extends WebSocketServer {
 
     private ChatHandler chatHandler;
 
-    private String version = null;
+    private static String hash = null;
 
     private int pnum = 0;
 
@@ -113,6 +114,23 @@ public class App extends WebSocketServer {
     public App(int port, Draft_6455 draft) {
         super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
     }
+
+    public static void currHash(){ // Enviorment variable version always null, adding this back in to change it to the current hash
+        String sResults = null;
+        try{
+            Process process = Runtime.getRuntime().exec("git rev-parse HEAD"); // Starts a process to get the hash
+
+            InputStream results = process.getInputStream(); // Capture results of command 
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(results));
+            StringBuilder output = new StringBuilder();
+            while((sResults = reader.readLine()) != null) {
+                output.append(sResults).append("\n");
+            }
+            hash = output.toString().trim();
+        }
+        catch(IOException e){}
+    } 
 
     @Override
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
@@ -442,8 +460,7 @@ public class App extends WebSocketServer {
         A.start();
         System.out.println("websocket Server started on port: " + port);
 
-        A.version = System.getenv("VERSION");
-        System.out.println("Current github hash : " + A.version); // Will work once it is connected to the web site
-
+        currHash();// System.getenv("VERSION"); alwways gives null
+        System.out.println("Current github hash : " + A.hash);
     }
 }

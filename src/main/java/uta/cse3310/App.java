@@ -148,22 +148,28 @@ public class App extends WebSocketServer {
     @Override
     public void onMessage(WebSocket conn, String message) {
         
-        System.out.println("\nincoming < " + Duration.between(startTime, Instant.now()).toMillis() + " " + "-" + " " + escape(message) + "\n");
+        System.out.println("\nincoming < " + Duration.between(startTime, Instant.now()).toMillis() 
+            + " " + "-" + " " + escape(message) + "\n");
 
+        /*Checks to see if it is a type 'chat' message string. If its not a type 'chat' message, it will continue 
+        with rest of the logic for other type of message string.*/
         try {
             JsonObject jsonMessage = JsonParser.parseString(message).getAsJsonObject();
             // Check if the message is a chat message
             if ("chat".equals(jsonMessage.get("type").getAsString())) {
                 String chatMessage = jsonMessage.get("text").getAsString();
-                String playerNick = jsonMessage.has("playerNick") ? jsonMessage.get("playerNick").getAsString() : "Anonymous"; // Handle anonymous or default nicknames
+                // Handle anonymous or default nicknames
+                String playerNick = jsonMessage.has("playerNick") ? jsonMessage.get("playerNick")
+                    .getAsString() : "Anonymous"; 
                 String GameId = jsonMessage.get("GameId").getAsString();
                 chatHandler.handleMessage(conn, chatMessage, playerNick, GameId);
-            } // No need for else if chat is the only type you're handling here
+                return;
+            } 
         } catch (Exception e) {
             System.err.println("Error processing message: " + e.getMessage());
             //e.printStackTrace();
         }
-
+        
         // Bring in the data from the webpage
         // A UserEvent is all that is allowed at this point
         GsonBuilder builder = new GsonBuilder();

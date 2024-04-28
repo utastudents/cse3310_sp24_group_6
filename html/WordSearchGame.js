@@ -532,6 +532,7 @@ function SelectPlayer(id)
         StrikethroughWord(word);
         word="";
      }
+     
      function StrikethroughWord(word) {
          var table = document.getElementById("p5table4");
          for(let i = 0; i < table.rows.length;i++) {

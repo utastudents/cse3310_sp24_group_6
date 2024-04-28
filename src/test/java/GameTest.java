@@ -7,7 +7,7 @@ import junit.framework.Assert;
 import java.util.Vector;
 import java.util.Random;
 import java.util.Arrays;
-/*
+
 public class GameTest extends TestCase {
     Player P1 = new Player("user1", 1);
     Player P2 = new Player("user2", 2);
@@ -42,9 +42,8 @@ public class GameTest extends TestCase {
         System.out.println("\nCoord1: " + Arrays.toString(Coord1) + "\nCoord2: " + Arrays.toString(Coord2));
 
         //see if verifyWord can identify the random word and by its coords
-        boolean b = G.verifyWord(Arrays.toString(Coord1), Arrays.toString(Coord2), totalwords);
+        boolean b = G.verifyWord(Coord2, Coord1, totalwords);
         System.out.println("Result of verifyWord: " + b);
         assertTrue(b);
     }
 }
-*/

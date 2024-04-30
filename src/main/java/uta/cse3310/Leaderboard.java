@@ -1,6 +1,3 @@
-//Kaitlin Martin
-//Group 6
-
 package uta.cse3310;
 import java.util.Vector;
 import java.util.Collections;

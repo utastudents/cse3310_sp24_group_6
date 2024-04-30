@@ -57,7 +57,7 @@ class UserEvent {
 
 var connection = null;
 
-serverUrl = "ws://" + window.location.hostname +":9106";
+serverUrl = "ws://" + window.location.hostname +":9880";
 //9880 for locoal
 //9106 for website
 // Create the connection with the server
@@ -79,10 +79,11 @@ connection.onmessage = function (evt) {
     console.log("Message received: " + msg);
     const obj = JSON.parse(msg);
 
-    if (obj.type == 'chat' && obj.GameId == GameId) {
+    if (obj.type == 'connection') {
+      document.title = `Hash: ${obj.hash}`;
+    } else if (obj.type == 'chat' && obj.GameId == GameId) {
       console.log("Messenger: " + obj.PlayerNick);    
       displayChatMessage(obj.text);
-     
     } else {
       console.log("obj.state: " + obj.state);
       console.log("obj.GameId: " + obj.GameId);

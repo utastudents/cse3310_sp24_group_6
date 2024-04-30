@@ -136,6 +136,16 @@ public class App extends WebSocketServer {
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         connectionId++;
         System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
+
+        // Include the hash in the initial message
+        JsonObject message = new JsonObject();
+        message.addProperty("type", "connection");
+        message.addProperty("hash", hash); // Include the hash here
+        String hashString = message.toString();
+
+        // Send the message to the client
+        conn.send(hashString);
+
         ServerEvent E = new ServerEvent();
 
         Gson gson = new Gson();

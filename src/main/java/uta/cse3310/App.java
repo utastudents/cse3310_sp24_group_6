@@ -466,6 +466,8 @@ public class App extends WebSocketServer {
             port = Integer.valueOf(WSPort);
         }
 
+        //comment to redeploy
+
         App A = new App(port);
         A.setReuseAddr(true);
         A.start();
